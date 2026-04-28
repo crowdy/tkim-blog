@@ -1,6 +1,6 @@
-# crowdy-blog
+# tkim-blog
 
-Personal blog at https://crowdy.github.io/crowdy-blog/
+Personal blog at https://crowdy.github.io/tkim-blog/
 
 Built with Astro. Source markdown lives at `~/dev/crowdy/blog/` and is synced into `src/content/posts/<lang>/` by a local script.
 
@@ -49,8 +49,8 @@ npm test
 
 ## First-time GitHub setup
 
-1. Create the GitHub repo `crowdy/crowdy-blog` (empty, no README/license).
-2. `git remote add origin git@github.com:crowdy/crowdy-blog.git`
+1. Create the GitHub repo `crowdy/tkim-blog` (empty, no README/license).
+2. `git remote add origin git@github.com:crowdy/tkim-blog.git`
 3. `git push -u origin main`
 4. In repo Settings → Pages → Source: GitHub Actions.
-5. Wait for the deploy workflow to finish; visit `https://crowdy.github.io/crowdy-blog/`.
+5. Wait for the deploy workflow to finish; visit `https://crowdy.github.io/tkim-blog/`.
