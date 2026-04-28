@@ -82,6 +82,16 @@ describe('extractDescription', () => {
     expect(result.length).toBeLessThanOrEqual(201);
     expect(result.endsWith('…')).toBe(true);
   });
+
+  it('skips horizontal rules and subheadings before description', () => {
+    const md = '# Title\n\n## Subtitle line\n\n---\n\nReal first paragraph here.';
+    expect(extractDescription(md)).toBe('Real first paragraph here.');
+  });
+
+  it('skips empty blockquotes and falls back to next paragraph', () => {
+    const md = '# T\n\n> \n\nBody paragraph.';
+    expect(extractDescription(md)).toBe('Body paragraph.');
+  });
 });
 
 describe('detectLanguage', () => {
@@ -100,5 +110,19 @@ describe('detectLanguage', () => {
   it('returns en when content is empty or unclassifiable', () => {
     expect(detectLanguage('')).toBe('en');
     expect(detectLanguage('123 456 789')).toBe('en');
+  });
+
+  it('classifies as ko even with heavy code blocks (code is stripped first)', () => {
+    const md = `# 한국어 제목
+
+이 글은 한국어로 작성된 본문입니다. 한국어 문장이 충분히 들어갑니다.
+
+\`\`\`python
+def some_long_function_with_many_english_words(argument_name, another_one):
+    return some_long_english_identifier + another_long_english_identifier
+\`\`\`
+
+추가적인 한국어 본문이 더 있습니다.`;
+    expect(detectLanguage(md)).toBe('ko');
   });
 });

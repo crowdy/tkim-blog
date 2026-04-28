@@ -30,26 +30,42 @@ export function extractTitle(markdown: string): string | null {
   return null;
 }
 
+function isSkippableLine(line: string): boolean {
+  const t = line.trim();
+  if (t === '') return true;
+  if (/^#{1,6}\s/.test(t)) return true; // any heading
+  if (/^[-*_]{3,}$/.test(t)) return true; // hr
+  return false;
+}
+
 export function extractDescription(markdown: string): string {
   const lines = markdown.split('\n');
   let i = 0;
-  while (i < lines.length && (lines[i].trim() === '' || /^#\s/.test(lines[i]))) i++;
 
-  if (i < lines.length && lines[i].startsWith('>')) {
-    const quoteLines: string[] = [];
-    while (i < lines.length && lines[i].startsWith('>')) {
-      quoteLines.push(lines[i].replace(/^>\s?/, '').trim());
+  while (i < lines.length) {
+    while (i < lines.length && isSkippableLine(lines[i])) i++;
+    if (i >= lines.length) break;
+
+    if (lines[i].startsWith('>')) {
+      const quoteLines: string[] = [];
+      while (i < lines.length && lines[i].startsWith('>')) {
+        quoteLines.push(lines[i].replace(/^>\s?/, '').trim());
+        i++;
+      }
+      const joined = quoteLines.filter(Boolean).join(' ').trim();
+      if (joined) return truncate(joined);
+      continue;
+    }
+
+    const paraLines: string[] = [];
+    while (i < lines.length && lines[i].trim() !== '') {
+      paraLines.push(lines[i].trim());
       i++;
     }
-    return truncate(quoteLines.filter(Boolean).join(' '));
+    const joined = paraLines.join(' ').trim();
+    if (joined) return truncate(joined);
   }
-
-  const paraLines: string[] = [];
-  while (i < lines.length && lines[i].trim() !== '') {
-    paraLines.push(lines[i].trim());
-    i++;
-  }
-  return truncate(paraLines.join(' '));
+  return '';
 }
 
 function truncate(s: string, max = 200): string {
@@ -58,7 +74,11 @@ function truncate(s: string, max = 200): string {
 }
 
 export function detectLanguage(content: string): Lang {
-  const stripped = content.replace(/\s+/g, '');
+  // Strip code fences and inline code so prose is what gets classified.
+  const prose = content
+    .replace(/```[\s\S]*?```/g, '')
+    .replace(/`[^`\n]*`/g, '');
+  const stripped = prose.replace(/\s+/g, '');
   if (stripped.length === 0) return 'en';
 
   let hangul = 0;
