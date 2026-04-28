@@ -5,4 +5,13 @@ export default defineConfig({
   base: '/tkim-blog',
   output: 'static',
   trailingSlash: 'ignore',
+  markdown: {
+    shikiConfig: {
+      themes: {
+        light: 'github-light',
+        dark: 'github-dark',
+      },
+      wrap: true,
+    },
+  },
 });
