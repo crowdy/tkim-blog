@@ -1,0 +1,28 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import LangToggle from '../components/LangToggle.astro';
+import { getCollection } from 'astro:content';
+import { getPairs } from '../utils/pairs';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+const all = await getCollection('posts');
+const pairs = getPairs(all, post);
+const dateStr = post.data.pubDate.toISOString().slice(0, 10);
+---
+
+<BaseLayout title={post.data.title} description={post.data.description} lang={post.data.lang}>
+  <article>
+    <h1>{post.data.title}</h1>
+    <p>
+      <time datetime={post.data.pubDate.toISOString()}>{dateStr}</time>
+      {post.data.draft && <span> · draft</span>}
+    </p>
+    <LangToggle current={post} pairs={pairs} />
+    <slot />
+  </article>
+</BaseLayout>
