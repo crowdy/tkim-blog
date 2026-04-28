@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  return (['ko', 'ja', 'en'] as const).map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+const all = await getCollection('posts');
+const isProd = !import.meta.env.DEV;
+const posts = all
+  .filter((p: CollectionEntry<'posts'>) => p.data.lang === lang)
+  .filter((p: CollectionEntry<'posts'>) => !(isProd && p.data.draft))
+  .sort(
+    (a: CollectionEntry<'posts'>, b: CollectionEntry<'posts'>) =>
+      b.data.pubDate.getTime() - a.data.pubDate.getTime()
+  );
+
+const pairSlugsWithOtherLangs = new Set(
+  all
+    .filter((p: CollectionEntry<'posts'>) => p.data.lang !== lang)
+    .map((p: CollectionEntry<'posts'>) => p.data.pairSlug)
+);
+---
+
+<BaseLayout title={`crowdy — ${lang}`} lang={lang}>
+  <h1>posts ({lang})</h1>
+  {posts.length === 0 ? (
+    <p>No posts yet.</p>
+  ) : (
+    <ul class="post-list">
+      {posts.map((p) => (
+        <PostCard post={p} hasTranslation={pairSlugsWithOtherLangs.has(p.data.pairSlug)} />
+      ))}
+    </ul>
+  )}
+</BaseLayout>
