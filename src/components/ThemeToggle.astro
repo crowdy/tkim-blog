@@ -1,0 +1,28 @@
+---
+---
+<button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+  <span class="theme-toggle-light">☼</span>
+  <span class="theme-toggle-dark">☾</span>
+</button>
+
+<style>
+  .theme-toggle-dark { display: none; }
+  :global(:root[data-theme='dark']) .theme-toggle-light { display: none; }
+  :global(:root[data-theme='dark']) .theme-toggle-dark { display: inline; }
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) .theme-toggle-light { display: none; }
+    :global(:root:not([data-theme='light'])) .theme-toggle-dark { display: inline; }
+  }
+</style>
+
+<script is:inline>
+  document.getElementById('theme-toggle')?.addEventListener('click', () => {
+    const root = document.documentElement;
+    const current = root.getAttribute('data-theme');
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDark = current === 'dark' || (current === null && systemDark);
+    const next = isDark ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+</script>
