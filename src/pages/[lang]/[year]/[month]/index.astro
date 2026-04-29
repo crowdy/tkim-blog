@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import PostCard from '../../../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+type Lang = 'ko' | 'ja' | 'en';
+
+export async function getStaticPaths() {
+  const all = await getCollection('posts');
+  const isProd = !import.meta.env.DEV;
+  const visible = all.filter(
+    (p: CollectionEntry<'posts'>) => !(isProd && p.data.draft)
+  );
+  const seen = new Set<string>();
+  const paths: { params: { lang: Lang; year: string; month: string } }[] = [];
+  for (const p of visible) {
+    const year = p.data.pubDate.getUTCFullYear().toString();
+    const month = String(p.data.pubDate.getUTCMonth() + 1).padStart(2, '0');
+    const key = `${p.data.lang}/${year}/${month}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    paths.push({ params: { lang: p.data.lang as Lang, year, month } });
+  }
+  return paths;
+}
+
+const { lang, year, month } = Astro.params as {
+  lang: Lang;
+  year: string;
+  month: string;
+};
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const headings: Record<Lang, string> = {
+  ko: `${year}년 ${parseInt(month, 10)}월 글`,
+  ja: `${year}年${parseInt(month, 10)}月の記事`,
+  en: `Posts from ${year}-${month}`,
+};
+
+const all = await getCollection('posts');
+const isProd = !import.meta.env.DEV;
+const posts = all
+  .filter((p: CollectionEntry<'posts'>) => p.data.lang === lang)
+  .filter((p: CollectionEntry<'posts'>) => !(isProd && p.data.draft))
+  .filter((p: CollectionEntry<'posts'>) => {
+    const y = p.data.pubDate.getUTCFullYear().toString();
+    const m = String(p.data.pubDate.getUTCMonth() + 1).padStart(2, '0');
+    return y === year && m === month;
+  })
+  .sort(
+    (a: CollectionEntry<'posts'>, b: CollectionEntry<'posts'>) =>
+      b.data.pubDate.getTime() - a.data.pubDate.getTime()
+  );
+
+const pairSlugsWithOtherLangs = new Set(
+  all
+    .filter((p: CollectionEntry<'posts'>) => p.data.lang !== lang)
+    .map((p: CollectionEntry<'posts'>) => p.data.pairSlug)
+);
+---
+
+<BaseLayout title={`tkim — ${lang} ${year}-${month}`} lang={lang} activeLang={lang}>
+  <p class="breadcrumbs">
+    <a href={`${base}/${lang}/`}>← {lang.toUpperCase()}</a>
+    {' · '}
+    <a href={`${base}/${lang}/${year}/`}>{year}</a>
+  </p>
+  <h2>{headings[lang]}</h2>
+  <section class="posts">
+    {posts.length === 0 ? (
+      <p>No posts.</p>
+    ) : (
+      <ul>
+        {posts.map((p) => (
+          <PostCard post={p} hasTranslation={pairSlugsWithOtherLangs.has(p.data.pairSlug)} />
+        ))}
+      </ul>
+    )}
+  </section>
+</BaseLayout>
