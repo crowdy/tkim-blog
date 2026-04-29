@@ -13,7 +13,7 @@ interface Props {
 
 const {
   title,
-  description = 'crowdy blog',
+  description = 'tkim blog',
   lang = 'ko',
   activeLang = null,
   sourcePath = null,
@@ -37,7 +37,7 @@ const ariaForLang = (l: 'ko' | 'ja' | 'en') => (activeLang === l ? 'page' : unde
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
     />
-    <link rel="alternate" type="application/rss+xml" title="crowdy blog" href={`${base}/rss.xml`} />
+    <link rel="alternate" type="application/rss+xml" title="tkim blog" href={`${base}/rss.xml`} />
     <script is:inline>
       (() => {
         const stored = localStorage.getItem('theme');
@@ -50,7 +50,7 @@ const ariaForLang = (l: 'ko' | 'ja' | 'en') => (activeLang === l ? 'page' : unde
   <body>
     <div class="container">
       <nav class="navbar" aria-label="Site">
-        <a class="brand" href={`${base}/`}>crowdy</a>
+        <a class="brand" href={`${base}/`}>tkim</a>
         <ul class="nav-icons">
           <li class="lang-nav">
             <a href={`${base}/ko/`} aria-current={ariaForLang('ko')}>KO</a>

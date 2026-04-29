@@ -19,7 +19,7 @@ export async function GET(context: APIContext) {
     });
 
   return rss({
-    title: 'crowdy blog',
+    title: 'tkim blog',
     description: 'Tonghyun Kim — multilingual tech blog',
     site: context.site!,
     items,
