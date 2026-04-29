@@ -9,7 +9,6 @@ const posts = defineCollection({
     lang: z.enum(['ko', 'ja', 'en']),
     pairSlug: z.string(),
     draft: z.boolean().default(false),
-    sourceDir: z.enum(['root', 'posted', 'draft']),
   }),
 });
 

@@ -20,6 +20,7 @@ export function getPairs(allPosts: Post[], current: Post): PairMap {
 }
 
 export function postSlug(post: Post): string {
-  const parts = post.id.split('/');
-  return parts[parts.length - 1].replace(/\.md$/, '');
+  // post.id is like "ko/2026/04/21/ghost-in-the-skill.md"
+  // Return the path within the lang folder, without extension: "2026/04/21/ghost-in-the-skill"
+  return post.id.replace(/^[^/]+\//, '').replace(/\.md$/, '');
 }
