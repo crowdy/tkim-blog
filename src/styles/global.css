@@ -392,6 +392,21 @@ section.posts li h4 { margin: 0; font-size: 1rem; }
 section.posts li h4 a { color: var(--color-text); }
 section.posts li h4 a:hover { color: var(--color-accent); }
 
+section.projects { margin: 0 0 30px; }
+section.projects h3 { margin: 30px 0 5px 0; font-size: 1.25rem; }
+section.projects ul {
+  list-style: none;
+  margin: 15px 0 0 0;
+  padding: 0;
+}
+section.projects li {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 8px;
+}
+section.projects li a { color: var(--color-text); font-weight: 500; }
+section.projects li a:hover { color: var(--color-accent); }
+
 /* ===== Mobile ===== */
 
 @media only screen and (max-width: 600px) {
