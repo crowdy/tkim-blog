@@ -1,7 +1,7 @@
 ---
 title: 'WikiTok — 위키백과를 틱톡처럼 스크롤하는 시대, 무엇이 바뀌는가'
 description: '알고리즘이 지배하는 세계에서, 알고리즘 없는 앱이 바이럴이 되었다. 위키백과의 950만 문서를 틱톡처럼 넘기는 WikiTok은 "둠스크롤링의 반대편"을 꿈꾼다. 2시간 만에 AI로 만들어진 이 작은 웹앱이 던지는 질문은 생각보다 크다.'
-pubDate: 2026-03-07T14:35:53.949Z
+pubDate: 2026-03-07T00:00:00.000Z
 lang: ko
 pairSlug: 'wikitok-tiktok-wikipedia-serendipity'
 draft: true

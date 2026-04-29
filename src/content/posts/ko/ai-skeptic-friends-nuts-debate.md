@@ -1,7 +1,7 @@
 ---
 title: '"내 AI 회의론자 친구들은 다 미쳤다" — 2,826개의 댓글이 보여주는 개발자 사회의 균열'
 description: '2025년 6월, 보안 업계의 전설이 Hacker News에 수류탄을 던졌다. "AI에 회의적인 내 친구들은 다 미쳤다." 2,356포인트, 2,826개의 댓글. 개발자 사회는 둘로 쪼개졌다. 그리고 그 균열은 아직도 벌어지고 있다.'
-pubDate: 2026-03-09T01:33:28.000Z
+pubDate: 2026-03-09T00:00:00.000Z
 lang: ko
 pairSlug: 'ai-skeptic-friends-nuts-debate'
 draft: true

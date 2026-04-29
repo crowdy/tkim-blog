@@ -1,7 +1,7 @@
 ---
 title: 'Verification Loop — AI 에이전트 시대에 가장 과소평가된 패턴'
 description: '"Reasoning Effort를 최대로 올리면 되는 거 아닌가?" GPT-5.4 프롬프트 가이드는 정반대를 말한다. 가벼운 검증 루프가 무거운 추론보다 낫다고. 그리고 Claude Opus 4.6은 아무도 시키지 않았는데 스스로 검증 루프를 돌렸다.'
-pubDate: 2026-03-11T04:20:42.000Z
+pubDate: 2026-03-11T00:00:00.000Z
 lang: ko
 pairSlug: 'verification-loop-underrated-pattern'
 draft: true

@@ -1,7 +1,7 @@
 ---
 title: '人間かAgentか分からない時代 — "API First"の次、"Agent First"の世界'
 description: '私たちのウェブサイトの「顧客」が変わりつつある。2025年、ウェブトラフィック全体の過半数がボットとなった今、次の顧客はブラウザを手にした人間ではなく、APIを呼び出すAI Agentかもしれない。'
-pubDate: 2026-03-07T07:00:46.000Z
+pubDate: 2026-03-04T00:00:00.000Z
 lang: ja
 pairSlug: 'agent-first-era'
 draft: false

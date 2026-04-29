@@ -18,6 +18,7 @@ describe('parseFilename', () => {
     expect(parseFilename('korea-ai-policy-review-ja.md')).toEqual({
       baseSlug: 'korea-ai-policy-review',
       explicitLang: 'ja',
+      pubDate: null,
     });
   });
 
@@ -25,6 +26,7 @@ describe('parseFilename', () => {
     expect(parseFilename('korea-ai-policy-review.md')).toEqual({
       baseSlug: 'korea-ai-policy-review',
       explicitLang: null,
+      pubDate: null,
     });
   });
 
@@ -32,6 +34,7 @@ describe('parseFilename', () => {
     expect(parseFilename('multimedia-search-ai-system-2.md')).toEqual({
       baseSlug: 'multimedia-search-ai-system-2',
       explicitLang: null,
+      pubDate: null,
     });
   });
 
@@ -39,6 +42,39 @@ describe('parseFilename', () => {
     expect(parseFilename('multimedia-search-ai-system-ja-2.md')).toEqual({
       baseSlug: 'multimedia-search-ai-system-2',
       explicitLang: 'ja',
+      pubDate: null,
+    });
+  });
+
+  it('extracts YYYY-MM-DD prefix into pubDate and strips it from baseSlug', () => {
+    expect(parseFilename('2026-03-07-ide-decline-ai-coding-era.md')).toEqual({
+      baseSlug: 'ide-decline-ai-coding-era',
+      explicitLang: null,
+      pubDate: new Date('2026-03-07T00:00:00.000Z'),
+    });
+  });
+
+  it('extracts date prefix together with -ja suffix', () => {
+    expect(parseFilename('2026-03-07-ide-decline-ai-coding-era-ja.md')).toEqual({
+      baseSlug: 'ide-decline-ai-coding-era',
+      explicitLang: 'ja',
+      pubDate: new Date('2026-03-07T00:00:00.000Z'),
+    });
+  });
+
+  it('extracts date prefix with -ja and numeric tail', () => {
+    expect(parseFilename('2026-03-07-multimedia-search-ai-system-ja-2.md')).toEqual({
+      baseSlug: 'multimedia-search-ai-system-2',
+      explicitLang: 'ja',
+      pubDate: new Date('2026-03-07T00:00:00.000Z'),
+    });
+  });
+
+  it('leaves invalid date-shaped prefixes intact in the slug', () => {
+    expect(parseFilename('2026-13-40-bad-date-slug.md')).toEqual({
+      baseSlug: '2026-13-40-bad-date-slug',
+      explicitLang: null,
+      pubDate: null,
     });
   });
 });

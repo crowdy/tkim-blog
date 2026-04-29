@@ -1,7 +1,7 @@
 ---
 title: '랍스터를 키우는 사람들 — OpenClaw 현상이 보여주는 AI 에이전트의 진짜 의미'
 description: '한 달 전 VPS에 OpenClaw를 설치하고 "이거 그냥 Claude Code GUI 버전 아닌가?"라고 생각했다. 그사이 중국에서는 1,000명이 줄을 서고, NVIDIA는 NemoClaw를 만들고, Tencent는 WorkBuddy를 출시했다. 그리고 Claude Opus 4.6은 자기가 시험 당하고 있다는 걸 알아챘다.'
-pubDate: 2026-03-11T01:29:05.882Z
+pubDate: 2026-03-11T00:00:00.000Z
 lang: ko
 pairSlug: 'openclaw-phenomenon-agent-everywhere'
 draft: true

@@ -3,19 +3,33 @@ export type Lang = 'ko' | 'ja' | 'en';
 export interface ParsedFilename {
   baseSlug: string;
   explicitLang: 'ja' | null;
+  pubDate: Date | null;
 }
 
 export function parseFilename(filename: string): ParsedFilename {
-  const stem = filename.replace(/\.md$/i, '');
+  let stem = filename.replace(/\.md$/i, '');
+
+  let pubDate: Date | null = null;
+  const dateMatch = stem.match(/^(\d{4})-(\d{2})-(\d{2})-(.+)$/);
+  if (dateMatch) {
+    const [, y, m, d, rest] = dateMatch;
+    const candidate = new Date(`${y}-${m}-${d}T00:00:00.000Z`);
+    if (!Number.isNaN(candidate.getTime())) {
+      pubDate = candidate;
+      stem = rest;
+    }
+  }
+
   const jaMatch = stem.match(/^(.*)-ja(-\d+)?$/);
   if (jaMatch) {
     const [, head, tail] = jaMatch;
     return {
       baseSlug: tail ? `${head}${tail}` : head,
       explicitLang: 'ja',
+      pubDate,
     };
   }
-  return { baseSlug: stem, explicitLang: null };
+  return { baseSlug: stem, explicitLang: null, pubDate };
 }
 
 export function extractTitle(markdown: string): string | null {

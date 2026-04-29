@@ -1,7 +1,7 @@
 ---
 title: 'RAG의 정밀도가 낮아서 고민하는 회사에게'
 description: '"우리도 RAG 해봤는데… 생각보다 별로더라고요."'
-pubDate: 2026-03-05T00:15:32.000Z
+pubDate: 2026-03-05T00:00:00.000Z
 lang: ko
 pairSlug: 'rag-precision-problem'
 draft: false

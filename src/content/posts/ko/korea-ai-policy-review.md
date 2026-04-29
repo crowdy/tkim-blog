@@ -1,7 +1,7 @@
 ---
 title: '인프라는 깔았는데 선수가 없다 — 한국 AI 정책, 무엇이 빠져 있는가'
 description: '예산 10.1조원, GPU 26만개, AI 기본법 시행. 숫자는 화려하다. 그런데 한국산 프론티어 AI 모델은? AI 유니콘은? 글로벌에서 쓰이는 한국산 AI 서비스는? "기반을 깔았지만 경기를 뛰는 선수가 없다."'
-pubDate: 2026-03-04T23:39:48.000Z
+pubDate: 2026-03-04T00:00:00.000Z
 lang: ko
 pairSlug: 'korea-ai-policy-review'
 draft: false

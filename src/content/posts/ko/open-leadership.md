@@ -1,7 +1,7 @@
 ---
 title: '국무회의를 보며 생각한 IT 조직의 ''열린 경영'' — 벤처 CTO가 스스로에게 던지는 질문들'
 description: '정치인이 아니라 조직 운영자의 눈으로 보았을 때, 공개 국무회의에서 무엇을 배울 수 있는가? CTO의 성장은 기술적 깊이에서 조직적 넓이로 나아가는 여정이다.'
-pubDate: 2026-03-04T23:11:44.000Z
+pubDate: 2026-03-04T00:00:00.000Z
 lang: ko
 pairSlug: 'open-leadership'
 draft: false

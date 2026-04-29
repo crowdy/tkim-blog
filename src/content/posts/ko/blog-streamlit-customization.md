@@ -1,7 +1,7 @@
 ---
 title: 'Streamlit은 어디까지 커스터마이징할 수 있을까?'
 description: '**대상 독자**: Python으로 데이터 앱을 만들고 있는 분, Streamlit을 "일단 써봤다" 수준에서 한 단계 더 나아가고 싶은 분'
-pubDate: 2026-03-05T13:54:06.000Z
+pubDate: 2026-03-05T00:00:00.000Z
 lang: ko
 pairSlug: 'blog-streamlit-customization'
 draft: false

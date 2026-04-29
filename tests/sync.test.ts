@@ -81,6 +81,27 @@ describe('sync', () => {
     rmSync(dup, { recursive: true, force: true });
   });
 
+  it('uses YYYY-MM-DD prefix from filename as pubDate (and strips it from slug)', async () => {
+    const dated = mkdtempSync(join(tmpdir(), 'crowdy-dated-'));
+    writeFileSync(join(dated, '2026-03-07-ide-decline.md'), '# Title\n\nKorean 한국어 본문 한국어 본문 한국어.\n');
+    writeFileSync(
+      join(dated, '2026-03-07-ide-decline-ja.md'),
+      '# Title\n\n日本語の本文です。日本語の本文です。\n'
+    );
+
+    await sync({ sourceDir: dated, outDir, verbose: false });
+
+    const ko = readFileSync(join(outDir, 'ko', 'ide-decline.md'), 'utf8');
+    expect(ko).toMatch(/pubDate: 2026-03-07T00:00:00\.000Z/);
+    expect(ko).toMatch(/pairSlug: 'ide-decline'/);
+
+    const ja = readFileSync(join(outDir, 'ja', 'ide-decline.md'), 'utf8');
+    expect(ja).toMatch(/pubDate: 2026-03-07T00:00:00\.000Z/);
+    expect(ja).toMatch(/pairSlug: 'ide-decline'/);
+
+    rmSync(dated, { recursive: true, force: true });
+  });
+
   it('wipes outDir before writing (no orphans)', async () => {
     mkdirSync(join(outDir, 'en'), { recursive: true });
     writeFileSync(join(outDir, 'en', 'orphan.md'), '---\n---\n');

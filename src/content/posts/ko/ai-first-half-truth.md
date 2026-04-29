@@ -1,7 +1,7 @@
 ---
 title: 'AI First의 명과 암 — "누구에게" 맞느냐가 핵심이다'
 description: '"AI First가 실패했다"도, "AI가 사람을 대체한다"도 절반만 맞다. Klarna는 AI로 700명을 줄였다가 다시 뽑고 있고, Microsoft는 코드의 30%를 AI로 쓰며 6,000명을 줄이고 있다. 같은 기술인데 결과가 갈린다. 핵심은 "AI를 쓰느냐 마느냐"가 아니라, **"어디에, 누가"** 쓰느냐다.'
-pubDate: 2026-03-16T07:54:55.825Z
+pubDate: 2026-03-16T00:00:00.000Z
 lang: ko
 pairSlug: 'ai-first-half-truth'
 draft: true

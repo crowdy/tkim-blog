@@ -1,7 +1,7 @@
 ---
 title: 'CLIの帰還 — Google Workspace CLI（gws）が示す「Agent First CLI」時代'
 description: '2026年、GoogleがGmail・Drive・Sheets・Calendarをひとつのコマンドラインに統合した。しかし、このCLIの本当のユーザーは人間ではなくAIエージェントだ。公開からわずか3日でGitHubスター14,500個、Hacker News 1位 — CLIが帰ってきた。ただし、以前とはまったく違う理由で。'
-pubDate: 2026-03-09T12:18:50.000Z
+pubDate: 2026-03-07T00:00:00.000Z
 lang: ja
 pairSlug: 'google-workspace-cli-agent-era'
 draft: false

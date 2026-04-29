@@ -98,7 +98,7 @@ export async function sync(
       continue;
     }
 
-    const { baseSlug, explicitLang } = parseFilename(filename);
+    const { baseSlug, explicitLang, pubDate: filenameDate } = parseFilename(filename);
     const lang: Lang = explicitLang ?? detectLanguage(content);
     const titleRaw = extractTitle(content);
     const fileWarnings: string[] = [];
@@ -111,7 +111,11 @@ export async function sync(
     }
     const description = extractDescription(content) || title;
     const sourceDir = classifySourceDir(rel);
-    const stats = await stat(filepath);
+    let pubDate = filenameDate;
+    if (!pubDate) {
+      const stats = await stat(filepath);
+      pubDate = stats.mtime;
+    }
 
     collected.push({
       outPath: join(opts.outDir, lang, `${baseSlug}.md`),
@@ -122,7 +126,7 @@ export async function sync(
       pairSlug: baseSlug,
       draft: sourceDir === 'draft',
       sourceDir,
-      pubDate: stats.mtime,
+      pubDate,
       warnings: fileWarnings,
     });
     warnings += fileWarnings.length;

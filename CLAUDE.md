@@ -45,7 +45,7 @@ CI runs `npm ci && npm run check && npm run build`. It does **not** run sync —
 
 - A post's first markdown line is `# Title` — used as both the frontmatter title and the rendered title. The body's duplicate `<h1>` is hidden via CSS (`.post-content > h1:first-child { display: none }`). Don't "fix" this by stripping the H1 in the sync script — keep markdown source untouched.
 - An optional `> blockquote` right after the title is captured as `description`.
-- Filename pairs: `<slug>.md` (primary) + `<slug>-ja.md` (Japanese sibling). The `LangToggle` matches by `pairSlug` (filename with `-ja` removed).
+- Filenames carry a `YYYY-MM-DD-` date prefix that becomes `pubDate`. Pairs: `YYYY-MM-DD-<slug>.md` (primary) + `YYYY-MM-DD-<slug>-ja.md` (Japanese sibling — share the same date as the primary). The date prefix is stripped from `baseSlug` and `pairSlug`, so URLs stay `<slug>` only. If the prefix is missing, sync falls back to file mtime.
 - Drafts: anything under `~/dev/crowdy/blog/draft/` gets `draft: true`. They are visible in `npm run dev` but excluded from the production build and RSS feed.
 
 ### Sync script behavior

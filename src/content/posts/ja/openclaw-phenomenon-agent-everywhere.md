@@ -1,7 +1,7 @@
 ---
 title: 'ロブスターを育てる人々 — OpenClaw現象が示すAIエージェントの本当の意味'
 description: '1ヶ月前、VPSにOpenClawをインストールして「これ、ただのClaude Code GUI版じゃないか？」と思った。その間に中国では1,000人が行列を作り、NVIDIAはNemoClawを発表し、TencentはWorkBuddyをリリースした。そしてClaude Opus 4.6は、自分がテストされていることに気づいた。'
-pubDate: 2026-03-11T02:10:54.000Z
+pubDate: 2026-03-11T00:00:00.000Z
 lang: ja
 pairSlug: 'openclaw-phenomenon-agent-everywhere'
 draft: true

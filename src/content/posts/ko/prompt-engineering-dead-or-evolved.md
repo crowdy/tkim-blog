@@ -1,7 +1,7 @@
 ---
 title: '프롬프트 엔지니어링은 죽었는가 — GPT-5.4 가이드가 조용히 선언한 것'
 description: 'GPT-5.4 프롬프트 가이드를 읽고 나서 깨달았다. OpenAI는 "프롬프트를 잘 쓰는 법"이 아니라 "시스템을 설계하는 법"을 가르치고 있었다. Andrej Karpathy는 이미 말했다 — "LLM은 CPU, 컨텍스트 윈도우는 RAM, 당신의 역할은 OS."'
-pubDate: 2026-03-11T04:19:02.000Z
+pubDate: 2026-03-11T00:00:00.000Z
 lang: ko
 pairSlug: 'prompt-engineering-dead-or-evolved'
 draft: true

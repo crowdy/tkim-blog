@@ -1,7 +1,7 @@
 ---
 title: 'プロンプトエンジニアリングは死んだのか — GPT-5.4ガイドが静かに宣言したこと'
 description: 'GPT-5.4のプロンプトガイドを読んで気づいた。OpenAIは「プロンプトの書き方」ではなく「システムの設計方法」を教えていた。Andrej Karpathyはすでにこう言っていた — 「LLMはCPU、コンテキストウィンドウはRAM、あなたの役割はOS。」'
-pubDate: 2026-03-11T05:17:28.000Z
+pubDate: 2026-03-11T00:00:00.000Z
 lang: ja
 pairSlug: 'prompt-engineering-dead-or-evolved'
 draft: true

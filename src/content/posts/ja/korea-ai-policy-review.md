@@ -1,7 +1,7 @@
 ---
 title: 'インフラは整えたが選手がいない — 韓国AI政策、何が欠けているのか'
 description: '予算10.1兆ウォン、GPU 26万基、AI基本法施行。数字は華やかだ。しかし韓国産フロンティアAIモデルは？AIユニコーンは？グローバルで使われている韓国産AIサービスは？「基盤は整えたが、試合に出る選手がいない。」'
-pubDate: 2026-03-07T07:01:45.057Z
+pubDate: 2026-03-04T00:00:00.000Z
 lang: ja
 pairSlug: 'korea-ai-policy-review'
 draft: false

@@ -1,7 +1,7 @@
 ---
 title: 'AI Firstの光と影 ―― 「誰にとって」正しいかが核心だ'
 description: '「AI Firstは失敗した」も、「AIが人を代替する」も半分しか正しくない。KlarnaはAIで700人を削減した後、再び人を採用している。MicrosoftはAIでコードの30%を書かせ、6,000人を削減している。同じ技術なのに結果が分かれる。核心は「AIを使うかどうか」ではなく、**「どこに、誰が」** 使うかだ。'
-pubDate: 2026-03-16T08:14:04.466Z
+pubDate: 2026-03-16T00:00:00.000Z
 lang: ja
 pairSlug: 'ai-first-half-truth'
 draft: true

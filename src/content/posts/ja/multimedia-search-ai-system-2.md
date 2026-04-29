@@ -1,7 +1,7 @@
 ---
 title: '1.2TBのマルチメディアアーカイブをAIで検索するシステムを構築するなら'
 description: '「この放送局アーカイブで『バブル経済』という言葉が初めて登場した時期はいつですか？その前後で報道の論調はどう変わりましたか？」'
-pubDate: 2026-03-07T07:23:54.000Z
+pubDate: 2026-03-07T00:00:00.000Z
 lang: ja
 pairSlug: 'multimedia-search-ai-system-2'
 draft: false

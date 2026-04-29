@@ -1,7 +1,7 @@
 ---
 title: '閣議を見て考えたIT組織の「オープン経営」— ベンチャーCTOが自らに投げかける問い'
 description: '政治家ではなく組織運営者の目で見たとき、公開閣議から何を学べるのか？CTOの成長とは、技術的な深さから組織的な広さへと進む旅路である。'
-pubDate: 2026-03-07T07:01:18.000Z
+pubDate: 2026-03-04T00:00:00.000Z
 lang: ja
 pairSlug: 'open-leadership'
 draft: false

@@ -1,7 +1,7 @@
 ---
 title: 'CLI 르네상스 — AI 에이전트 시대, 터미널이 다시 세상의 중심이 된 이유'
 description: 'GUI의 시대는 끝나지 않았다. 하지만 AI 에이전트에게 버튼을 클릭하라고 시킬 수는 없다. 2026년, 개발자들이 사랑해온 CLI 도구들이 AI 에이전트의 "손과 발"이 되면서, 터미널이 다시 소프트웨어 개발의 중심으로 돌아왔다.'
-pubDate: 2026-03-07T13:38:19.735Z
+pubDate: 2026-03-07T00:00:00.000Z
 lang: ko
 pairSlug: 'cli-renaissance-agent-era'
 draft: true

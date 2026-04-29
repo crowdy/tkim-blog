@@ -1,7 +1,7 @@
 ---
 title: 'CLIルネサンス — AIエージェント時代、ターミナルが再び世界の中心となった理由'
 description: 'GUIの時代は終わっていない。だがAIエージェントにボタンをクリックさせるわけにはいかない。2026年、開発者たちが愛してきたCLIツールがAIエージェントの「手足」となり、ターミナルが再びソフトウェア開発の中心に帰ってきた。'
-pubDate: 2026-03-09T12:34:55.073Z
+pubDate: 2026-03-07T00:00:00.000Z
 lang: ja
 pairSlug: 'cli-renaissance-agent-era'
 draft: true

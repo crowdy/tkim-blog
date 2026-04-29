@@ -1,7 +1,7 @@
 ---
 title: '1.2TBのマルチメディアアーカイブをAIで検索するシステムを構築するなら'
 description: '「この新聞で金正恩が初めて登場した時期はいつですか？その前後で報道の論調はどう変わりましたか？」'
-pubDate: 2026-03-06T08:59:20.000Z
+pubDate: 2026-03-06T00:00:00.000Z
 lang: ja
 pairSlug: 'multimedia-search-ai-system'
 draft: false

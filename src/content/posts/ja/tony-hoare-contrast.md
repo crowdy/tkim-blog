@@ -1,7 +1,7 @@
 ---
 title: '「実装が簡単だったから、誘惑を断れなかった」――60年前の告白がAI時代に響く理由'
 description: '2026年3月5日、テクノロジーニュースに二つの見出しが並んだ。'
-pubDate: 2026-03-12T05:45:41.514Z
+pubDate: 2026-03-12T00:00:00.000Z
 lang: ja
 pairSlug: 'tony-hoare-contrast'
 draft: true

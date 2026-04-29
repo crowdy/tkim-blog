@@ -1,7 +1,7 @@
 ---
 title: '1959년 모스크바의 정렬 문제에서 2026년 Amazon 장애까지 — Tony Hoare가 남긴 것들'
 description: '1959년, 스물여섯 살의 영국 청년 토니 호어(Tony Hoare)는 모스크바 국립대학교에 있었다. 콜모고로프 연구실에서 러시아어-영어 기계번역을 연구하던 그에게 하나의 실무적 문제가 주어졌다. 러시아어 단어를 사전 순서로 정렬해야 했다.'
-pubDate: 2026-03-12T05:08:34.000Z
+pubDate: 2026-03-12T00:00:00.000Z
 lang: ko
 pairSlug: 'tony-hoare-timeline'
 draft: true

@@ -1,7 +1,7 @@
 ---
 title: 'IDEの黄昏 — AIコーディングエージェント時代、開発者はIDEを離れつつあるのか'
 description: 'VS Codeを最後に開いたのがいつだったか思い出せない。IntelliJのライセンス更新メールが届いても無視している。Claude Codeがターミナルですべてを解決し始めてから、IDEは私のワークフローから静かに消えていった。しかし、そう感じていたのは私だけではなかった。'
-pubDate: 2026-03-09T12:24:05.416Z
+pubDate: 2026-03-07T00:00:00.000Z
 lang: ja
 pairSlug: 'ide-decline-ai-coding-era'
 draft: false

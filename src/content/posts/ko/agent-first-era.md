@@ -1,7 +1,7 @@
 ---
 title: '인간인지 Agent인지 알 수 없는 시대 — "API First"의 다음, "Agent First"의 세계'
 description: '우리 웹사이트의 "고객"이 바뀌고 있다. 2025년, 전체 웹 트래픽의 과반이 봇이 된 지금, 다음 고객은 브라우저를 든 인간이 아니라 API를 호출하는 AI Agent일 수 있다.'
-pubDate: 2026-03-04T14:24:01.218Z
+pubDate: 2026-03-04T00:00:00.000Z
 lang: ko
 pairSlug: 'agent-first-era'
 draft: false

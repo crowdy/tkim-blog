@@ -1,7 +1,7 @@
 ---
 title: 'RAGの精度の低さに悩む企業へ'
 description: '「うちもRAGを試してみたけど…思ったほどじゃなかったんだよね。」'
-pubDate: 2026-03-07T07:04:30.000Z
+pubDate: 2026-03-05T00:00:00.000Z
 lang: ja
 pairSlug: 'rag-precision-problem'
 draft: false

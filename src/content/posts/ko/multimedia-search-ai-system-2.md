@@ -1,7 +1,7 @@
 ---
 title: '1.2TB 멀티미디어 아카이브를 AI로 검색하는 시스템을 만든다면'
 description: '"이 방송국 아카이브에서 ''버블경제''라는 단어가 처음 등장한 시점은 언제인가요? 그 전후로 보도 논조가 어떻게 변했나요?"'
-pubDate: 2026-03-07T07:23:41.491Z
+pubDate: 2026-03-07T00:00:00.000Z
 lang: ko
 pairSlug: 'multimedia-search-ai-system-2'
 draft: false

@@ -1,7 +1,7 @@
 ---
 title: 'AI 시대, 질문하는 법이 달라졌다 — 프롬프트가 바꾼 사고의 지형'
 description: 'Claude Code를 쓰기 시작한 뒤, 나는 문장이 길어졌다. 코드를 짜달라고 말하기 전에 내가 무엇을 원하는지 정리하는 시간이 늘었다. 그리고 어느 날 서점에서 시집을 집어 들었다. AI는 나의 사고를 비추는 거울이 되었다.'
-pubDate: 2026-03-07T14:19:30.000Z
+pubDate: 2026-03-07T00:00:00.000Z
 lang: ko
 pairSlug: 'ai-mirror-how-ai-changed-thinking'
 draft: true

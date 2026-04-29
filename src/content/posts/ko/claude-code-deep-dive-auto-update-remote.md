@@ -1,7 +1,7 @@
 ---
 title: 'Claude Code 심층 가이드 — 자동 업데이트의 비밀과 Remote Control 완전 정복'
 description: 'Claude Code가 2026년 개발자 도구의 중심에 서 있다. 하지만 대부분의 사용자는 표면적인 기능만 활용하고 있다. 자동 업데이트는 어떻게 작동하는지, Remote Control은 왜 게임 체인저인지 — 이 글에서 Claude Code의 숨겨진 메커니즘을 파헤쳐본다.'
-pubDate: 2026-03-10T00:10:44.000Z
+pubDate: 2026-03-10T00:00:00.000Z
 lang: ko
 pairSlug: 'claude-code-deep-dive-auto-update-remote'
 draft: true

@@ -1,7 +1,7 @@
 ---
 title: '2026년 프론트엔드 테스트의 정답 — Vitest + Testing Library + Playwright, 그리고 Next.js 생태계의 현재'
 description: 'Jest의 시대가 끝나고, Vitest가 새로운 기본값이 되었다. 하지만 진짜 이야기는 "어떤 테스트 도구를 쓰느냐"가 아니라, "프론트엔드 생태계 전체가 어디로 향하고 있느냐"에 있다. 2026년, 개발자들이 실제로 선택하고 있는 조합을 데이터와 커뮤니티 논의를 기반으로 정리한다.'
-pubDate: 2026-03-14T03:15:16.000Z
+pubDate: 2026-03-14T00:00:00.000Z
 lang: ko
 pairSlug: 'frontend-testing-2026-vitest-nextjs'
 draft: true

@@ -1,7 +1,7 @@
 ---
 title: '"구현이 쉬웠기에 유혹을 거절할 수 없었다" — 60년 전 고백이 AI 시대에 울리는 이유'
 description: '2026년 3월 5일, 기술 뉴스에 두 가지 헤드라인이 나란히 올라왔다.'
-pubDate: 2026-03-12T05:34:33.225Z
+pubDate: 2026-03-12T00:00:00.000Z
 lang: ko
 pairSlug: 'tony-hoare-contrast'
 draft: true

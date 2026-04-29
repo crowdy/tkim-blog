@@ -1,7 +1,7 @@
 ---
 title: '인터넷이 단일장애점이 되었다 — 클라우드 의존 리스크의 SRE 해부학'
 description: '"자가치유 시스템이 자가파괴 시스템이 되는 순간, 우리는 자동화의 역설과 마주한다."'
-pubDate: 2026-03-08T13:40:12.000Z
+pubDate: 2026-03-08T00:00:00.000Z
 lang: ko
 pairSlug: 'cloud-dependency-risk-sre-perspective'
 draft: true

@@ -1,7 +1,7 @@
 ---
 title: 'IDE의 황혼 — AI 코딩 에이전트 시대, 개발자는 IDE를 떠나고 있는가'
 description: 'VS Code를 마지막으로 연 게 언제인지 기억나지 않는다. IntelliJ 라이선스 갱신 메일이 와도 무시한다. Claude Code가 터미널에서 모든 걸 해결하기 시작한 뒤, IDE는 내 워크플로우에서 조용히 사라졌다. 그런데 나만 그런 게 아니었다.'
-pubDate: 2026-03-07T13:48:29.978Z
+pubDate: 2026-03-07T00:00:00.000Z
 lang: ko
 pairSlug: 'ide-decline-ai-coding-era'
 draft: false

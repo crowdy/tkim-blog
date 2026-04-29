@@ -1,7 +1,7 @@
 ---
 title: '2023년부터 현재까지, AI 툴의 등장과 진화: 개발자가 반드시 알아야 할 23가지 툴'
 description: '작성일: 2026년 3월 대상 독자: 어떤 툴이 어떤 흐름에서 나왔는지 파악하고 싶은 개발자'
-pubDate: 2026-03-06T00:52:26.000Z
+pubDate: 2026-03-06T00:00:00.000Z
 lang: ko
 pairSlug: 'blog-ai-tools-evolution-2023-2026'
 draft: false

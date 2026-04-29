@@ -1,7 +1,7 @@
 ---
 title: '2026年フロントエンドテストの最適解 — Vitest + Testing Library + Playwright、そしてNext.jsエコシステムの現在地'
 description: 'Jestの時代は終わり、Vitestが新たなデフォルトとなった。しかし本当に重要なのは「どのテストツールを使うか」ではなく、「フロントエンドエコシステム全体がどこへ向かっているか」だ。2026年、開発者たちが実際に選んでいる組み合わせを、データとコミュニティの議論をもとに整理する。'
-pubDate: 2026-03-14T03:23:35.460Z
+pubDate: 2026-03-14T00:00:00.000Z
 lang: ja
 pairSlug: 'frontend-testing-2026-vitest-nextjs'
 draft: true

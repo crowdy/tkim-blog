@@ -1,7 +1,7 @@
 ---
 title: 'AI軍事化の最前線 — Anthropic vs Pentagon、そして私たちが選ぶべきもの'
 description: '2026年2月の最終週、AI史上最も劇的な72時間が展開された。AnthropicがPentagonの「あらゆる合法的使用」要求を拒否し、同じ日にOpenAIがその空席を埋め、米国政府は自国のAI企業をサプライチェーンリスクに指定した。Hacker Newsで関連3件の投稿が計5,687ポイントを記録したこの事件は、単なる契約紛争ではない。AI安全の理想主義が地政学的現実と正面衝突した瞬間だ。'
-pubDate: 2026-03-09T01:07:53.333Z
+pubDate: 2026-03-09T00:00:00.000Z
 lang: ja
 pairSlug: 'ai-militarization-anthropic-pentagon'
 draft: true

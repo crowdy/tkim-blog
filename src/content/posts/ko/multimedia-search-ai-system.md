@@ -1,7 +1,7 @@
 ---
 title: '1.2TB 멀티미디어 아카이브를 AI로 검색하는 시스템을 만든다면'
 description: '"이 신문에서 김정은이 처음 등장한 시점은 언제인가요? 그 전후로 보도 논조가 어떻게 변했나요?"'
-pubDate: 2026-03-06T08:51:01.466Z
+pubDate: 2026-03-06T00:00:00.000Z
 lang: ko
 pairSlug: 'multimedia-search-ai-system'
 draft: false
