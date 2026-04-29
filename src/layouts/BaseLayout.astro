@@ -1,15 +1,28 @@
 ---
 import '../styles/global.css';
-import ThemeToggle from '../components/ThemeToggle.astro';
 
 interface Props {
   title: string;
   description?: string;
   lang?: string;
+  /** When set to a known language, that nav link is marked aria-current. */
+  activeLang?: 'ko' | 'ja' | 'en' | null;
+  /** Footer source path relative to repo root, used on post pages. */
+  sourcePath?: string | null;
 }
 
-const { title, description = 'crowdy blog', lang = 'ko' } = Astro.props;
+const {
+  title,
+  description = 'crowdy blog',
+  lang = 'ko',
+  activeLang = null,
+  sourcePath = null,
+} = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const repoUrl = 'https://github.com/crowdy/tkim-blog';
+const sourceUrl = sourcePath ? `${repoUrl}/blob/main/${sourcePath}` : null;
+
+const ariaForLang = (l: 'ko' | 'ja' | 'en') => (activeLang === l ? 'page' : undefined);
 ---
 
 <!DOCTYPE html>
@@ -24,6 +37,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
     />
+    <link rel="alternate" type="application/rss+xml" title="crowdy blog" href={`${base}/rss.xml`} />
     <script is:inline>
       (() => {
         const stored = localStorage.getItem('theme');
@@ -34,22 +48,80 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     </script>
   </head>
   <body>
-    <header class="site-header">
-      <a class="brand" href={`${base}/`}>crowdy</a>
-      <nav>
-        <a href={`${base}/ko/`}>KO</a>
-        <span>·</span>
-        <a href={`${base}/ja/`}>JA</a>
-        <span>·</span>
-        <a href={`${base}/en/`}>EN</a>
-        <ThemeToggle />
+    <div class="container">
+      <nav class="navbar" aria-label="Site">
+        <a class="brand" href={`${base}/`}>crowdy</a>
+        <ul class="nav-icons">
+          <li class="lang-nav">
+            <a href={`${base}/ko/`} aria-current={ariaForLang('ko')}>KO</a>
+            <span class="sep">·</span>
+            <a href={`${base}/ja/`} aria-current={ariaForLang('ja')}>JA</a>
+            <span class="sep">·</span>
+            <a href={`${base}/en/`} aria-current={ariaForLang('en')}>EN</a>
+          </li>
+          <li>
+            <a href={`${base}/rss.xml`} aria-label="RSS feed">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm1.5 2.5c5.523 0 10 4.477 10 10a1 1 0 1 1-2 0 8 8 0 0 0-8-8 1 1 0 0 1 0-2m0 4a6 6 0 0 1 6 6 1 1 0 1 1-2 0 4 4 0 0 0-4-4 1 1 0 0 1 0-2m.5 7a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href={repoUrl} aria-label="GitHub">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/></svg>
+            </a>
+          </li>
+          <li>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278"/></svg>
+            </button>
+          </li>
+        </ul>
       </nav>
-    </header>
-    <main>
-      <slot />
-    </main>
-    <footer class="site-footer">
-      <p>© crowdy · <a href="https://github.com/crowdy/tkim-blog">source</a></p>
-    </footer>
+
+      <main aria-label="Content">
+        <slot />
+      </main>
+
+      <footer class="site-footer">
+        <span class="footer-nav">
+          <a href={repoUrl}>GitHub</a> ·
+          <a href={`${base}/rss.xml`}>RSS</a>
+        </span>
+        {sourceUrl && (
+          <span class="footer-source">
+            <a href={sourceUrl}>View source</a>
+          </span>
+        )}
+      </footer>
+    </div>
+
+    <script is:inline>
+      (function () {
+        const btn = document.getElementById('theme-toggle');
+        const moon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278"/></svg>';
+        const sun = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M3.757 4.464a.5.5 0 0 1-.707 0L1.636 3.05a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707"/></svg>';
+        function isDark() {
+          const t = document.documentElement.getAttribute('data-theme');
+          if (t) return t === 'dark';
+          return window.matchMedia('(prefers-color-scheme: dark)').matches;
+        }
+        function updateIcon() { if (btn) btn.innerHTML = isDark() ? sun : moon; }
+        updateIcon();
+        if (btn) {
+          btn.addEventListener('click', function () {
+            const next = isDark() ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            updateIcon();
+          });
+        }
+        document.querySelectorAll('.post-content h2[id], .post-content h3[id], .post-content h4[id], .post-content h5[id]').forEach(function (h) {
+          const a = document.createElement('a');
+          a.className = 'anchor-link';
+          a.href = '#' + h.id;
+          a.textContent = '#';
+          h.appendChild(a);
+        });
+      })();
+    </script>
   </body>
 </html>
