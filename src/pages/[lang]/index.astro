@@ -8,7 +8,20 @@ export async function getStaticPaths() {
   return (['ko', 'ja', 'en'] as const).map((lang) => ({ params: { lang } }));
 }
 
-const { lang } = Astro.params;
+const { lang } = Astro.params as { lang: 'ko' | 'ja' | 'en' };
+
+const intros: Record<'ko' | 'ja' | 'en', string> = {
+  ko: 'Tonghyun Kim의 기술 블로그 — 한국어 글 모음',
+  ja: 'Tonghyun Kim の技術ブログ — 日本語の記事',
+  en: "Tonghyun Kim's tech blog — English posts",
+};
+
+const headings: Record<'ko' | 'ja' | 'en', string> = {
+  ko: '글 목록',
+  ja: '記事一覧',
+  en: 'Posts',
+};
+
 const all = await getCollection('posts');
 const isProd = !import.meta.env.DEV;
 const posts = all
@@ -26,15 +39,19 @@ const pairSlugsWithOtherLangs = new Set(
 );
 ---
 
-<BaseLayout title={`crowdy — ${lang}`} lang={lang}>
-  <h1>posts ({lang})</h1>
-  {posts.length === 0 ? (
-    <p>No posts yet.</p>
-  ) : (
-    <ul class="post-list">
-      {posts.map((p) => (
-        <PostCard post={p} hasTranslation={pairSlugsWithOtherLangs.has(p.data.pairSlug)} />
-      ))}
-    </ul>
-  )}
+<BaseLayout title={`crowdy — ${lang}`} lang={lang} activeLang={lang}>
+  <p>{intros[lang]}</p>
+  <hr />
+  <section class="posts">
+    <h3>{headings[lang]}</h3>
+    {posts.length === 0 ? (
+      <p>No posts yet.</p>
+    ) : (
+      <ul>
+        {posts.map((p) => (
+          <PostCard post={p} hasTranslation={pairSlugsWithOtherLangs.has(p.data.pairSlug)} />
+        ))}
+      </ul>
+    )}
+  </section>
 </BaseLayout>
