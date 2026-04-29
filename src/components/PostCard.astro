@@ -14,11 +14,11 @@ const dateStr = post.data.pubDate.toISOString().slice(0, 10);
 ---
 
 <li>
-  <h2><a href={`${base}/${post.data.lang}/${slug}/`}>{post.data.title}</a></h2>
-  <p class="post-card-meta">
+  <h4><a href={`${base}/${post.data.lang}/${slug}/`}>{post.data.title}</a></h4>
+  <p class="post-meta">
     <time datetime={post.data.pubDate.toISOString()}>{dateStr}</time>
     {post.data.draft && <span> · draft</span>}
     {hasTranslation && <span> · 翻訳あり</span>}
   </p>
-  <p>{post.data.description}</p>
+  <p class="post-description">{post.data.description}</p>
 </li>
