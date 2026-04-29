@@ -13,16 +13,25 @@ const { post } = Astro.props;
 const all = await getCollection('posts');
 const pairs = getPairs(all, post);
 const dateStr = post.data.pubDate.toISOString().slice(0, 10);
+const sourcePath = `src/content/posts/${post.id}`;
 ---
 
-<BaseLayout title={post.data.title} description={post.data.description} lang={post.data.lang}>
-  <article>
-    <h1>{post.data.title}</h1>
-    <p>
-      <time datetime={post.data.pubDate.toISOString()}>{dateStr}</time>
-      {post.data.draft && <span> · draft</span>}
-    </p>
-    <LangToggle current={post} pairs={pairs} />
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  lang={post.data.lang}
+  activeLang={post.data.lang}
+  sourcePath={sourcePath}
+>
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">{post.data.title}</h1>
+      <p class="post-meta">
+        <time datetime={post.data.pubDate.toISOString()}>{dateStr}</time>
+        {post.data.draft && <span> · draft</span>}
+      </p>
+      <LangToggle current={post} pairs={pairs} />
+    </header>
     <div class="post-content">
       <slot />
     </div>
