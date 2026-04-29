@@ -50,7 +50,18 @@ const ariaForLang = (l: 'ko' | 'ja' | 'en') => (activeLang === l ? 'page' : unde
   <body>
     <div class="container">
       <nav class="navbar" aria-label="Site">
-        <a class="brand" href={`${base}/`}>tkim</a>
+        <a class="brand" href={`${base}/`}>
+          <img
+            class="brand-avatar"
+            src="https://github.com/crowdy.png?size=64"
+            alt=""
+            width="28"
+            height="28"
+            loading="eager"
+            decoding="async"
+          />
+          <span>tkim</span>
+        </a>
         <ul class="nav-icons">
           <li class="lang-nav">
             <a href={`${base}/ko/`} aria-current={ariaForLang('ko')}>KO</a>

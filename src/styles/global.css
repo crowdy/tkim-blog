@@ -93,6 +93,9 @@ a:hover { text-decoration: underline; }
 }
 
 .navbar .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--color-text);
@@ -100,6 +103,14 @@ a:hover { text-decoration: underline; }
 }
 
 .navbar .brand:hover { text-decoration: none; color: var(--color-accent); }
+
+.navbar .brand-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: block;
+  object-fit: cover;
+}
 
 .nav-icons {
   list-style: none;
