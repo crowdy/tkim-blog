@@ -23,6 +23,8 @@ const dateStr = post.data.pubDate.toISOString().slice(0, 10);
       {post.data.draft && <span> · draft</span>}
     </p>
     <LangToggle current={post} pairs={pairs} />
-    <slot />
+    <div class="post-content">
+      <slot />
+    </div>
   </article>
 </BaseLayout>

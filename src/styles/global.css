@@ -137,6 +137,12 @@ article h1 {
   letter-spacing: -0.015em;
 }
 
+/* The post body's first H1 duplicates the layout's title (frontmatter
+   was generated from the very same H1). Hide it without touching markdown. */
+article .post-content > h1:first-child {
+  display: none;
+}
+
 article > p:first-of-type {
   color: var(--muted);
   font-size: 0.95rem;
