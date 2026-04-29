@@ -77,6 +77,100 @@ Armin Ronacher はそこで、もう一つの方向を提示する。新しい�
 
 エンジニア個人レベルで今すぐ取れる行動は、より小さな単位から始まる。nesbitt.io の推奨を要約すれば、五点に圧縮できる。zizmor のような静的解析ツールをワークフローに導入すること。アクションをタグではなくSHAでピン留めすること。ワークフローの最上段に `permissions: {}` を置き、必要な権限だけを足していくこと。`pull_request_target` を使わないこと。認証されていないユーザーがPRに記述しうるあらゆるテキストを、最終的にシェルスクリプトになると仮定すること。この五点は、GitHubを離れずとも、GitHubが我々のインフラの最も弱い環にならないようにする最低限の保険である。
 
+## 補強 — `pull_request_target` トリガの落とし穴
+
+この五つの推奨のうち、現場のエンジニアにとって最も曖昧に映るのは四点目である。「`pull_request_target` を使うな」とだけ書かれているが、ではどのトリガを使えばよいかは書かれていない。しかしGitHub Actions事故のほぼすべての事例がこのトリガの誤用から始まるという事実を踏まえると、この一行は別途解きほぐしておく価値がある。
+
+要点はシンプルだ。デフォルトのトリガは `pull_request` であり、secretsが本当に必要な場面では `workflow_run` パターンに分離する。
+
+**`pull_request` と `pull_request_target` の違い**
+
+| トリガ | 実行コンテキスト | secretsアクセス | GITHUB_TOKEN | forkからのPRコード実行 |
+|---|---|---|---|---|
+| `pull_request` | PR HEADコンテキスト | 空 | read-only | 安全に実行される |
+| `pull_request_target` | baseブランチコンテキスト | フルアクセス | 書き込み可 | 危険 — RCEの常連入口 |
+
+`pull_request` は「forkのコードが実行されても盗まれるものがない」トリガである。シークレットが空でトークンが読み取り専用であるため、外部コントリビュータのコードが実行されてもベースリポジトリに影響を及ぼさない。一方 `pull_request_target` はbaseコンテキストで実行され、すべてのsecretsと書き込み権限付きのトークンを受け取る。それ自体は誤りではないが、ワークフローがPR HEADコードをチェックアウトして実行した瞬間 — 例えば `actions/checkout` に `ref: ${{ github.event.pull_request.head.sha }}` を指定した瞬間 — 外部の人間のコードがsecretsを手にしたまま実行される。2025年のtj-actions/changed-files事件が23,000のリポジトリを一気に揺るがしたメカニズムは、まさにこれである。
+
+**パターン1 — 基本形: `pull_request` だけで足りる場合**
+
+lint、テスト、ビルドのようにsecretsを必要としない作業はすべて、このトリガ一つで十分である。
+
+```yaml
+on:
+  pull_request:
+permissions: {}
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@<SHA>
+      - run: npm test
+```
+
+forkからのPRであっても安全だ。トークンが読み取り専用でありsecretsが空であるため、悪性コードが実行されても外部に流出するデータが存在しない。
+
+**パターン2 — secretsが必要な場合: `workflow_run` で分離**
+
+デプロイプレビューなどsecretsを必要とするシナリオは、二段階に分割する。最初のワークフローはuntrusted環境でビルドのみを行い、成果物をartifactとしてアップロードする。次のワークフローがそのartifactを受け取り、secretsと共に処理する。
+
+```yaml
+# pr-build.yml — untrusted, secretsなし
+on: pull_request
+permissions: {}
+jobs:
+  build:
+    steps:
+      - uses: actions/checkout@<SHA>
+      - run: npm run build
+      - uses: actions/upload-artifact@<SHA>
+        with: { name: build, path: dist/ }
+```
+
+```yaml
+# pr-deploy-preview.yml — trusted, secretsあり
+on:
+  workflow_run:
+    workflows: ["pr-build"]
+    types: [completed]
+permissions:
+  pull-requests: write
+jobs:
+  deploy:
+    if: github.event.workflow_run.conclusion == 'success'
+    steps:
+      - uses: actions/download-artifact@<SHA>
+      - run: ./deploy-preview.sh
+        env:
+          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+```
+
+肝心なのは、secretsに触れる段階でPR HEADコードを決して実行しないという点である。二つ目のワークフローは、最初のワークフローが生成した静的なartifactしか扱わない。
+
+**パターン3 — `pull_request_target` を正当に使えるほぼ唯一の場合**
+
+ラベル自動付与、ウェルカムコメントなど、PR HEADコードをまったく実行しない自動化に限定される。
+
+```yaml
+on: pull_request_target
+permissions:
+  pull-requests: write
+jobs:
+  label:
+    steps:
+      - uses: actions/labeler@<SHA>
+```
+
+このワークフローに `actions/checkout` でPR HEADを取得し、ビルドや実行を追加した瞬間、その場で事故が始まる。
+
+**一行ルール**
+
+> 「このワークフローは外部コントリビュータがPRに記述したコードを実行するか?」
+> → YESなら `pull_request`(必要に応じて `workflow_run` と組み合わせる)。
+> → NO(ラベル・コメントのみ)なら `pull_request_target`。
+
+nesbitt.ioが「`pull_request_target` を使うな」と断定したのは、実務でこの境界を守れているワークフローがほとんど存在しないからである。一度でもPRコードをチェックアウトすればその瞬間にsecrets漏洩が発生し、その事故は単一リポジトリに留まらず、ダウンストリームの依存ツリー全体へと伝播する。
+
 ## 結論 — 神話の終わり、インフラの始まり
 
 冒頭の問いに戻ろう。今週のGitHubは運が悪かったのか、それとも18年分の請求書が一気に届いたのか。

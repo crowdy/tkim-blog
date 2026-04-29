@@ -77,6 +77,100 @@ Armin Ronacher는 그래서 또 다른 방향을 제시한다. 새 포지를 찾
 
 엔지니어 개인 차원에서 지금 당장 할 수 있는 일은 더 작은 단위에서 시작된다. nesbitt.io의 권고를 추리면 다섯 가지로 압축된다. zizmor 같은 정적 분석 도구를 워크플로에 도입할 것. 액션을 태그가 아니라 SHA로 핀할 것. 워크플로 최상단에 `permissions: {}`를 두고 필요한 권한만 추가할 것. `pull_request_target`을 사용하지 말 것. 인증 없는 사용자가 PR에 넣을 수 있는 모든 텍스트를 결국 셸 스크립트가 될 것이라고 가정할 것. 이 다섯 가지는 GitHub을 떠나지 않더라도, GitHub이 우리 인프라의 가장 약한 고리가 되지 않도록 하는 최소한의 보험이다.
 
+## 보강 — `pull_request_target` 트리거의 함정
+
+이 다섯 가지 권고 중에서, 실무자에게 가장 모호하게 느껴지는 것이 네 번째다. "`pull_request_target`을 사용하지 말 것"이라고만 적혀 있을 뿐, 그러면 무엇을 트리거로 써야 하는지는 적혀 있지 않다. 그러나 GitHub Actions 사고의 거의 모든 사례가 이 트리거의 오용에서 출발한다는 점에서, 이 한 줄은 따로 풀어 둘 필요가 있다.
+
+요점은 단순하다. 기본 트리거는 `pull_request`이고, secrets가 정말 필요하면 `workflow_run` 패턴으로 분리한다.
+
+**`pull_request`와 `pull_request_target`의 차이**
+
+| 트리거 | 실행 컨텍스트 | secrets | GITHUB_TOKEN | fork PR의 코드 실행 |
+|---|---|---|---|---|
+| `pull_request` | PR HEAD 컨텍스트 | 비어 있음 | read-only | 안전하게 실행됨 |
+| `pull_request_target` | base 브랜치 컨텍스트 | 풀 액세스 | write 가능 | 위험 — RCE의 단골 진입점 |
+
+`pull_request`는 "fork의 코드가 실행돼도 훔쳐 갈 것이 없는" 트리거다. 시크릿이 비어 있고 토큰은 읽기 전용이므로, 외부 기여자의 코드가 실행되어도 base 리포지토리에 영향을 주지 못한다. 반면 `pull_request_target`은 base 컨텍스트에서 실행되며 모든 secrets와 쓰기 권한을 가진 토큰을 받는다. 이 자체는 잘못이 아니지만, 워크플로가 PR HEAD 코드를 체크아웃하여 실행하는 순간 — 예컨대 `actions/checkout`에 `ref: ${{ github.event.pull_request.head.sha }}`를 지정하는 순간 — 외부인의 코드가 secrets를 손에 쥔 채로 실행된다. 2025년의 tj-actions/changed-files 사건이 23,000개 리포지토리를 한 번에 흔든 메커니즘이 정확히 이것이다.
+
+**패턴 1 — 기본형: `pull_request`만으로 충분한 경우**
+
+lint, 테스트, 빌드처럼 secrets가 필요하지 않은 모든 작업은 이 트리거 하나로 충분하다.
+
+```yaml
+on:
+  pull_request:
+permissions: {}
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@<SHA>
+      - run: npm test
+```
+
+fork에서 온 PR이라도 안전하다. 토큰이 읽기 전용이고 secrets가 비어 있으므로, 악성 코드가 실행되어도 외부로 빠져나갈 데이터가 없다.
+
+**패턴 2 — secrets가 필요한 경우: `workflow_run`으로 분리**
+
+배포 미리보기 등 secrets가 필요한 시나리오는 두 단계로 쪼갠다. 첫 번째 워크플로는 untrusted 환경에서 빌드만 하고 결과물을 artifact로 업로드한다. 두 번째 워크플로는 그 artifact를 받아 secrets와 함께 처리한다.
+
+```yaml
+# pr-build.yml — untrusted, secrets 없음
+on: pull_request
+permissions: {}
+jobs:
+  build:
+    steps:
+      - uses: actions/checkout@<SHA>
+      - run: npm run build
+      - uses: actions/upload-artifact@<SHA>
+        with: { name: build, path: dist/ }
+```
+
+```yaml
+# pr-deploy-preview.yml — trusted, secrets 있음
+on:
+  workflow_run:
+    workflows: ["pr-build"]
+    types: [completed]
+permissions:
+  pull-requests: write
+jobs:
+  deploy:
+    if: github.event.workflow_run.conclusion == 'success'
+    steps:
+      - uses: actions/download-artifact@<SHA>
+      - run: ./deploy-preview.sh
+        env:
+          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+```
+
+핵심은 secrets에 닿는 단계에서는 PR HEAD 코드를 절대 실행하지 않는다는 것이다. 두 번째 워크플로는 첫 번째가 만든 정적 artifact만 다룬다.
+
+**패턴 3 — `pull_request_target`을 정당하게 쓰는 거의 유일한 경우**
+
+라벨 자동 부착, 환영 코멘트 등 PR HEAD 코드를 전혀 실행하지 않는 자동화에 한정된다.
+
+```yaml
+on: pull_request_target
+permissions:
+  pull-requests: write
+jobs:
+  label:
+    steps:
+      - uses: actions/labeler@<SHA>
+```
+
+이 워크플로에 `actions/checkout`으로 PR HEAD를 가져와 빌드·실행을 추가하는 순간, 그 자리에서 사고가 시작된다.
+
+**한 줄 룰**
+
+> "이 워크플로가 외부 기여자의 PR 본문을 코드로 실행하는가?"
+> → 그렇다면 `pull_request` (필요 시 `workflow_run`과 결합).
+> → 아니라면 (라벨·코멘트만) `pull_request_target`.
+
+nesbitt.io가 "`pull_request_target`을 사용하지 말라"고 단정한 이유는, 실무에서 이 경계를 지킨 워크플로가 거의 없기 때문이다. 한 번이라도 PR 코드를 체크아웃하는 순간 secrets 누출이 일어나며, 그 사고는 단일 리포지토리에 머물지 않고 다운스트림 의존 트리 전체로 전파된다.
+
 ## 결론 — 신화의 끝, 인프라의 시작
 
 이 글의 첫머리에서 던진 질문으로 돌아가 보자. 이번 주 GitHub은 운이 나빴던 것인가, 아니면 18년치 청구서가 한꺼번에 도착한 것인가.
