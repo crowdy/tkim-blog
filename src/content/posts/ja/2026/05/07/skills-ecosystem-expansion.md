@@ -32,7 +32,7 @@ addyosmani/agent-skills は規模が一段階大きい。22 個の skill を lif
 
 各 skill の標準構造も明文化されている。README の "How Skills Work" セクションでは、SKILL.md 一ファイルが frontmatter、Overview、When to Use、Process、Rationalizations、Red Flags、Verification の 7 セクションを持つべきことを明記している。特に興味深いのは "Rationalizations" と "Red Flags" のセクションだ。エージェントが「テストは後で追加します」のような言い訳を使うときに使う反論表をあらかじめ明記している。これは prompt engineering というより **「エージェントの認知バイアスへのカウンターデザイン」** に近い。
 
-Osmani コレクションのもう一つの特徴は、Google エンジニアリング文化の直接移植である。README の "Why Agent Skills?" セクションは「Software Engineering at Google」と Google の engineering practices guide を明示的に引用している。API 設計 skill には Hyrum's Law、テスト skill には Beyonce Rule と test pyramid、コードレビュー skill には change sizing(~100 lines)と review speed norm、簡素化 skill には Chesterton's Fence、git skill には trunk-based development、CI/CD skill には Shift Left と feature flag、そして deprecation を別 skill に分離して "code as liability" のマインドセットを強制する。Google 社内文書に近い運用規範を外部リポジトリに移したかたちである。
+Osmani コレクションのもう一つの特徴は、Google エンジニアリング文化の直接移植である。README の "Why Agent Skills?" セクションは「Software Engineering at Google」と Google の engineering practices guide を明示的に引用している。API 設計 skill には Hyrum's Law、テスト skill には Beyonce Rule と test pyramid、コードレビュー skill には change sizing(～100 lines)と review speed norm、簡素化 skill には Chesterton's Fence、git skill には trunk-based development、CI/CD skill には Shift Left と feature flag、そして deprecation を別 skill に分離して "code as liability" のマインドセットを強制する。Google 社内文書に近い運用規範を外部リポジトリに移したかたちである。
 
 そして Osmani のリポジトリはマルチエージェント互換を明示的にサポートする。README の Quick Start は Claude Code、Cursor、Gemini CLI、Windsurf、OpenCode、GitHub Copilot、Kiro IDE、Codex の 8 つの環境について、それぞれインストールガイドを提供する。`gemini skills install` のような native command に対応すると同時に、plain Markdown としても動作するように設計された portability が核心である。これは skill が特定ベンダーの従属資産ではなく、**ベンダーニュートラル標準** になりうる兆候である。
 
@@ -68,11 +68,11 @@ Osmani コレクションのもう一つの特徴は、Google エンジニアリ
 
 **第三に、セキュリティ事件の発生とその後のガバナンス強化である**。4 月 29 日の GitHub Actions の pull_request_target 事件が示したパターン — 権限モデルへの微妙な理解不足が権限 escalation に繋がるパターン — は、skill エコシステムでもほぼ確実に再現される。時期は「来年のどこか」ではなく「次の四半期内」である可能性が高い。最初のセキュリティ事件は、(1)人気 skill の maintainer アカウント乗っ取り、(2)依存 skill の transitive injection、(3)skill 内部の prompt injection payload の形態のいずれかで来るだろう。そしてその事件直後、上で述べた signing・権限モデルが標準化への圧力を受けることになる。
 
-**第四に、インフルエンサーキュレーションの限界と marketplace の出現である**。Pocock と Osmani のコレクションは初期 trust signal として非常に効果的だが、二つの限界がある。(1)ドメインカバレッジが一般エンジニアリングに限定される。機械学習、データエンジニアリング、DevSecOps、組み込み、ゲーム開発などのドメイン別 best practice には別のキュレーターが必要だ。(2)個人の時間と評判がボトルネックになる。一人のインフルエンサーが 21~22 個の skill を毎週メンテナンスするには限界がある。この二つの限界が marketplace モデルを呼ぶ。複数のキュレーター・企業がそれぞれの skill pack を登録・販売し、ユーザーが評価・ダウンロード数・検証された使用例に基づいて選ぶ構造である。これは VS Code Extension Marketplace、Chrome Web Store、Hugging Face Hub の進化経路と非常に似ている。
+**第四に、インフルエンサーキュレーションの限界と marketplace の出現である**。Pocock と Osmani のコレクションは初期 trust signal として非常に効果的だが、二つの限界がある。(1)ドメインカバレッジが一般エンジニアリングに限定される。機械学習、データエンジニアリング、DevSecOps、組み込み、ゲーム開発などのドメイン別 best practice には別のキュレーターが必要だ。(2)個人の時間と評判がボトルネックになる。一人のインフルエンサーが 21～22 個の skill を毎週メンテナンスするには限界がある。この二つの限界が marketplace モデルを呼ぶ。複数のキュレーター・企業がそれぞれの skill pack を登録・販売し、ユーザーが評価・ダウンロード数・検証された使用例に基づいて選ぶ構造である。これは VS Code Extension Marketplace、Chrome Web Store、Hugging Face Hub の進化経路と非常に似ている。
 
-ここに、もう一つの流れが加わる可能性がある。**企業内部 skill ライブラリのエンジニアリング化**である。4 月の記事で SkillOps という仮想の職務に言及したが、5 月時点でこれはより具体化している。mattpocock/skills の `/setup-matt-pocock-skills` が「チーム単位の設定スキャフォールディング」を自動化し、addyosmani/agent-skills の references/ ディレクトリが「組織標準チェックリスト」を別モジュール化したのは、両者ともに「スキルをチームの資産として管理する構造」を意識したデザインである。Notion ページに散らばっていた「AI 利用 Tips」を git リポジトリに集め、PR review と CI 回帰テストで管理する流れが、1~2 年以内にシニアエンジニアリング組織の衛生基準として定着するだろう。
+ここに、もう一つの流れが加わる可能性がある。**企業内部 skill ライブラリのエンジニアリング化**である。4 月の記事で SkillOps という仮想の職務に言及したが、5 月時点でこれはより具体化している。mattpocock/skills の `/setup-matt-pocock-skills` が「チーム単位の設定スキャフォールディング」を自動化し、addyosmani/agent-skills の references/ ディレクトリが「組織標準チェックリスト」を別モジュール化したのは、両者ともに「スキルをチームの資産として管理する構造」を意識したデザインである。Notion ページに散らばっていた「AI 利用 Tips」を git リポジトリに集め、PR review と CI 回帰テストで管理する流れが、1～2 年以内にシニアエンジニアリング組織の衛生基準として定着するだろう。
 
-この 4 つの流れの時間軸を整理するとこうなる。今後 3 ヶ月以内に最初のベンダーニュートラル registry 候補が出て、6 ヶ月以内に最初の意味あるセキュリティ事件が発生し、9 ヶ月以内に権限・signing 標準のドラフトが community から提案され、12 ヶ月以内に marketplace モデルが本格化する。これは npm の 2010~2014 の 4 年間の圧縮版と見ても差し支えない。AI ツールの進化速度はインフラツールの進化速度より平均 3~5 倍速いという点を踏まえれば、4 年が 1 年に圧縮されるのは自然なことである。
+この 4 つの流れの時間軸を整理するとこうなる。今後 3 ヶ月以内に最初のベンダーニュートラル registry 候補が出て、6 ヶ月以内に最初の意味あるセキュリティ事件が発生し、9 ヶ月以内に権限・signing 標準のドラフトが community から提案され、12 ヶ月以内に marketplace モデルが本格化する。これは npm の 2010～2014 の 4 年間の圧縮版と見ても差し支えない。AI ツールの進化速度はインフラツールの進化速度より平均 3～5 倍速いという点を踏まえれば、4 年が 1 年に圧縮されるのは自然なことである。
 
 ## 結論
 

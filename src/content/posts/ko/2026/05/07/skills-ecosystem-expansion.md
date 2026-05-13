@@ -32,7 +32,7 @@ addyosmani/agent-skills 는 규모가 한 단계 크다. 22개 skill 을 lifecyc
 
 각 skill 의 표준 구조도 명문화돼 있다. README 의 "How Skills Work" 섹션은 SKILL.md 한 파일이 frontmatter, Overview, When to Use, Process, Rationalizations, Red Flags, Verification 의 7개 섹션을 가져야 함을 못박는다. 특히 흥미로운 것은 "Rationalizations" 와 "Red Flags" 섹션이다. 에이전트가 "테스트는 나중에 추가할게요" 같은 핑계를 댈 때 쓸 반박 표를 미리 명시한다. 이는 prompt engineering 이라기보다 **"에이전트의 인지 편향에 대한 카운터 디자인"** 에 가깝다.
 
-Osmani 컬렉션의 또 한 가지 특징은 Google 엔지니어링 문화의 직접 이식이다. README 의 "Why Agent Skills?" 섹션은 "Software Engineering at Google" 책과 Google 의 engineering practices guide 를 명시 인용한다. API 설계 skill 에는 Hyrum's Law, 테스트 skill 에는 Beyonce Rule 과 test pyramid, 코드 리뷰 skill 에는 change sizing(~100 lines)과 review speed norm, 단순화 skill 에는 Chesterton's Fence, git skill 에는 trunk-based development, CI/CD skill 에는 Shift Left 와 feature flag, 그리고 deprecation 을 별도 skill 로 분리해 "code as liability" 마인드셋을 강제한다. Google 내부 문서에 가까운 운영 규범을 외부 저장소에 옮긴 셈이다.
+Osmani 컬렉션의 또 한 가지 특징은 Google 엔지니어링 문화의 직접 이식이다. README 의 "Why Agent Skills?" 섹션은 "Software Engineering at Google" 책과 Google 의 engineering practices guide 를 명시 인용한다. API 설계 skill 에는 Hyrum's Law, 테스트 skill 에는 Beyonce Rule 과 test pyramid, 코드 리뷰 skill 에는 change sizing(～100 lines)과 review speed norm, 단순화 skill 에는 Chesterton's Fence, git skill 에는 trunk-based development, CI/CD skill 에는 Shift Left 와 feature flag, 그리고 deprecation 을 별도 skill 로 분리해 "code as liability" 마인드셋을 강제한다. Google 내부 문서에 가까운 운영 규범을 외부 저장소에 옮긴 셈이다.
 
 그리고 Osmani 의 저장소는 멀티 에이전트 호환을 명시 지원한다. README 의 Quick Start 는 Claude Code, Cursor, Gemini CLI, Windsurf, OpenCode, GitHub Copilot, Kiro IDE, Codex 의 8가지 환경에 대해 각각 설치 가이드를 제공한다. `gemini skills install` 같은 native command 에 대응하는 동시에, plain Markdown 으로도 작동하도록 설계된 portability 가 핵심이다. 이는 skill 이 특정 벤더의 종속 자산이 아니라 **벤더 중립 표준** 이 될 수 있다는 신호다.
 
@@ -68,11 +68,11 @@ Osmani 컬렉션의 또 한 가지 특징은 Google 엔지니어링 문화의 �
 
 **셋째, 보안 사건의 발생과 그 후의 거버넌스 강화다**. 4월 29일 GitHub Actions 의 pull_request_target 사건이 보여준 패턴 — 권한 모델의 미묘한 이해 부족이 권한 escalation 으로 이어지는 패턴 — 은 skill 생태계에서 거의 확실하게 재현된다. 시점은 "내년 어디쯤" 이 아니라 "다음 분기 안" 일 가능성이 높다. 첫 보안 사건은 (1) 인기 skill 의 maintainer 계정 탈취, (2) 의존 skill 의 transitive injection, (3) skill 내부의 prompt injection payload 형태 중 하나로 올 것이다. 그리고 그 사건 직후, 위에서 언급한 signing·권한 모델이 표준화 압력을 받게 된다.
 
-**넷째, 인플루언서 큐레이션의 한계와 marketplace 의 등장이다**. Pocock 과 Osmani 의 컬렉션은 초기 trust signal 로 매우 효과적이지만, 두 가지 한계가 있다. (1) 도메인 커버리지가 일반 엔지니어링에 한정된다. 머신러닝, 데이터 엔지니어링, DevSecOps, 임베디드, 게임 개발 등 도메인별 best practice 는 별도 큐레이터가 필요하다. (2) 개인의 시간과 평판이 병목이다. 한 명의 인플루언서가 21~22개 skill 을 매주 메인테넌스하는 데는 한계가 있다. 이 두 한계가 marketplace 모델을 부른다. 여러 큐레이터·기업이 각자의 skill pack 을 등록·판매하고, 사용자가 평점·다운로드 수·검증된 사용 사례에 기반해 선택하는 구조다. 이는 VS Code Extension Marketplace, Chrome Web Store, Hugging Face Hub 의 진화 경로와 매우 닮아 있다.
+**넷째, 인플루언서 큐레이션의 한계와 marketplace 의 등장이다**. Pocock 과 Osmani 의 컬렉션은 초기 trust signal 로 매우 효과적이지만, 두 가지 한계가 있다. (1) 도메인 커버리지가 일반 엔지니어링에 한정된다. 머신러닝, 데이터 엔지니어링, DevSecOps, 임베디드, 게임 개발 등 도메인별 best practice 는 별도 큐레이터가 필요하다. (2) 개인의 시간과 평판이 병목이다. 한 명의 인플루언서가 21～22개 skill 을 매주 메인테넌스하는 데는 한계가 있다. 이 두 한계가 marketplace 모델을 부른다. 여러 큐레이터·기업이 각자의 skill pack 을 등록·판매하고, 사용자가 평점·다운로드 수·검증된 사용 사례에 기반해 선택하는 구조다. 이는 VS Code Extension Marketplace, Chrome Web Store, Hugging Face Hub 의 진화 경로와 매우 닮아 있다.
 
-여기에 한 가지 흐름이 더해질 수 있다. **기업 내부 skill 라이브러리의 엔지니어링화**다. 4월 글에서 SkillOps 라는 가상의 직무를 언급했는데, 5월 시점에서 이는 더 구체화되고 있다. mattpocock/skills 의 `/setup-matt-pocock-skills` 가 "팀 단위 설정 스캐폴딩" 을 자동화하고, addyosmani/agent-skills 의 references/ 디렉토리가 "조직 표준 체크리스트" 를 별도 모듈화한 것은, 양쪽 모두 "스킬을 팀 자산으로 관리하는 구조" 를 의식한 디자인이다. Notion 페이지에 흩어져 있던 "AI 사용 팁" 을 git 저장소에 모으고, PR review 와 CI 회귀 테스트로 관리하는 흐름이 1~2년 안에 시니어 엔지니어링 조직의 위생 기준으로 자리잡을 것이다.
+여기에 한 가지 흐름이 더해질 수 있다. **기업 내부 skill 라이브러리의 엔지니어링화**다. 4월 글에서 SkillOps 라는 가상의 직무를 언급했는데, 5월 시점에서 이는 더 구체화되고 있다. mattpocock/skills 의 `/setup-matt-pocock-skills` 가 "팀 단위 설정 스캐폴딩" 을 자동화하고, addyosmani/agent-skills 의 references/ 디렉토리가 "조직 표준 체크리스트" 를 별도 모듈화한 것은, 양쪽 모두 "스킬을 팀 자산으로 관리하는 구조" 를 의식한 디자인이다. Notion 페이지에 흩어져 있던 "AI 사용 팁" 을 git 저장소에 모으고, PR review 와 CI 회귀 테스트로 관리하는 흐름이 1～2년 안에 시니어 엔지니어링 조직의 위생 기준으로 자리잡을 것이다.
 
-이 4가지 흐름의 시간 축을 정리하면 다음과 같다. 향후 3개월 안에 첫 벤더 중립 registry 후보가 나오고, 6개월 안에 첫 의미 있는 보안 사건이 발생하며, 9개월 안에 권한·signing 표준 초안이 community 로부터 제안되고, 12개월 안에 marketplace 모델이 본격화된다. 이는 npm 의 2010~2014 4년 압축판이라 봐도 무방하다. AI 도구의 진화 속도는 인프라 도구의 진화 속도보다 평균 3~5배 빠르다는 점을 감안하면, 4년이 1년으로 압축되는 것은 자연스럽다.
+이 4가지 흐름의 시간 축을 정리하면 다음과 같다. 향후 3개월 안에 첫 벤더 중립 registry 후보가 나오고, 6개월 안에 첫 의미 있는 보안 사건이 발생하며, 9개월 안에 권한·signing 표준 초안이 community 로부터 제안되고, 12개월 안에 marketplace 모델이 본격화된다. 이는 npm 의 2010～2014 4년 압축판이라 봐도 무방하다. AI 도구의 진화 속도는 인프라 도구의 진화 속도보다 평균 3～5배 빠르다는 점을 감안하면, 4년이 1년으로 압축되는 것은 자연스럽다.
 
 ## 결론
 

@@ -45,7 +45,7 @@ draft: false
 
 **5월 11일 19시 50분경.** 외부 보안 연구자 `ashishkurmi`(StepSecurity)가 새로 게시된 버전들의 지문을 보고 침해를 식별한다. TanStack 팀이 인지한 시점이 아니라 외부에서 먼저 발견된 시점이다. postmortem이 가장 솔직하게 인정하는 부분이 바로 여기다. 자체 publish 모니터링이 없었고, 발견은 외부에 의존했다.
 
-**5월 11일 20시 ~ 21시 30분.** 팀 구성원 전원의 push 권한 회수, npm 보안팀에 tarball 서버 측 제거 요청, 84개 버전 전부 deprecate, SNS 공지, 캐시 purge, repository_owner 가드와 SHA 핀이 들어간 hardening PR 머지. 이 일련의 대응은 두 시간 안에 정리되었다.
+**5월 11일 20시 ～ 21시 30분.** 팀 구성원 전원의 push 권한 회수, npm 보안팀에 tarball 서버 측 제거 요청, 84개 버전 전부 deprecate, SNS 공지, 캐시 purge, repository_owner 가드와 SHA 핀이 들어간 hardening PR 머지. 이 일련의 대응은 두 시간 안에 정리되었다.
 
 여기까지 정리하면 그림이 명확해진다. 공격자는 메인테이너 계정에 손도 대지 않았다. npm 토큰을 훔치지도 않았다. trusted publisher OIDC 바인딩, 메인테이너 MFA, 워크플로 인증 모두 정상이다. 공격자가 한 일은 단 하나, "다른 워크플로가 캐시를 복원할 때까지 8시간을 기다린 것"이다.
 

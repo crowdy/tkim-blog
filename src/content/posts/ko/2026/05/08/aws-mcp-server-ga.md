@@ -62,7 +62,7 @@ Anthropic이 MCP를 발표한 것은 2024년 11월 25일이다. 그날의 발표
 
 채택 곡선부터 짚자. 발표 후 첫 6개월간 MCP는 Claude Desktop을 위한 사양으로만 인식됐다. 변화의 신호는 2025년 5월 OpenAI가 ChatGPT의 도구 호출 인터페이스를 MCP와 호환되는 형태로 재설계한다고 공지한 시점이다. 같은 해 9월 Microsoft가 Visual Studio Code 1.93에 MCP 클라이언트를 1급 시민으로 통합했고, 2025년 12월에는 Google이 Gemini API의 함수 호출 백엔드를 MCP 호환 레이어 위에 올린다고 발표했다. 이 시점에서 클라우드 메이저 셋(AWS·Azure·GCP) 중 두 곳이 클라이언트 측 채택을 선언했고, 서버 측에서는 이미 awslabs/mcp가 30여 개의 미리보기 서버를 풀어 둔 상태였다. 그리고 2026년 5월 6일, AWS가 매니지드 GA로 합류한 것이다.
 
-채택 곡선만 보면 OpenAPI가 RESTful API의 사실상 표준이 되어 가던 2016~2018년 흐름과 정확히 닮아 있다. 한 회사(Swagger Inc., 이후 SmartBear)가 발표한 사양이 Linux Foundation 산하 OpenAPI Initiative로 이관되고, 이관 직후 AWS, Microsoft, Google, IBM이 일제히 OpenAPI를 자사 API Gateway의 1급 입력 포맷으로 채택하면서, OpenAPI는 "한 회사가 미는 사양"에서 "업계가 디폴트로 가정하는 포맷"으로 전이했다. MCP의 5월 6일은 그 전이 곡선의 OpenAPI 3.0 GA 시점에 해당한다.
+채택 곡선만 보면 OpenAPI가 RESTful API의 사실상 표준이 되어 가던 2016～2018년 흐름과 정확히 닮아 있다. 한 회사(Swagger Inc., 이후 SmartBear)가 발표한 사양이 Linux Foundation 산하 OpenAPI Initiative로 이관되고, 이관 직후 AWS, Microsoft, Google, IBM이 일제히 OpenAPI를 자사 API Gateway의 1급 입력 포맷으로 채택하면서, OpenAPI는 "한 회사가 미는 사양"에서 "업계가 디폴트로 가정하는 포맷"으로 전이했다. MCP의 5월 6일은 그 전이 곡선의 OpenAPI 3.0 GA 시점에 해당한다.
 
 그러나 거버넌스 곡선을 보면 그림이 다르다. MCP의 사양은 여전히 `modelcontextprotocol/specification` 저장소에서 관리되며, 이 저장소의 메인테이너 명단은 Anthropic 직원이 다수를 차지한다. 표준 변경은 RFC 형식의 PR로 제안되지만, 머지 권한은 Anthropic이 가진다. AWS는 클라이언트와 서버를 만들 뿐 사양 변경에 직접 영향을 미치지 않는다. 다만 AWS GA 발표 자료에서 한 줄, "AWS는 MCP의 향후 진화에 활발히 참여한다(AWS will actively participate in the future evolution of MCP)"는 문장이 끼어 있다. 이 한 줄이 의미하는 것은 향후 MCP 사양 변경의 거버넌스 압력 균형이 옮겨가기 시작했다는 신호다.
 

@@ -15,7 +15,7 @@ draft: false
 
 2026년 4월, Anthropic은 자사의 새 모델 Mythos가 "위험할 만큼" 소스 코드 보안 결함을 잘 찾는다고 발표했다. 너무 잘 찾기 때문에 일반에 즉시 풀 수 없고, 일부 선별된 기업과 프로젝트에 먼저 풀어 방어자들이 우위를 잡을 시간을 주겠다는 것이 발표의 골자였다. 미디어는 즉시 이 표현을 받아 적었다. 일부 보안 책임자는 "취약점의 쓰나미"가 몰려온다고 이사회에 보고했고, 예산을 끌어왔다. 한 네덜란드 준정부 기관의 CISO는 HN 댓글에서 "Mythos 때문에 살짝 패닉에 빠진 우리 보스 덕에 보안 예산이 늘었다. 좋은 마케팅 공포는 절대 낭비하지 말 것(Never waste a good marketing scare)"이라고 적었다.
 
-5월 6일, 이 모델은 마침내 curl 소스 코드에 적용됐다. curl은 1996년부터 계속 다듬어져 온 C 프로젝트로 약 178,000줄의 소스를 가지고 있다. 200억 개의 인스턴스에 설치돼 있고 110개 운영체제, 28개 CPU 아키텍처에서 돈다. 누적 188개 CVE를 발표한 만큼 결함이 없는 코드는 아니지만, OSS-Fuzz, Coverity, CodeQL, 유료 감사, 그리고 최근 8~10개월 동안에는 AISLE, Zeropath, OpenAI Codex Security 같은 AI 보안 도구까지 모두 거쳐 간 코드다. AI 도구만으로도 그 사이 200~300건의 버그픽스가 머지됐다. 즉 Mythos가 들어간 시점의 curl은 사실상 "하드모드"였다. 이런 코드에서 새 모델이 무엇을 찾아낼 것인가가 5월의 작은 시험대였다.
+5월 6일, 이 모델은 마침내 curl 소스 코드에 적용됐다. curl은 1996년부터 계속 다듬어져 온 C 프로젝트로 약 178,000줄의 소스를 가지고 있다. 200억 개의 인스턴스에 설치돼 있고 110개 운영체제, 28개 CPU 아키텍처에서 돈다. 누적 188개 CVE를 발표한 만큼 결함이 없는 코드는 아니지만, OSS-Fuzz, Coverity, CodeQL, 유료 감사, 그리고 최근 8～10개월 동안에는 AISLE, Zeropath, OpenAI Codex Security 같은 AI 보안 도구까지 모두 거쳐 간 코드다. AI 도구만으로도 그 사이 200～300건의 버그픽스가 머지됐다. 즉 Mythos가 들어간 시점의 curl은 사실상 "하드모드"였다. 이런 코드에서 새 모델이 무엇을 찾아낼 것인가가 5월의 작은 시험대였다.
 
 리드 개발자 Daniel Stenberg가 5월 11일 블로그에 결과를 올렸다. 제목 그대로다. "Mythos가 curl에서 취약점을 찾았다 — 그렇다, 단수, 단 하나다(Mythos finds a curl vulnerability — yes, as in singular one)." 이 한 줄은 4월에 Anthropic이 만든 거대한 마케팅 풍선에 바늘을 꽂았다. 그러나 같은 날 Hacker News의 685점짜리 토론 스레드는, Stenberg의 결론을 그대로 받아들이지 않았다. "위험하지 않다"가 아니라 "curl은 예외일 뿐이다"라는 반대 의견이 위로 올라왔다. 이 비대칭이 이번 글의 출발점이다.
 
@@ -29,7 +29,7 @@ Stenberg가 받은 Mythos 보고서는 178K LOC를 분석한 결과로 "확인�
 
 이 결과를 맥락 없이 보면 모델이 별로처럼 보인다. 그러나 Stenberg가 보고서 본문에 인용한 Mythos 자신의 첫 문장이 결정적이다. "curl은 현존하는 가장 fuzzed되고 audited된 C 코드베이스 중 하나다(curl is one of the most fuzzed and audited C codebases in existence (OSS-Fuzz, Coverity, CodeQL, multiple paid audits)). hot path(HTTP/1, TLS, URL parsing core)에서 무언가를 찾을 가능성은 낮다." 그리고 모델은 실제로 그 영역에서 아무것도 찾지 못했다. 모델이 자기가 들어간 환경의 난이도를 정확히 인식했고, 그 인식대로 결과를 냈다. 이 메타 인식 자체는 이전 도구들에서 보기 드문 특성이다.
 
-수치상의 비교도 필요하다. AISLE, Zeropath, Codex Security 등 이전 AI 도구들은 같은 8~10개월 동안 200~300건의 버그픽스를 끌어냈고, 그중 "수십 건 이상"이 실제 CVE로 발표됐다. Mythos는 같은 코드에 들어와서 1건의 low CVE와 약 20건의 일반 버그를 가져왔다. 단순 산수로는 이전 도구들의 한 달치에도 못 미친다. 그러나 이전 도구들이 들어갔을 때의 curl과 Mythos가 들어갔을 때의 curl은 다른 코드다. 후자는 이미 전자가 다 훑고 간 후의 코드다. 이 점이 Stenberg의 결론과 HN 다수 의견이 갈리는 지점이다.
+수치상의 비교도 필요하다. AISLE, Zeropath, Codex Security 등 이전 AI 도구들은 같은 8～10개월 동안 200～300건의 버그픽스를 끌어냈고, 그중 "수십 건 이상"이 실제 CVE로 발표됐다. Mythos는 같은 코드에 들어와서 1건의 low CVE와 약 20건의 일반 버그를 가져왔다. 단순 산수로는 이전 도구들의 한 달치에도 못 미친다. 그러나 이전 도구들이 들어갔을 때의 curl과 Mythos가 들어갔을 때의 curl은 다른 코드다. 후자는 이미 전자가 다 훑고 간 후의 코드다. 이 점이 Stenberg의 결론과 HN 다수 의견이 갈리는 지점이다.
 
 Stenberg의 결론은 두 줄이다. "이 모델 주변의 큰 hype는 주로 마케팅이었다(the big hype around this model so far was primarily marketing)." 그리고 "Mythos 이전의 다른 도구들이 한 것보다 특별히 높거나 진보된 수준으로 문제를 찾는다는 증거를 보지 못했다(I see no evidence that this setup finds issues to any particular higher or more advanced degree than the other tools have done before Mythos)." 한 코드베이스의 결과로 모델 전체를 평가하는 것은 부당하다는 단서를 그도 달았다. 그러나 헤드라인은 "marketing hype" 쪽으로 굳어졌다.
 
