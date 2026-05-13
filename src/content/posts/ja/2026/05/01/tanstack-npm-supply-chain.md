@@ -19,7 +19,7 @@ draft: false
 
 5月11日のインシデントについてのpostmortemは、その三日後の5月14日にTanStackチームから公開された。本稿が扱う時点はそれよりさらに数日後、事件がHacker News一面を占拠してスコア1,072点、コメント450件を超えた5月13日前後である。コメント欄はいつも通り二つに割れている。一方では「TanStackチームは何を間違えたのか」を詰め、もう一方では「ほぼ何も間違えていないのにこれが起きるという事実」を凝視している。
 
-本稿は後者の視点で事件を読み直す。4月末に[GitHub Actionsが最も弱い環(GitHub Actions is the weakest link)](https://crowdy.github.io/tkim-blog/ja/2026/04/29/github-cracking-week)というタイトルでまとめた一週間のセキュリティ事件群 — tj-actions/changed-files、nx/s1ngularity、elementary-data — の直系の続編である。あの時の診断はシンプルだった。「GitHub Actionsのセキュリティ問題は、ユーザーが間違って使ったことではなく、デフォルトが危険であることに本質がある」。TanStackの事件はその診断を一段押し進める。ユーザーが「推奨される解」であるtrusted publisherへ移行した後でも、同種の事故が起きること、それも6分で起きることを、定量的に示した最初の事例である。
+本稿は後者の視点で事件を読み直す。4月末に[GitHub Actionsが最も弱い環(GitHub Actions is the weakest link)](https://crowdy.dev/ja/2026/04/29/github-cracking-week)というタイトルでまとめた一週間のセキュリティ事件群 — tj-actions/changed-files、nx/s1ngularity、elementary-data — の直系の続編である。あの時の診断はシンプルだった。「GitHub Actionsのセキュリティ問題は、ユーザーが間違って使ったことではなく、デフォルトが危険であることに本質がある」。TanStackの事件はその診断を一段押し進める。ユーザーが「推奨される解」であるtrusted publisherへ移行した後でも、同種の事故が起きること、それも6分で起きることを、定量的に示した最初の事例である。
 
 ## 本文1 — 6分のタイムライン:何が起きたのか
 
@@ -128,4 +128,4 @@ Hacker Newsで真っ先に浮上したコメントは、この責任の分散を
 - TanStack, "Postmortem: TanStack NPM supply-chain compromise," 2026-05-14. https://tanstack.com/blog/npm-supply-chain-compromise-postmortem
 - Hacker News discussion, item 48100706, 2026-05-13. https://news.ycombinator.com/item?id=48100706
 - TanStack/router issue #7383 — インシデントトラッキング. https://github.com/TanStack/router/issues/7383
-- 本ブログ「GitHub神話の6日間 — ガバナンス・稼働率・セキュリティ・コストが同時に崩れた一週間」2026-04-29. https://crowdy.github.io/tkim-blog/ja/2026/04/29/github-cracking-week
+- 本ブログ「GitHub神話の6日間 — ガバナンス・稼働率・セキュリティ・コストが同時に崩れた一週間」2026-04-29. https://crowdy.dev/ja/2026/04/29/github-cracking-week

@@ -2,8 +2,8 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://crowdy.github.io',
-  base: '/tkim-blog',
+  site: 'https://crowdy.dev',
+  base: '/',
   output: 'static',
   trailingSlash: 'ignore',
   integrations: [

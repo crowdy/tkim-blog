@@ -2,8 +2,8 @@
 
 Tonghyun Kim's multilingual (ko / ja / en) tech blog.
 
-- **Live:** https://crowdy.github.io/tkim-blog/
-- **RSS:** https://crowdy.github.io/tkim-blog/rss.xml
+- **Live:** https://crowdy.dev/
+- **RSS:** https://crowdy.dev/rss.xml
 - **Stack:** Astro 5, vanilla CSS, Pretendard, GitHub Pages, GitHub Actions
 
 Posts live in this repo under `src/content/posts/`. There is no external authoring source and no sync step — write the file, commit, push.

@@ -26,7 +26,7 @@ interface Props {
 
 const {
   title,
-  description = 'tkim blog',
+  description = 'crowdy blog',
   lang = 'ko',
   activeLang = null,
   sourcePath = null,
@@ -69,7 +69,7 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
     />
-    <link rel="alternate" type="application/rss+xml" title="tkim blog" href={`${base}/rss.xml`} />
+    <link rel="alternate" type="application/rss+xml" title="crowdy blog" href={`${base}/rss.xml`} />
     {alternates.map((a) => (
       <link rel="alternate" hreflang={a.lang} href={a.href} />
     ))}
@@ -77,7 +77,7 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:site_name" content="tkim blog" />
+    <meta property="og:site_name" content="crowdy blog" />
     <meta property="og:locale" content={ogLocale} />
     {alternates.map((a) => (
       <meta property="og:locale:alternate" content={OG_LOCALES[a.lang]} />
@@ -123,7 +123,7 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
             loading="eager"
             decoding="async"
           />
-          <span>tkim</span>
+          <span>crowdy</span>
         </a>
         <ul class="nav-icons">
           <li class="lang-nav">

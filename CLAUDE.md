@@ -6,7 +6,7 @@ This file orients Claude (and other AI agents) working on this repo. Read it bef
 
 A multilingual (ko / ja / en) personal blog built with Astro and deployed to GitHub Pages.
 
-- **Live:** https://crowdy.github.io/tkim-blog/
+- **Live:** https://crowdy.dev/
 - **Source of truth:** `src/content/posts/{ko,ja,en}/YYYY/MM/DD/<slug>.md` — markdown with frontmatter, committed to this repo
 - **Tech:** Astro 5, vanilla CSS, Pretendard via jsDelivr CDN, Shiki dual theme
 
@@ -119,7 +119,8 @@ For non-trivial changes, write a spec under `docs/superpowers/specs/YYYY-MM-DD-<
 
 ## Watch out
 
-- The site's `base` is `/tkim-blog` (project Pages URL). All internal hrefs go through `import.meta.env.BASE_URL`. Don't hardcode root-relative `/` paths.
+- The site is served from the apex domain `crowdy.dev` (custom domain on the GitHub Pages project repo), so `base` is `/`. All internal hrefs still go through `import.meta.env.BASE_URL` so the site can be re-pathed without code changes. Don't hardcode the bare domain.
+- `public/CNAME` contains `crowdy.dev` and is copied to `dist/` on build — GitHub Pages reads it to bind the custom domain. Do not delete it.
 - The URL slug is the path inside `<lang>/`, including the date hierarchy. `postSlug(post)` in `src/utils/pairs.ts` derives this from `post.id`.
 - The CDN-loaded Pretendard stylesheet is pinned to `v1.3.9`. Bumping the version is fine, but verify the path matches jsDelivr's current layout.
 - GitHub Actions uses Node 22.
