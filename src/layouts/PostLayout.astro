@@ -2,7 +2,7 @@
 import BaseLayout from './BaseLayout.astro';
 import LangToggle from '../components/LangToggle.astro';
 import { getCollection } from 'astro:content';
-import { getPairs } from '../utils/pairs';
+import { getPairs, postSlug } from '../utils/pairs';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
@@ -14,6 +14,17 @@ const all = await getCollection('posts');
 const pairs = getPairs(all, post);
 const dateStr = post.data.pubDate.toISOString().slice(0, 10);
 const sourcePath = `src/content/posts/${post.id}`;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const alternates = (['ko', 'ja', 'en'] as const)
+  .filter((l) => pairs[l])
+  .map((l) => {
+    const sibling = pairs[l]!;
+    const href = Astro.site
+      ? new URL(`${base}/${sibling.data.lang}/${postSlug(sibling)}/`, Astro.site).toString()
+      : `${base}/${sibling.data.lang}/${postSlug(sibling)}/`;
+    return { lang: l, href };
+  });
 ---
 
 <BaseLayout
@@ -22,6 +33,9 @@ const sourcePath = `src/content/posts/${post.id}`;
   lang={post.data.lang}
   activeLang={post.data.lang}
   sourcePath={sourcePath}
+  ogType="article"
+  articlePublishedTime={post.data.pubDate.toISOString()}
+  alternates={alternates}
 >
   <article class="post">
     <header class="post-header">

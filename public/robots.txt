@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://crowdy.github.io/tkim-blog/sitemap-index.xml
