@@ -1,0 +1,9 @@
+book: turbulence-fundamentals
+bookTitle: Fundamentals of Turbulence Analysis
+bookAuthor: Oh-Hyun Rho
+description: A top-down study log working through viscous flow fundamentals up to RANS and LES.
+lang: en
+pairSlug: turbulence-fundamentals
+totalChapters: 12
+draft: false
+updated: 2026-05-14

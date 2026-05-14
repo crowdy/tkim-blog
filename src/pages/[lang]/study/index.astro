@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import {
+  type Lang,
+  booksForLang,
+  bookSlugFromId,
+  latestUpdate,
+  progressFor,
+} from '../../../utils/studies';
+
+export async function getStaticPaths() {
+  return (['ko', 'ja', 'en'] as const).map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const allBooks = await getCollection('books');
+const allChapters = await getCollection('studies');
+
+const books = booksForLang(allBooks, lang)
+  .map((b) => ({
+    book: b,
+    progress: progressFor(b, allChapters),
+    latest: latestUpdate(b, allChapters),
+  }))
+  .sort((a, b) => {
+    const ta = a.latest ? a.latest.getTime() : 0;
+    const tb = b.latest ? b.latest.getTime() : 0;
+    return tb - ta;
+  });
+
+const labels: Record<Lang, { heading: string; empty: string; intro: string; updated: string }> = {
+  ko: {
+    heading: '책 학습 노트',
+    empty: '아직 공개된 책 노트가 없습니다.',
+    intro: '책을 top-down으로 읽으며 정리한 학습 노트 모음.',
+    updated: '마지막 업데이트',
+  },
+  ja: {
+    heading: '本の学習ノート',
+    empty: 'まだ公開された学習ノートはありません。',
+    intro: '本をトップダウンで読み解きながらまとめた学習ノート集。',
+    updated: '最終更新',
+  },
+  en: {
+    heading: 'Book study notes',
+    empty: 'No study notes published yet.',
+    intro: 'Top-down reading notes on books I am working through.',
+    updated: 'last updated',
+  },
+};
+const L = labels[lang];
+---
+
+<BaseLayout title={`${L.heading} — crowdy`} lang={lang} activeLang={lang}>
+  <h2>{L.heading}</h2>
+  <p>{L.intro}</p>
+  <hr />
+  {books.length === 0 ? (
+    <p>{L.empty}</p>
+  ) : (
+    <ul class="book-list">
+      {books.map(({ book, progress, latest }) => (
+        <li class="book-card">
+          <h3>
+            <a href={`${base}/${lang}/study/${bookSlugFromId(book)}/`}>{book.data.bookTitle}</a>
+          </h3>
+          {book.data.bookAuthor && <p class="book-author">{book.data.bookAuthor}</p>}
+          <p class="book-description">{book.data.description}</p>
+          <p class="book-meta">
+            {progress.done} / {progress.total}
+            {latest && <> · {L.updated} {latest.toISOString().slice(0, 10)}</>}
+          </p>
+        </li>
+      ))}
+    </ul>
+  )}
+</BaseLayout>

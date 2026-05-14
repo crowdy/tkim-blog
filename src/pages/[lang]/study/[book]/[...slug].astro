@@ -1,0 +1,28 @@
+---
+import StudyLayout from '../../../../layouts/StudyLayout.astro';
+import { getCollection } from 'astro:content';
+import { chapterBookSlug, chapterSlug } from '../../../../utils/studies';
+import type { CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const all = await getCollection('studies');
+  const isProd = !!import.meta.env.PROD;
+  return all
+    .filter((c) => !(isProd && c.data.draft))
+    .map((c) => ({
+      params: {
+        lang: c.data.lang,
+        book: chapterBookSlug(c),
+        slug: chapterSlug(c),
+      },
+      props: { chapter: c },
+    }));
+}
+
+const { chapter } = Astro.props as { chapter: CollectionEntry<'studies'> };
+const { Content } = await chapter.render();
+---
+
+<StudyLayout chapter={chapter}>
+  <Content />
+</StudyLayout>

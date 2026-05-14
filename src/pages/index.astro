@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostCard from '../components/PostCard.astro';
+import StudyBanner from '../components/StudyBanner.astro';
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 
@@ -27,6 +28,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 <BaseLayout title="crowdy" lang="ko" activeLang={null}>
   <p>Tonghyun Kim의 기술 블로그 — 한국어, 일본어, 영어로 씁니다.</p>
   <hr />
+  <StudyBanner lang="ko" />
   <section class="projects">
     <h3>프로젝트</h3>
     <ul>

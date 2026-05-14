@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostCard from '../../components/PostCard.astro';
+import StudyBanner from '../../components/StudyBanner.astro';
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 
@@ -41,6 +42,7 @@ const pairSlugsWithOtherLangs = new Set(
 
 <BaseLayout title={`crowdy — ${lang}`} lang={lang} activeLang={lang}>
   <p>{intros[lang]}</p>
+  <StudyBanner lang={lang} />
   <hr />
   <section class="posts">
     <h3>{headings[lang]}</h3>

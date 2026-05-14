@@ -1,0 +1,9 @@
+book: turbulence-fundamentals
+bookTitle: 난류해석의 기초
+bookAuthor: 노오현
+description: 점성유동의 기본 개념부터 RANS·LES까지, 난류해석을 처음부터 top-down으로 따라가는 학습 노트.
+lang: ko
+pairSlug: turbulence-fundamentals
+totalChapters: 12
+draft: false
+updated: 2026-05-14

@@ -1,0 +1,46 @@
+---
+import {
+  type Lang,
+  type Chapter,
+  chapterSlug,
+} from '../utils/studies';
+
+interface Props {
+  lang: Lang;
+  bookSlug: string;
+  prev?: Chapter | null;
+  next?: Chapter | null;
+}
+
+const { lang, bookSlug, prev, next } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const labels: Record<Lang, { prev: string; next: string; toc: string }> = {
+  ko: { prev: '← 이전 장', next: '다음 장 →', toc: '책 목차' },
+  ja: { prev: '← 前の章', next: '次の章 →', toc: '目次' },
+  en: { prev: '← Previous', next: 'Next →', toc: 'Book TOC' },
+};
+const L = labels[lang];
+---
+
+<nav class="chapter-nav" aria-label="Chapter navigation">
+  <div class="chapter-nav-prev">
+    {prev ? (
+      <a href={`${base}/${lang}/study/${bookSlug}/${chapterSlug(prev)}/`}>
+        {L.prev}
+        <span class="chapter-nav-title">{prev.data.title}</span>
+      </a>
+    ) : <span />}
+  </div>
+  <div class="chapter-nav-toc">
+    <a href={`${base}/${lang}/study/${bookSlug}/`}>{L.toc}</a>
+  </div>
+  <div class="chapter-nav-next">
+    {next ? (
+      <a href={`${base}/${lang}/study/${bookSlug}/${chapterSlug(next)}/`}>
+        {L.next}
+        <span class="chapter-nav-title">{next.data.title}</span>
+      </a>
+    ) : <span />}
+  </div>
+</nav>

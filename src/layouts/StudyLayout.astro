@@ -1,0 +1,94 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import ChapterNav from '../components/ChapterNav.astro';
+import { getCollection } from 'astro:content';
+import {
+  type Lang,
+  chapterSlug,
+  chapterBookSlug,
+  chaptersOfBook,
+  getChapterPairs,
+} from '../utils/studies';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  chapter: CollectionEntry<'studies'>;
+}
+
+const { chapter } = Astro.props;
+const lang = chapter.data.lang as Lang;
+const bookSlug = chapterBookSlug(chapter);
+const allChapters = await getCollection('studies');
+
+const pairs = getChapterPairs(allChapters, chapter);
+const siblings = chaptersOfBook(allChapters, lang, bookSlug, { includeDrafts: !import.meta.env.PROD });
+const idx = siblings.findIndex((c) => c.id === chapter.id);
+const prev = idx > 0 ? siblings[idx - 1] : null;
+const next = idx >= 0 && idx < siblings.length - 1 ? siblings[idx + 1] : null;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const sourcePath = `src/content/studies/${chapter.id}`;
+
+const alternates = (['ko', 'ja', 'en'] as const)
+  .filter((l) => pairs[l])
+  .map((l) => {
+    const sib = pairs[l]!;
+    const sibBook = chapterBookSlug(sib);
+    const href = Astro.site
+      ? new URL(`${base}/${l}/study/${sibBook}/${chapterSlug(sib)}/`, Astro.site).toString()
+      : `${base}/${l}/study/${sibBook}/${chapterSlug(sib)}/`;
+    return { lang: l, href };
+  });
+
+const updatedStr = chapter.data.updated
+  ? chapter.data.updated.toISOString().slice(0, 10)
+  : null;
+
+const langs: Array<'ko' | 'ja' | 'en'> = ['ko', 'ja', 'en'];
+---
+
+<BaseLayout
+  title={`${chapter.data.bookTitle} — ${chapter.data.title}`}
+  description={chapter.data.description}
+  lang={lang}
+  activeLang={lang}
+  sourcePath={sourcePath}
+  ogType="article"
+  alternates={alternates}
+>
+  <article class="post">
+    <header class="post-header">
+      <p class="study-breadcrumb">
+        <a href={`${base}/${lang}/study/`}>Study</a>
+        {' › '}
+        <a href={`${base}/${lang}/study/${bookSlug}/`}>{chapter.data.bookTitle}</a>
+        {' › '}
+        <span>Ch. {chapter.data.chapter}</span>
+      </p>
+      <h1 class="post-title">{chapter.data.title}</h1>
+      <p class="post-meta">
+        {updatedStr && <time datetime={chapter.data.updated!.toISOString()}>updated {updatedStr}</time>}
+        {chapter.data.draft && <span> · draft</span>}
+      </p>
+      <nav class="lang-toggle" aria-label="Language">
+        {langs.map((l) => {
+          if (l === lang) {
+            return <button aria-current="true">{l.toUpperCase()}</button>;
+          }
+          const sib = pairs[l];
+          if (!sib) return null;
+          const sibBook = chapterBookSlug(sib);
+          return (
+            <a href={`${base}/${l}/study/${sibBook}/${chapterSlug(sib)}/`}>
+              <button>{l.toUpperCase()}</button>
+            </a>
+          );
+        })}
+      </nav>
+    </header>
+    <div class="post-content">
+      <slot />
+    </div>
+    <ChapterNav lang={lang} bookSlug={bookSlug} prev={prev} next={next} />
+  </article>
+</BaseLayout>

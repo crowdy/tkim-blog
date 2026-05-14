@@ -1,0 +1,86 @@
+---
+import { getCollection } from 'astro:content';
+import {
+  type Lang,
+  booksForLang,
+  bookSlugFromId,
+  chaptersOfBook,
+  latestUpdate,
+} from '../utils/studies';
+
+interface Props {
+  lang: Lang;
+  limit?: number;
+}
+
+const { lang, limit = 3 } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const allBooks = await getCollection('books');
+const allChapters = await getCollection('studies');
+
+const books = booksForLang(allBooks, lang).filter(
+  (b) => chaptersOfBook(allChapters, b.data.lang, bookSlugFromId(b)).length > 0
+);
+
+const ranked = books
+  .map((b) => ({
+    book: b,
+    latest: latestUpdate(b, allChapters),
+    done: chaptersOfBook(allChapters, b.data.lang, bookSlugFromId(b)).length,
+  }))
+  .sort((a, b) => {
+    const ta = a.latest ? a.latest.getTime() : 0;
+    const tb = b.latest ? b.latest.getTime() : 0;
+    return tb - ta;
+  })
+  .slice(0, limit);
+
+const labels: Record<Lang, { heading: string; allLink: string; ofChapters: (d: number, t: number) => string; updated: string }> = {
+  ko: {
+    heading: '📖 진행 중인 책 학습 노트',
+    allLink: '전체 보기 →',
+    ofChapters: (d, t) => `${d}/${t}장`,
+    updated: '마지막 업데이트',
+  },
+  ja: {
+    heading: '📖 学習中の本',
+    allLink: 'すべて見る →',
+    ofChapters: (d, t) => `${d}/${t}章`,
+    updated: '最終更新',
+  },
+  en: {
+    heading: '📖 Currently studying',
+    allLink: 'See all →',
+    ofChapters: (d, t) => `${d}/${t} chapters`,
+    updated: 'last updated',
+  },
+};
+const L = labels[lang];
+---
+
+{ranked.length > 0 && (
+  <aside class="study-banner">
+    <h3 class="study-banner-heading">{L.heading}</h3>
+    <ul class="study-banner-list">
+      {ranked.map(({ book, done, latest }) => (
+        <li>
+          <a href={`${base}/${lang}/study/${bookSlugFromId(book)}/`}>
+            <span class="study-banner-title">{book.data.bookTitle}</span>
+          </a>
+          <span class="study-banner-meta">
+            {' — '}{L.ofChapters(done, book.data.totalChapters)}
+            {latest && (
+              <>
+                {' · '}{L.updated} {latest.toISOString().slice(0, 10)}
+              </>
+            )}
+          </span>
+        </li>
+      ))}
+    </ul>
+    <p class="study-banner-link">
+      <a href={`${base}/${lang}/study/`}>{L.allLink}</a>
+    </p>
+  </aside>
+)}

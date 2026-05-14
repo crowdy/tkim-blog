@@ -1,0 +1,9 @@
+book: turbulence-fundamentals
+bookTitle: 乱流解析の基礎
+bookAuthor: 盧吾鉉
+description: 粘性流れの基本概念からRANS・LESまで、乱流解析をトップダウンで追いかける学習ノート。
+lang: ja
+pairSlug: turbulence-fundamentals
+totalChapters: 12
+draft: false
+updated: 2026-05-14

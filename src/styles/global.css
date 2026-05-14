@@ -430,6 +430,81 @@ section.projects li {
 section.projects li a { color: var(--color-text); font-weight: 500; }
 section.projects li a:hover { color: var(--color-accent); }
 
+/* ===== Study (book notes) ===== */
+
+.study-banner {
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-accent);
+  border-radius: 4px;
+  padding: 12px 16px;
+  margin: 20px 0;
+}
+.study-banner-heading {
+  margin: 0 0 8px 0;
+  font-size: 1em;
+  font-weight: 600;
+}
+.study-banner-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.study-banner-list li {
+  margin: 0;
+  padding: 2px 0;
+  font-size: 0.95em;
+}
+.study-banner-title { font-weight: 500; }
+.study-banner-meta { color: var(--color-text-muted); font-size: 0.9em; }
+.study-banner-link { margin: 8px 0 0 0; font-size: 0.9em; }
+
+.book-list { list-style: none; margin: 0; padding: 0; }
+.book-card {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.book-card h3 { margin: 0 0 4px 0; }
+.book-author { color: var(--color-text-muted); font-size: 0.9em; margin: 0 0 6px; }
+.book-description { margin: 0 0 6px; }
+.book-meta { color: var(--color-text-muted); font-size: 0.9em; margin: 0; }
+
+.study-breadcrumb {
+  color: var(--color-text-muted);
+  font-size: 0.9em;
+  margin: 0 0 12px;
+}
+.study-breadcrumb a { color: var(--color-text-muted); }
+.study-breadcrumb a:hover { color: var(--color-accent); }
+
+.chapter-toc { padding-left: 1.4em; }
+.chapter-toc li { margin: 4px 0; }
+.chapter-toc .chapter-num {
+  color: var(--color-text-muted);
+  font-size: 0.9em;
+  margin-right: 8px;
+}
+.chapter-toc .chapter-title { font-weight: 500; }
+.chapter-draft { color: var(--color-text-muted); font-size: 0.85em; }
+
+.chapter-nav {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 16px;
+  margin-top: 36px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border);
+  font-size: 0.95em;
+}
+.chapter-nav-prev { text-align: left; }
+.chapter-nav-toc { text-align: center; }
+.chapter-nav-next { text-align: right; }
+.chapter-nav a { display: inline-flex; flex-direction: column; gap: 2px; }
+.chapter-nav .chapter-nav-title {
+  color: var(--color-text-muted);
+  font-size: 0.9em;
+  font-weight: 400;
+}
+
 /* ===== Mobile ===== */
 
 @media only screen and (max-width: 600px) {
