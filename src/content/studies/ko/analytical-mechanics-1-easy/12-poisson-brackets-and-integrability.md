@@ -6,7 +6,7 @@ bookTitle: 해석역학 I — 쉬운 풀이
 chapter: 12
 lang: ko
 pairSlug: am1e-poisson-integrability
-draft: true
+draft: false
 updated: 2026-05-14
 ---
 

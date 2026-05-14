@@ -6,7 +6,7 @@ bookTitle: 해석역학 I — 쉬운 풀이
 chapter: 9
 lang: ko
 pairSlug: am1e-symmetry-conservation
-draft: true
+draft: false
 updated: 2026-05-14
 ---
 

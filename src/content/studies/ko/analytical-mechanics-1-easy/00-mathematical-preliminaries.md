@@ -6,7 +6,7 @@ bookTitle: 해석역학 I — 쉬운 풀이
 chapter: 0
 lang: ko
 pairSlug: am1e-mathematical-preliminaries
-draft: true
+draft: false
 updated: 2026-05-14
 ---
 

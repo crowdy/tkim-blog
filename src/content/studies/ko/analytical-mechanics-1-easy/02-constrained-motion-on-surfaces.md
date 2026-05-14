@@ -6,7 +6,7 @@ bookTitle: 해석역학 I — 쉬운 풀이
 chapter: 2
 lang: ko
 pairSlug: am1e-constrained-motion
-draft: true
+draft: false
 updated: 2026-05-14
 ---
 
