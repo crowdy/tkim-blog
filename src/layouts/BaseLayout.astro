@@ -52,6 +52,10 @@ const canonicalUrl = Astro.site
   ? new URL(Astro.url.pathname, Astro.site).toString()
   : Astro.url.toString();
 
+const resolvedOgImage = ogImage ?? (Astro.site
+  ? new URL(`${base}/og-image.png`, Astro.site).toString()
+  : null);
+
 const gaId = import.meta.env.PUBLIC_GA_ID;
 ---
 
@@ -82,14 +86,14 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
     {alternates.map((a) => (
       <meta property="og:locale:alternate" content={OG_LOCALES[a.lang]} />
     ))}
-    {ogImage && <meta property="og:image" content={ogImage} />}
+    {resolvedOgImage && <meta property="og:image" content={resolvedOgImage} />}
     {articlePublishedTime && (
       <meta property="article:published_time" content={articlePublishedTime} />
     )}
-    <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+    <meta name="twitter:card" content={resolvedOgImage ? 'summary_large_image' : 'summary'} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    {ogImage && <meta name="twitter:image" content={ogImage} />}
+    {resolvedOgImage && <meta name="twitter:image" content={resolvedOgImage} />}
     {gaId && (
       <>
         <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
