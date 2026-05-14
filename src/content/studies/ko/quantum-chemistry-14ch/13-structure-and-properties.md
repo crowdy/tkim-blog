@@ -69,7 +69,7 @@ def color_of(lam_nm):
 
 print(f"{'N':>3} {'L(nm)':>7} {'dE(eV)':>8} {'lam(nm)':>9}  color")
 print("-" * 40)
-for N in [4, 6, 8, 10, 14, 22]:
+for N in [4, 9, 10, 11, 12, 14]:
     L = (N - 1) * d
     dE = (np.pi**2 * hbar**2) / (2 * me * L**2) * (N + 1)   # J
     lam_nm = h * c / dE * 1e9
