@@ -73,6 +73,12 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"
+      integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+"
+      crossorigin="anonymous"
+    />
     <link rel="alternate" type="application/rss+xml" title="crowdy blog" href={`${base}/rss.xml`} />
     {alternates.map((a) => (
       <link rel="alternate" hreflang={a.lang} href={a.href} />
