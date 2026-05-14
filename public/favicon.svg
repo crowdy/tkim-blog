@@ -10,5 +10,5 @@
   <rect class="bg" width="64" height="64" rx="12" />
   <text class="fg" x="50%" y="50%" text-anchor="middle" dominant-baseline="central"
         font-family="ui-sans-serif, system-ui, -apple-system, 'Pretendard Variable', sans-serif"
-        font-size="34" font-weight="700">tk</text>
+        font-size="44" font-weight="700">c</text>
 </svg>
