@@ -6,7 +6,7 @@ bookTitle: 해석역학 II — 쉬운 풀이
 chapter: 7
 lang: ko
 pairSlug: am2e-relativistic-mechanics
-draft: true
+draft: false
 updated: 2026-05-14
 ---
 

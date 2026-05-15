@@ -6,7 +6,7 @@ bookTitle: 해석역학 II — 쉬운 풀이
 chapter: 9
 lang: ko
 pairSlug: am2e-classical-to-quantum
-draft: true
+draft: false
 updated: 2026-05-14
 ---
 
