@@ -109,6 +109,12 @@ updated: <YYYY-MM-DD>
 | クリストッフェル記号 | 크리스토펠 기호 | Christoffel symbols | 1.2.4 |
 | 慣性運動 | 관성운동 | inertial motion | 1.2.5 |
 | 測地線 | 측지선 | geodesic | 1.2.5 |
+| 反変ベクトル | 반변벡터 | contravariant vector | 1.3.1 |
+| 共変ベクトル | 공변벡터 | covariant vector | 1.3.1 |
+| テンソル | 텐서 | tensor | 1.3.2 |
+| 接続 | 접속 | connection | 1.3.3 |
+| 平行移動 | 평행이동 | parallel transport | 1.3.3 |
+| 共変微分 | 공변미분 | covariant derivative | 1.3.4 |
 
 (章 1 spec 에서 본 표를 1.1.1 ~ 1.6.8 의 어휘로 채운다.)
 
