@@ -19,33 +19,33 @@ updated: 2026-05-17
 원서 1.2.3 절은 1.2.2 의 벡터식
 
 $$
-m \ddot{\mathbf r} = \mathbf F^{\text{appl}} + \mathbf R
+m \ddot{\mathbf{r}} = \mathbf{F}^{\text{appl}} + \mathbf{R}
 $$
 
-을 *접선 방향* 과 *법선 방향* 으로 분해한다. 접공간 기저 $\{\mathbf r_u, \mathbf r_v\}$ 와 단위 법선 벡터
+을 *접선 방향* 과 *법선 방향* 으로 분해한다. 접공간 기저 $\{\mathbf{r}_u, \mathbf{r}_v\}$ 와 단위 법선 벡터
 
 $$
-\hat{\mathbf n} = \frac{\mathbf r_u \times \mathbf r_v}{|\mathbf r_u \times \mathbf r_v|}
+\hat{\mathbf{n}} = \frac{\mathbf{r}_u \times \mathbf{r}_v}{|\mathbf{r}_u \times \mathbf{r}_v|}
 $$
 
 세 벡터가 $\mathbb R^3$ 의 기저. 다랑베르 가정 — 매끄러운 구속 — 으로 구속력은 *법선 성분만* 갖는다:
 
 $$
-\mathbf R = \lambda\, \hat{\mathbf n}
+\mathbf{R} = \lambda\, \hat{\mathbf{n}}
 $$
 
 여기서 $\lambda \in \mathbb R$ 가 라그랑주 곱셈자 (Lagrange multiplier). 미지수다.
 
-벡터식을 $\hat{\mathbf n}$ 으로 사영 (내적) 하면
+벡터식을 $\hat{\mathbf{n}}$ 으로 사영 (내적) 하면
 
 $$
-m\, \ddot{\mathbf r} \cdot \hat{\mathbf n} = \mathbf F^{\text{appl}} \cdot \hat{\mathbf n} + \lambda
+m\, \ddot{\mathbf{r}} \cdot \hat{\mathbf{n}} = \mathbf{F}^{\text{appl}} \cdot \hat{\mathbf{n}} + \lambda
 $$
 
 좌변은 가속도의 법선 성분 (1.2.2 에서 본 *굽은 부분*). 따라서
 
 $$
-\lambda = m\, \ddot{\mathbf r} \cdot \hat{\mathbf n} - \mathbf F^{\text{appl}} \cdot \hat{\mathbf n}
+\lambda = m\, \ddot{\mathbf{r}} \cdot \hat{\mathbf{n}} - \mathbf{F}^{\text{appl}} \cdot \hat{\mathbf{n}}
 $$
 
 $\lambda$ 가 $(u, v, \dot u, \dot v, \ddot u, \ddot v)$ 와 외력의 함수로 *결정* 되었다. 그러나 이 식 자체는 운동을 풀지 않는다 — 운동이 결정된 *뒤* 에 구속력 크기를 *읽어내는* 식.
@@ -54,11 +54,11 @@ $\lambda$ 가 $(u, v, \dot u, \dot v, \ddot u, \ddot v)$ 와 외력의 함수로
 
 ## 한 번 더, 천천히
 
-**(1) 라그랑주 곱셈자의 두 얼굴.** $\lambda$ 는 (i) 라그랑주식의 부산물 (구속을 미정 곱셈자로 다루는 형식적 도구) 이자 (ii) 물리적 *구속력의 크기* (단진자의 장력 = $\lambda$, 비드의 수직항력 = $\lambda$). 단진자의 $\lambda$ 가 추의 속력에 따라 변하는 까닭은, 위 식의 우변에 $\ddot{\mathbf r} \cdot \hat{\mathbf n}$ 이 들어가 있기 때문 — *원심 가속도* 가 그 정체.
+**(1) 라그랑주 곱셈자의 두 얼굴.** $\lambda$ 는 (i) 라그랑주식의 부산물 (구속을 미정 곱셈자로 다루는 형식적 도구) 이자 (ii) 물리적 *구속력의 크기* (단진자의 장력 = $\lambda$, 비드의 수직항력 = $\lambda$). 단진자의 $\lambda$ 가 추의 속력에 따라 변하는 까닭은, 위 식의 우변에 $\ddot{\mathbf{r}} \cdot \hat{\mathbf{n}}$ 이 들어가 있기 때문 — *원심 가속도* 가 그 정체.
 
 **(2) 다랑베르의 영리함.** 위 분해의 핵심은, 운동방정식의 *접선 부분* 이 $\lambda$ 와 *독립* 이라는 것. 즉 운동을 풀기 위해 $\lambda$ 를 미리 알 필요가 없다. $\lambda$ 는 운동이 풀린 뒤 위 식으로 *사후에* 구해진다. 1.1.3 의 다랑베르 원리를 곡면의 언어로 다시 적은 셈.
 
-**(3) 정밀히 — 단위 법선의 존재.** $\mathbf r_u \times \mathbf r_v \neq 0$ 의 가정 (1.2.1) 이 깨지지 않는 한 $\hat{\mathbf n}$ 이 잘 정의된다. 곡면의 *특이점* (예: 원뿔 꼭짓점) 에서는 위 분해가 무너지고, 그 점에서의 운동은 더 정교한 처리가 필요하다.
+**(3) 정밀히 — 단위 법선의 존재.** $\mathbf{r}_u \times \mathbf{r}_v \neq 0$ 의 가정 (1.2.1) 이 깨지지 않는 한 $\hat{\mathbf{n}}$ 이 잘 정의된다. 곡면의 *특이점* (예: 원뿔 꼭짓점) 에서는 위 분해가 무너지고, 그 점에서의 운동은 더 정교한 처리가 필요하다.
 
 ## 파이썬으로 확인 — 단진자의 장력 $\lambda$ 결정
 

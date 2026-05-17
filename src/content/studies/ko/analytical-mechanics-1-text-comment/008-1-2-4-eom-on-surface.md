@@ -16,21 +16,21 @@ updated: 2026-05-17
 
 ## 본문이 말하는 것
 
-원서 1.2.4 절은 운동방정식을 접공간 기저 $\{\mathbf r_u, \mathbf r_v\}$ 로 사영해 *접선 식 2 개* 를 뽑는다. 1.2.2 의 가속도 식을 $\mathbf r_u$ 와 내적하면
+원서 1.2.4 절은 운동방정식을 접공간 기저 $\{\mathbf{r}_u, \mathbf{r}_v\}$ 로 사영해 *접선 식 2 개* 를 뽑는다. 1.2.2 의 가속도 식을 $\mathbf{r}_u$ 와 내적하면
 
 $$
-m\, (\mathbf r_u \cdot \mathbf r_u\, \ddot u + \mathbf r_u \cdot \mathbf r_v\, \ddot v + \mathbf r_u \cdot \mathbf r_{uu}\, \dot u^2 + 2\, \mathbf r_u \cdot \mathbf r_{uv}\, \dot u \dot v + \mathbf r_u \cdot \mathbf r_{vv}\, \dot v^2) = \mathbf F^{\text{appl}} \cdot \mathbf r_u
+m\, (\mathbf{r}_u \cdot \mathbf{r}_u\, \ddot u + \mathbf{r}_u \cdot \mathbf{r}_v\, \ddot v + \mathbf{r}_u \cdot \mathbf{r}_{uu}\, \dot u^2 + 2\, \mathbf{r}_u \cdot \mathbf{r}_{uv}\, \dot u \dot v + \mathbf{r}_u \cdot \mathbf{r}_{vv}\, \dot v^2) = \mathbf{F}^{\text{appl}} \cdot \mathbf{r}_u
 $$
 
-(구속력 $\lambda \hat{\mathbf n}$ 은 $\mathbf r_u$ 와 직각이라 사라진다.) $\mathbf r_v$ 사영도 같은 모양. 이 둘이 *접선 방향 운동방정식*.
+(구속력 $\lambda \hat{\mathbf{n}}$ 은 $\mathbf{r}_u$ 와 직각이라 사라진다.) $\mathbf{r}_v$ 사영도 같은 모양. 이 둘이 *접선 방향 운동방정식*.
 
 내적들이 곡면의 기하 정보를 모두 담는다:
 
 $$
-g_{ij} = \mathbf r_i \cdot \mathbf r_j,\qquad \Gamma_{kij} = \mathbf r_k \cdot \mathbf r_{ij} = \frac{1}{2} (\partial_i g_{jk} + \partial_j g_{ki} - \partial_k g_{ij})
+g_{ij} = \mathbf{r}_i \cdot \mathbf{r}_j,\qquad \Gamma_{kij} = \mathbf{r}_k \cdot \mathbf{r}_{ij} = \frac{1}{2} (\partial_i g_{jk} + \partial_j g_{ki} - \partial_k g_{ij})
 $$
 
-(증명은 본문 — $\mathbf r_i \cdot \mathbf r_j = g_{ij}$ 의 양변을 $\partial_k$ 로 미분해 좌변을 정리하면 위 등식이 나옴.) **크리스토펠 기호** (1종) 다. 첨자를 올려 2종
+(증명은 본문 — $\mathbf{r}_i \cdot \mathbf{r}_j = g_{ij}$ 의 양변을 $\partial_k$ 로 미분해 좌변을 정리하면 위 등식이 나옴.) **크리스토펠 기호** (1종) 다. 첨자를 올려 2종
 
 $$
 \Gamma^k_{ij} = g^{kl}\, \Gamma_{lij}
@@ -42,15 +42,15 @@ $$
 \ddot u^k + \Gamma^k_{ij}\, \dot u^i \dot u^j = \frac{1}{m}\, g^{kl}\, F^{\text{appl}}_l \quad (k = 1, 2)
 $$
 
-여기서 $u^1 = u$, $u^2 = v$, $F^{\text{appl}}_l = \mathbf F^{\text{appl}} \cdot \mathbf r_l$ 은 접선 성분 외력 (= 일반화 힘). 이게 *곡면 위의 운동방정식*. 좌변은 *공변 가속도* — 1.3 의 공변미분과 같은 객체.
+여기서 $u^1 = u$, $u^2 = v$, $F^{\text{appl}}_l = \mathbf{F}^{\text{appl}} \cdot \mathbf{r}_l$ 은 접선 성분 외력 (= 일반화 힘). 이게 *곡면 위의 운동방정식*. 좌변은 *공변 가속도* — 1.3 의 공변미분과 같은 객체.
 
 ## 한 번 더, 천천히
 
-**(1) 평면 한정 시 $\Gamma = 0$.** 평면 $\mathbf r = (u, v, 0)$ 이라면 $g_{ij}$ 가 상수 ($\delta_{ij}$), 그래서 모든 $\Gamma$ 가 0. 운동방정식은 $\ddot u = F_u / m$, $\ddot v = F_v / m$ — 익숙한 평면 뉴턴식. *곡면의 굽음이 $\Gamma$ 항으로 정확히 측정* 된다.
+**(1) 평면 한정 시 $\Gamma = 0$.** 평면 $\mathbf{r} = (u, v, 0)$ 이라면 $g_{ij}$ 가 상수 ($\delta_{ij}$), 그래서 모든 $\Gamma$ 가 0. 운동방정식은 $\ddot u = F_u / m$, $\ddot v = F_v / m$ — 익숙한 평면 뉴턴식. *곡면의 굽음이 $\Gamma$ 항으로 정확히 측정* 된다.
 
 **(2) 좌표 불변성.** 같은 운동을 $(u, v)$ 대신 $(u', v') = (u'(u, v), v'(u, v))$ 로 적으면, $g_{ij}$ 도 $\Gamma^k_{ij}$ 도 모두 변환되지만, 식 *형식* — $\ddot u^k + \Gamma^k_{ij} \dot u^i \dot u^j = (\text{외력 항})$ — 은 그대로다. 1.3 의 *공변미분* 정의가 이 사실을 정밀히 박는다.
 
-**(3) 비선형성의 출처.** 평면의 자유 입자 ($\mathbf F^{\text{appl}} = 0$) 는 $\ddot u^k = 0$ — 직선. 굽은 면에서는 $\ddot u^k = -\Gamma^k_{ij} \dot u^i \dot u^j$ — 속도의 이차식이 가속도에 끼어든다. 이 비선형성이 *측지선* 의 본질. 1.2.5 가 그 식을 본격적으로 다룬다.
+**(3) 비선형성의 출처.** 평면의 자유 입자 ($\mathbf{F}^{\text{appl}} = 0$) 는 $\ddot u^k = 0$ — 직선. 굽은 면에서는 $\ddot u^k = -\Gamma^k_{ij} \dot u^i \dot u^j$ — 속도의 이차식이 가속도에 끼어든다. 이 비선형성이 *측지선* 의 본질. 1.2.5 가 그 식을 본격적으로 다룬다.
 
 ## 파이썬으로 확인 — 구면의 크리스토펠 기호
 
