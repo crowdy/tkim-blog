@@ -102,6 +102,13 @@ updated: <YYYY-MM-DD>
 | 拘束力 | 구속력 | constraint force | 1.1.3 |
 | 一般化座標 | 일반화 좌표 | generalized coordinate | 1.1.4 |
 | 一般化力 | 일반화 힘 | generalized force | 1.1.4 |
+| パラメータ表示 | 매개변수 표현 | parametrization | 1.2.1 |
+| 第一基本形式 | 제1기본형식 | first fundamental form | 1.2.1 |
+| 計量 | 계량 | metric | 1.2.1 |
+| 法線 | 법선 | normal | 1.2.3 |
+| クリストッフェル記号 | 크리스토펠 기호 | Christoffel symbols | 1.2.4 |
+| 慣性運動 | 관성운동 | inertial motion | 1.2.5 |
+| 測地線 | 측지선 | geodesic | 1.2.5 |
 
 (章 1 spec 에서 본 표를 1.1.1 ~ 1.6.8 의 어휘로 채운다.)
 
