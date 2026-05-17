@@ -93,9 +93,15 @@ updated: <YYYY-MM-DD>
 
 | 일본어 | 한국어 | 영어 | 등장 절 |
 |---|---|---|---|
+| 質点 | 질점 | point particle | 1.1.1 |
+| 慣性系 | 관성계 | inertial frame | 1.1.1 |
 | 拘束条件 | 구속조건 | constraint | 1.1.2 |
 | 配位空間 | 배위공간 | configuration space | 1.1.2 |
+| ホロノミック拘束 | 홀로노믹 구속 | holonomic constraint | 1.1.2 |
 | 仮想仕事 | 가상일 | virtual work | 1.1.3 |
+| 拘束力 | 구속력 | constraint force | 1.1.3 |
+| 一般化座標 | 일반화 좌표 | generalized coordinate | 1.1.4 |
+| 一般化力 | 일반화 힘 | generalized force | 1.1.4 |
 
 (章 1 spec 에서 본 표를 1.1.1 ~ 1.6.8 의 어휘로 채운다.)
 
