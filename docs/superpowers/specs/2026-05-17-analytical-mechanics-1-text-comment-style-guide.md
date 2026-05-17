@@ -127,6 +127,11 @@ updated: <YYYY-MM-DD>
 | リー微分 | 리 미분 | Lie derivative | 1.4.8 |
 | リー群·リー代数 | 리 군·리 대수 | Lie group / algebra | 1.4.9 |
 | 指数写像 | 지수사상 | exponential map | 1.4.11 |
+| 双対空間 | 쌍대공간 | dual space | 1.5.1 |
+| コベクトル | 코벡터 | covector / 1-vector | 1.5.1 |
+| 共変テンソル | 공변텐서 | covariant tensor | 1.5.3 |
+| 交代テンソル | 교대텐서 | alternating tensor | 1.5.4 |
+| 外積 (wedge) | 외적 (wedge) | wedge product | 1.5.5 |
 
 (章 1 spec 에서 본 표를 1.1.1 ~ 1.6.8 의 어휘로 채운다.)
 
