@@ -1,0 +1,8 @@
+book: analytical-mechanics-1-text-comment
+bookTitle: 해석역학 I — 본문 해설
+description: '『解析力学 I』 原書의 모든 절(1.1.1 … 5.5.4)을 차례로 따라가며 한 절씩 풀어 쓰는 본문 해설 시리즈. 가능한 곳마다 LaTeX 로 식을 다시 적고, 파이썬으로 동작을 확인한다.'
+lang: ko
+pairSlug: am1-text-comment
+totalChapters: 104
+draft: false
+updated: 2026-05-17
