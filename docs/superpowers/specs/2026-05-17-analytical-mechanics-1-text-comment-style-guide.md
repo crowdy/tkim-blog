@@ -132,6 +132,14 @@ updated: <YYYY-MM-DD>
 | 共変テンソル | 공변텐서 | covariant tensor | 1.5.3 |
 | 交代テンソル | 교대텐서 | alternating tensor | 1.5.4 |
 | 外積 (wedge) | 외적 (wedge) | wedge product | 1.5.5 |
+| 余接空間 | 여접공간 | cotangent space | 1.6.1 |
+| 余接バンドル | 여접번들 | cotangent bundle | 1.6.1 |
+| 1形式 | 1-형식 | one-form / 1-form | 1.6.2 |
+| テンソル場 | 텐서장 | tensor field | 1.6.3 |
+| リーマン計量 | 리만 계량 | Riemannian metric | 1.6.3 |
+| p形式 | p-형식 | p-form | 1.6.4 |
+| 外微分 | 외미분 | exterior derivative | 1.6.5 |
+| ストークスの定理 | 스토크스 정리 | Stokes' theorem | 1.6.8 |
 
 (章 1 spec 에서 본 표를 1.1.1 ~ 1.6.8 의 어휘로 채운다.)
 
