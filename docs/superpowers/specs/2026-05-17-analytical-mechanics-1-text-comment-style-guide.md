@@ -115,6 +115,18 @@ updated: <YYYY-MM-DD>
 | 接続 | 접속 | connection | 1.3.3 |
 | 平行移動 | 평행이동 | parallel transport | 1.3.3 |
 | 共変微分 | 공변미분 | covariant derivative | 1.3.4 |
+| 多様体 | 다양체 | manifold | 1.4.1 |
+| チャート | 차트 | chart | 1.4.1 |
+| 接ベクトル | 접벡터 | tangent vector | 1.4.4 |
+| 接空間 | 접공간 | tangent space | 1.4.4 |
+| 接バンドル | 접번들 | tangent bundle | 1.4.5 |
+| ベクトル場 | 벡터장 | vector field | 1.4.5 |
+| 積分曲線 | 적분곡선 | integral curve | 1.4.6 |
+| 1径数変換群 | 1-매개변수 변환군 | one-parameter group | 1.4.6 |
+| 引き戻し | 당김 | pullback | 1.4.7 |
+| リー微分 | 리 미분 | Lie derivative | 1.4.8 |
+| リー群·リー代数 | 리 군·리 대수 | Lie group / algebra | 1.4.9 |
+| 指数写像 | 지수사상 | exponential map | 1.4.11 |
 
 (章 1 spec 에서 본 표를 1.1.1 ~ 1.6.8 의 어휘로 채운다.)
 
