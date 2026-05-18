@@ -188,6 +188,8 @@ updated: <YYYY-MM-DD>
 | リウウィルの定理 | 리우빌의 정리 | Liouville's theorem | 4.4.4 |
 | ポアンカレの再帰定理 | 푸앵카레의 재귀 정리 | Poincaré recurrence | 4.4.5 |
 | レジャンドル変換 | 르장드르 변환 | Legendre transform | 5.1.2 |
+| 積分不変式 | 적분 불변식 | integral invariant | 5.2.2 |
+| カルタンの原理 | 카르탕의 원리 | Cartan's principle | 5.2.3 |
 
 (章 1 spec 에서 본 표를 1.1.1 ~ 1.6.8 의 어휘로 채운다.)
 
