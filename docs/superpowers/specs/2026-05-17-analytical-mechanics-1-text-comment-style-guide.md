@@ -174,6 +174,16 @@ updated: <YYYY-MM-DD>
 | 拡大相空間 | 확장 상공간 | extended phase space | 4.1.5 |
 | シンプレクティック多様体 | 심플렉틱 다양체 | symplectic manifold | 4.2.1 |
 | ハミルトニアン・ベクトル場 | 해밀토니언 벡터장 | Hamiltonian vector field | 4.2.3 |
+| 力学系 | 동력학 시스템 | dynamical system | 4.3.1 |
+| 相流 | 상류 | phase flow | 4.3.2 |
+| 不変集合 | 불변 집합 | invariant set | 4.3.2 |
+| 平衡解 | 평형해 | equilibrium | 4.3.3 |
+| 周期解 | 주기해 | periodic solution | 4.3.3 |
+| 安定性 | 안정성 | stability | 4.3.3 |
+| 線形化 | 선형화 | linearization | 4.3.4 |
+| 分岐 | 분기 | bifurcation | 4.3.6 |
+| リャプノフ関数 | 랴푸노프 함수 | Lyapunov function | 4.3.7 |
+| ポアンカレ写像 | 푸앵카레 사상 | Poincaré map | 4.3.8 |
 
 (章 1 spec 에서 본 표를 1.1.1 ~ 1.6.8 의 어휘로 채운다.)
 
