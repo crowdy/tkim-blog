@@ -192,6 +192,9 @@ updated: <YYYY-MM-DD>
 | カルタンの原理 | 카르탕의 원리 | Cartan's principle | 5.2.3 |
 | 正準変換 | 정준 변환 | canonical transformation | 5.3.1 |
 | 母関数 | 생성 함수 (모함수) | generating function | 5.3.2 |
+| シンプレクティック条件 | 심플렉틱 조건 | symplectic condition | 5.4.1 |
+| シンプレクティック写像 | 심플렉틱 사상 | symplectic map | 5.4.1 |
+| 正準変換群 | 정준 변환군 | canonical transformation group | 5.4.4 |
 
 (章 1 spec 에서 본 표를 1.1.1 ~ 1.6.8 의 어휘로 채운다.)
 
