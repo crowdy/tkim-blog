@@ -154,6 +154,8 @@ updated: <YYYY-MM-DD>
 | ハミルトニアン | 해밀토니언 | Hamiltonian | 2.2.4 |
 | エネルギー積分 | 에너지 적분 | energy integral | 2.2.4 |
 | 自由度の削減 | 자유도의 삭감 | reduction of degrees of freedom | 2.2.5 |
+| 基本1形式 | 기본 1-형식 | fundamental 1-form (Poincaré–Cartan) | 2.3.1 |
+| 基本2形式 | 기본 2-형식 | fundamental 2-form | 2.3.1 |
 
 (章 1 spec 에서 본 표를 1.1.1 ~ 1.6.8 의 어휘로 채운다.)
 
