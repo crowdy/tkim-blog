@@ -195,6 +195,8 @@ updated: <YYYY-MM-DD>
 | シンプレクティック条件 | 심플렉틱 조건 | symplectic condition | 5.4.1 |
 | シンプレクティック写像 | 심플렉틱 사상 | symplectic map | 5.4.1 |
 | 正準変換群 | 정준 변환군 | canonical transformation group | 5.4.4 |
+| ラグランジュ括弧 | 라그랑주 괄호 | Lagrange bracket | 5.5.2 |
+| 斜交積 | 사교적 | skew product (symplectic pairing) | 5.5.3 |
 
 (章 1 spec 에서 본 표를 1.1.1 ~ 1.6.8 의 어휘로 채운다.)
 
