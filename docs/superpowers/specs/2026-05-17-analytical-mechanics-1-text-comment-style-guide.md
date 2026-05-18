@@ -140,6 +140,13 @@ updated: <YYYY-MM-DD>
 | p形式 | p-형식 | p-form | 1.6.4 |
 | 外微分 | 외미분 | exterior derivative | 1.6.5 |
 | ストークスの定理 | 스토크스 정리 | Stokes' theorem | 1.6.8 |
+| ラグランジュ方程式 | 라그랑주 방정식 | Euler–Lagrange equation | 2.1.1 |
+| ラグランジアン | 라그랑지언 | Lagrangian | 2.1.1 |
+| スクレロノーマス | 스클레로노믹 | scleronomic | 2.1.1 |
+| レオノーマス | 레오노믹 | rheonomic | 2.1.2 |
+| 共変性 | 공변성 | covariance | 2.1.3 |
+| 一般化ポテンシャル | 일반화 포텐셜 | generalized potential | 2.1.4 |
+| ゲージ変換 | 게이지 변환 | gauge transformation | 2.1.5 |
 
 (章 1 spec 에서 본 표를 1.1.1 ~ 1.6.8 의 어휘로 채운다.)
 
