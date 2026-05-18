@@ -168,6 +168,10 @@ updated: <YYYY-MM-DD>
 | ラグランジュの未定乗数法 | 라그랑주의 미정 곱셈자법 | method of Lagrange multipliers | 3.1.8 |
 | ワイスの原理 | 워이스의 원리 | Weiss's principle | 3.2.1 |
 | モーメント関数 | 모멘트 함수 | momentum function | 3.2.2 |
+| 正準方程式 | 정준 방정식 | canonical equations | 4.1.2 |
+| 相空間 | 상공간 | phase space | 4.1.3 |
+| 正準1形式 | 정준 1-형식 | canonical 1-form | 4.1.3 |
+| 拡大相空間 | 확장 상공간 | extended phase space | 4.1.5 |
 
 (章 1 spec 에서 본 표를 1.1.1 ~ 1.6.8 의 어휘로 채운다.)
 
