@@ -160,6 +160,12 @@ updated: <YYYY-MM-DD>
 | 非ボアンカレ方程式 | 비푸앵카레 방정식 | non-Poincaré equation (Boltzmann–Hamel) | 2.4.2 |
 | ラグランジュ乗数 | 라그랑주 곱셈자 | Lagrange multiplier | 2.5.1 |
 | 非ホロノミック拘束 | 비홀로노믹 구속 | non-holonomic constraint | 2.5.3 |
+| 作用積分 | 작용 적분 | action integral | 3.1.1 |
+| ハミルトンの原理 | 해밀턴의 원리 | Hamilton's principle | 3.1.1 |
+| 拡大配位空間 | 확장 배위공간 | extended configuration space | 3.1.2 |
+| 拡大状態空間 | 확장 상태공간 | extended state space | 3.1.3 |
+| 変分 | 변분 | variation | 3.1.5 |
+| ラグランジュの未定乗数法 | 라그랑주의 미정 곱셈자법 | method of Lagrange multipliers | 3.1.8 |
 
 (章 1 spec 에서 본 표를 1.1.1 ~ 1.6.8 의 어휘로 채운다.)
 
