@@ -166,6 +166,8 @@ updated: <YYYY-MM-DD>
 | 拡大状態空間 | 확장 상태공간 | extended state space | 3.1.3 |
 | 変分 | 변분 | variation | 3.1.5 |
 | ラグランジュの未定乗数法 | 라그랑주의 미정 곱셈자법 | method of Lagrange multipliers | 3.1.8 |
+| ワイスの原理 | 워이스의 원리 | Weiss's principle | 3.2.1 |
+| モーメント関数 | 모멘트 함수 | momentum function | 3.2.2 |
 
 (章 1 spec 에서 본 표를 1.1.1 ~ 1.6.8 의 어휘로 채운다.)
 
