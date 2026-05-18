@@ -158,6 +158,8 @@ updated: <YYYY-MM-DD>
 | 基本2形式 | 기본 2-형식 | fundamental 2-form | 2.3.1 |
 | 擾座標 | 준좌표 | quasi-coordinate | 2.4.1 |
 | 非ボアンカレ方程式 | 비푸앵카레 방정식 | non-Poincaré equation (Boltzmann–Hamel) | 2.4.2 |
+| ラグランジュ乗数 | 라그랑주 곱셈자 | Lagrange multiplier | 2.5.1 |
+| 非ホロノミック拘束 | 비홀로노믹 구속 | non-holonomic constraint | 2.5.3 |
 
 (章 1 spec 에서 본 표를 1.1.1 ~ 1.6.8 의 어휘로 채운다.)
 
