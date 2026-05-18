@@ -184,6 +184,9 @@ updated: <YYYY-MM-DD>
 | 分岐 | 분기 | bifurcation | 4.3.6 |
 | リャプノフ関数 | 랴푸노프 함수 | Lyapunov function | 4.3.7 |
 | ポアンカレ写像 | 푸앵카레 사상 | Poincaré map | 4.3.8 |
+| 構造安定性 | 구조 안정성 | structural stability | 4.4.2 |
+| リウウィルの定理 | 리우빌의 정리 | Liouville's theorem | 4.4.4 |
+| ポアンカレの再帰定理 | 푸앵카레의 재귀 정리 | Poincaré recurrence | 4.4.5 |
 
 (章 1 spec 에서 본 표를 1.1.1 ~ 1.6.8 의 어휘로 채운다.)
 
