@@ -156,6 +156,8 @@ updated: <YYYY-MM-DD>
 | 自由度の削減 | 자유도의 삭감 | reduction of degrees of freedom | 2.2.5 |
 | 基本1形式 | 기본 1-형식 | fundamental 1-form (Poincaré–Cartan) | 2.3.1 |
 | 基本2形式 | 기본 2-형식 | fundamental 2-form | 2.3.1 |
+| 擾座標 | 준좌표 | quasi-coordinate | 2.4.1 |
+| 非ボアンカレ方程式 | 비푸앵카레 방정식 | non-Poincaré equation (Boltzmann–Hamel) | 2.4.2 |
 
 (章 1 spec 에서 본 표를 1.1.1 ~ 1.6.8 의 어휘로 채운다.)
 
