@@ -172,6 +172,8 @@ updated: <YYYY-MM-DD>
 | 相空間 | 상공간 | phase space | 4.1.3 |
 | 正準1形式 | 정준 1-형식 | canonical 1-form | 4.1.3 |
 | 拡大相空間 | 확장 상공간 | extended phase space | 4.1.5 |
+| シンプレクティック多様体 | 심플렉틱 다양체 | symplectic manifold | 4.2.1 |
+| ハミルトニアン・ベクトル場 | 해밀토니언 벡터장 | Hamiltonian vector field | 4.2.3 |
 
 (章 1 spec 에서 본 표를 1.1.1 ~ 1.6.8 의 어휘로 채운다.)
 
