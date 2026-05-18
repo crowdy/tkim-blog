@@ -147,6 +147,13 @@ updated: <YYYY-MM-DD>
 | 共変性 | 공변성 | covariance | 2.1.3 |
 | 一般化ポテンシャル | 일반화 포텐셜 | generalized potential | 2.1.4 |
 | ゲージ変換 | 게이지 변환 | gauge transformation | 2.1.5 |
+| 第１積分 | 제1적분 | first integral | 2.2.1 |
+| 一般化運動量 | 일반화 운동량 | generalized momentum | 2.2.2 |
+| 循環座標 | 순환 좌표 | cyclic coordinate | 2.2.2 |
+| ネーターの定理 | 노에터 정리 | Noether's theorem | 2.2.3 |
+| ハミルトニアン | 해밀토니언 | Hamiltonian | 2.2.4 |
+| エネルギー積分 | 에너지 적분 | energy integral | 2.2.4 |
+| 自由度の削減 | 자유도의 삭감 | reduction of degrees of freedom | 2.2.5 |
 
 (章 1 spec 에서 본 표를 1.1.1 ~ 1.6.8 의 어휘로 채운다.)
 
