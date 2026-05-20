@@ -1,0 +1,1142 @@
+% !TEX TS-program = xelatex
+% !TEX encoding = UTF-8 Unicode
+%
+% PINN Hot Papers Report — Late 2025 to May 2026
+% Conversation + Deep Research Compilation
+%
+% Compile with:  xelatex pinn_report.tex  (twice for TOC)
+%
+\documentclass[11pt,a4paper,oneside]{report}
+
+% ---------- 한국어 조판 (XeLaTeX + fontspec) ----------
+% 원래 사용자 요청: kotex + NanumMyeongjo/NanumGothic/NanumGothicCoding
+% 빌드 환경에 kotex/Nanum 폰트가 없을 때는 아래처럼 Noto CJK KR로 fallback.
+% Noto CJK는 .ttc collection이므로 파일 경로와 인덱스로 명시. 로컬 빌드 시
+% 폰트 경로가 다르면 ExternalLocation 또는 폰트 이름을 조정하세요.
+% Linux 표준 위치: /usr/share/fonts/opentype/noto/
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX}
+\setmainfont{NotoSerifCJK-Regular.ttc}[
+  Path=/usr/share/fonts/opentype/noto/,
+  Extension=.ttc,
+  UprightFont=NotoSerifCJK-Regular,
+  BoldFont=NotoSerifCJK-Bold,
+  ItalicFont=NotoSerifCJK-Regular,
+  ItalicFeatures={FakeSlant=0.18},
+  BoldItalicFont=NotoSerifCJK-Bold,
+  BoldItalicFeatures={FakeSlant=0.18},
+  FontFace={mb}{n}{NotoSerifCJK-Medium}
+]
+\setsansfont{NotoSansCJK-Regular.ttc}[
+  Path=/usr/share/fonts/opentype/noto/,
+  Extension=.ttc,
+  UprightFont=NotoSansCJK-Regular,
+  BoldFont=NotoSansCJK-Bold,
+  ItalicFont=NotoSansCJK-Regular,
+  ItalicFeatures={FakeSlant=0.18}
+]
+% Monospace: DejaVu Sans Mono (CJK는 main에서 처리)
+\setmonofont{DejaVuSansMono}[Scale=0.88]
+
+% ---------- 페이지 / 레이아웃 ----------
+\usepackage[a4paper,margin=2.5cm,headheight=14pt]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{microtype}
+\usepackage{parskip}
+
+% ---------- 색상 / 하이퍼링크 ----------
+\usepackage[dvipsnames,table]{xcolor}
+\definecolor{linkblue}{HTML}{1F4E79}
+\definecolor{codebg}{HTML}{F5F5F5}
+\definecolor{codeframe}{HTML}{CCCCCC}
+\definecolor{rulered}{HTML}{B22222}
+
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=linkblue,
+  urlcolor=linkblue,
+  citecolor=linkblue,
+  pdftitle={PINN Hot Papers in Hemodynamics and Methodology (Late 2025 -- May 2026)},
+  pdfauthor={Crowdy / PlanitAI},
+  pdfsubject={PINN research compilation},
+  pdfkeywords={PINN, hemodynamics, Lang-PINN, multi-agent}
+}
+\usepackage[all]{hypcap}
+
+% ---------- 수식 ----------
+\usepackage{amsmath, amssymb, amsthm, mathtools}
+\usepackage{bm}
+
+% ---------- 표 / 그림 / 박스 ----------
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{caption}
+\captionsetup{font=small, labelfont=bf}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins}
+
+\newtcolorbox{infobox}[1][]{
+  enhanced, breakable, colback=blue!3, colframe=linkblue,
+  boxrule=0.5pt, arc=2pt, left=4pt, right=4pt, top=4pt, bottom=4pt,
+  fonttitle=\bfseries, title=#1
+}
+
+\newtcolorbox{quotebox}{
+  enhanced, breakable, colback=gray!5, colframe=gray!40,
+  boxrule=0.3pt, arc=1pt, left=8pt, right=8pt, top=4pt, bottom=4pt,
+  leftrule=2.5pt
+}
+
+\newtcolorbox{warningbox}[1][]{
+  enhanced, breakable, colback=red!3, colframe=rulered,
+  boxrule=0.5pt, arc=2pt, left=4pt, right=4pt, top=4pt, bottom=4pt,
+  fonttitle=\bfseries, title=#1
+}
+
+% ---------- 코드 ----------
+\usepackage{listings}
+% 한글이 포함된 코드 블록을 위해 main 폰트를 monospace로 살짝 사용
+\newfontfamily\listingfont{NotoSansCJK-Regular.ttc}[
+  Path=/usr/share/fonts/opentype/noto/,
+  Extension=.ttc,
+  UprightFont=NotoSansCJK-Regular,
+  BoldFont=NotoSansCJK-Bold,
+  Scale=0.85
+]
+\lstset{
+  basicstyle=\listingfont\small,
+  backgroundcolor=\color{codebg},
+  frame=single,
+  rulecolor=\color{codeframe},
+  breaklines=true,
+  breakatwhitespace=true,
+  showstringspaces=false,
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  numbersep=6pt,
+  xleftmargin=2em
+}
+
+% ---------- 헤더 / 푸터 ----------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\nouppercase{\leftmark}}
+\fancyhead[R]{\small\thepage}
+\fancyfoot[C]{\small PlanitAI Internal --- PINN Research Compilation}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Chapter / Section 한글 이름
+\renewcommand{\contentsname}{목차}
+\renewcommand{\chaptername}{Chapter}
+\renewcommand{\bibname}{참고문헌}
+\renewcommand{\appendixname}{부록}
+
+% ---------- 의미 매크로 ----------
+\newcommand{\pinn}{\textsc{Pinn}}
+\newcommand{\langpinn}{\textsc{Lang-Pinn}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\arxivid}[1]{\href{https://arxiv.org/abs/#1}{arXiv:#1}}
+
+% ============================================================
+%  Document
+% ============================================================
+\begin{document}
+
+% ---------- 표지 ----------
+\begin{titlepage}
+\centering
+\vspace*{2.5cm}
+
+{\Huge\bfseries PINN Hot Papers in Hemodynamics and Methodology \par}
+\vspace{0.4cm}
+{\Large\bfseries 2025년 후반 \textendash{} 2026년 5월 동향 보고서 \par}
+
+\vspace{0.6cm}
+\rule{12cm}{0.5pt}
+\vspace{0.6cm}
+
+{\large\itshape with Lang-PINN deep-dive and multi-domain extensions \par}
+
+\vspace{2.5cm}
+
+\begin{tabular}{rl}
+\textbf{Compiled for:} & Crowdy (CTO, PlanitAI) \\[4pt]
+\textbf{Compiled by:}  & Claude (Anthropic) --- Opus 4.7 \\[4pt]
+\textbf{Date:}         & 2026년 5월 20일 \\[4pt]
+\textbf{Scope:}        & 대화 전체 + Deep Research 원본 \\[4pt]
+\textbf{Class:}        & 내부 자료 (Internal) \\
+\end{tabular}
+
+\vspace{2cm}
+
+\begin{infobox}[About this document]
+이 문서는 Crowdy와 Claude의 대화 세션(2026년 5월 20일)에서 진행된 PINN 관련 리서치를 LaTeX로 정리한 것입니다. 본문은 다음 5개 챕터로 구성되어 있습니다.
+\begin{itemize}
+\item Chapter 1: 대화 흐름 요약 (Conversation Timeline)
+\item Chapter 2: PINN 핫 페이퍼 종합 리포트 (Deep Research Output)
+\item Chapter 3: \langpinn{} 첫 번째 해설
+\item Chapter 4: \langpinn{} 심화 해설 — Architecture, Math, Critique
+\item Chapter 5: \langpinn{}의 혈류 외 응용 도메인
+\end{itemize}
+\end{infobox}
+
+\vfill
+{\small\textcopyright{} 2026 PlanitAI. AI-assisted compilation.\par}
+\end{titlepage}
+
+% ---------- 목차 ----------
+\tableofcontents
+\clearpage
+
+% ============================================================
+\chapter{대화 흐름 요약 (Conversation Timeline)}
+% ============================================================
+
+이 챕터는 본 리서치 세션에서 Crowdy(사용자)와 Claude(AI assistant) 사이에 오간 질문과 답변의 흐름을 시간 순으로 정리한 것입니다. 각 단계의 의도와 결과가 후속 챕터로 어떻게 연결되는지 보여주는 메타 레벨 트레이스(meta-level trace)입니다.
+
+\section{Step 0 --- 초기 질문}
+
+\begin{quotebox}
+\textbf{Crowdy:} 올해 나온 \pinn{} 논문중 가장 핫한 논문 리스트를 알려줘. 나는 특히 혈류분석에 \pinn{}을 사용하는 방법에 관심이 있어.
+\end{quotebox}
+
+Claude는 본격적인 리서치 전에 범위를 좁히기 위해 세 가지를 확인했습니다:
+\begin{enumerate}
+\item ``올해''의 범위 --- 2026년만 vs. 2025년 후반 포함
+\item 혈류분석의 초점 영역 (뇌동맥류, 관상동맥, 대동맥 등)
+\item 논문 성격 (방법론적 신규성 vs. 임상 응용)
+\end{enumerate}
+
+\section{Step 1 --- 범위 확정}
+
+\begin{quotebox}
+\textbf{Crowdy:}
+\begin{enumerate}
+\item 2025년 말부터
+\item 모두
+\item 방법론적 신규성
+\end{enumerate}
+\end{quotebox}
+
+이 답변을 바탕으로 Claude는 extended search task를 실행했습니다. 검색 대상은 arXiv (cs.LG, physics.flu-dyn, physics.med-ph, q-bio.QM), Google Scholar, NeurIPS 2025 / ICLR 2026 / AAAI 2026, 그리고 주요 저널들(JCP, CMAME, Nature Machine Intelligence, Computers in Biology and Medicine, Medical Image Analysis, IEEE TMI, Computers \& Fluids)이었습니다.
+
+\section{Step 2 --- Deep Research 결과 산출}
+
+리서치 결과는 Chapter 2에 전체 수록되어 있습니다. 주요 발견 사항:
+\begin{itemize}
+\item \textbf{Tier 1 (혈류 PINN)} 12편 식별
+\item \textbf{Tier 2 (일반 방법론)} 12편 식별
+\item 결정적 3편: PINGS-X (AAAI 2026), Lannelongue et al.\ (npj Digital Medicine), PUNCH (\arxivid{2601.17192})
+\item 방법론 핵심 흐름: 2차 최적화/SOAP, PIKAN 정착, LLM 멀티에이전트, 동적 도메인 분해
+\end{itemize}
+
+\section{Step 3 --- \langpinn{} 후속 질문}
+
+\begin{quotebox}
+\textbf{Crowdy:} ``LLM 에이전트가 PINN 개발 루프에 진입 (Lang-PINN\ldots)'' --- 이 내용을 좀 더 자세히 설명해줘.
+\end{quotebox}
+
+Claude는 \arxivid{2510.05158}을 fetch하고 4-agent 아키텍처의 동작 원리를 정리했습니다. Chapter 3에 수록.
+
+\section{Step 4 --- \langpinn{} 심화 요청}
+
+\begin{quotebox}
+\textbf{Crowdy:} \langpinn{}에 대해 좀 더 자세하게 설명해줘.
+\end{quotebox}
+
+Claude는 OpenReview에서 논문 PDF 전체를 fetch하여 sibling system 비교, Bradley-Terry 수학적 디테일, Task2PDE의 구체 예시, 14개 PDE per-PDE 결과, multi-agent design pattern 6개까지 심화 분석을 수행했습니다. Chapter 4에 수록.
+
+\section{Step 5 --- 도메인 확장 탐색}
+
+\begin{quotebox}
+\textbf{Crowdy:} \langpinn{}을 혈류 시뮬레이션 CFD 이외의 다른 영역에서 사용한다면 어떤 영역을 예로 들 수 있을까?
+\end{quotebox}
+
+Claude는 PINNacle 호환성과 일본 산업 적합성을 기준으로 10개 도메인을 3-tier로 분류했습니다. Chapter 5에 수록.
+
+\section{Step 6 --- 본 문서 컴파일 요청}
+
+마지막 단계로 Crowdy가 전체 대화와 리서치 결과를 LaTeX 파일로 컴파일해서 외부 서버에 업로드 요청. Claude는 외부 도메인 접근 제약과 보안 우려를 설명하고 로컬 파일 생성 + 다운로드 옵션을 제시. 옵션 선택 결과:
+\begin{itemize}
+\item Document class: \textbf{report}
+\item Scope: \textbf{대화 전체 + research 원본}
+\item Language: \textbf{한국어 우선 (kotex, 나눔글꼴)}
+\end{itemize}
+이 문서가 그 산출물입니다.
+
+% ============================================================
+\chapter{PINN 핫 페이퍼 종합 리포트}
+% ============================================================
+
+이 챕터는 Deep Research가 산출한 원본 리포트 전체입니다. 형식과 인용은 원본을 유지하며, 한국어 표기와 약간의 조판만 조정했습니다.
+
+\section{TL;DR}
+
+\begin{itemize}
+\item \textbf{혈류(Tier 1)의 결정적 3편}: 이 기간의 가장 주목할 \pinn{} 혈류 논문은
+\begin{enumerate}
+\item \textbf{PINGS-X} (Hanyang University, AAAI 2026) --- 4D Flow MRI 초해상화에서 환자별 \pinn{} 학습 병목을 axes-aligned Gaussian Splatting 표현으로 대체
+\item \textbf{Lannelongue et al.} (MINES Paris/PSL, npj Digital Medicine 9:212, 06 Feb 2026) --- 물리 제약 GNN으로 두개내동맥류 혈역학을 실시간(GPU 1장에서 약 1분/심장박동주기) 예측하고 BenchAnXplore (105 환자 geometry) 벤치마크 공개
+\item \textbf{PUNCH} (AngioInsight + UCLA + U.\ Michigan + UC Riverside, \arxivid{2601.17192}, v2 Feb 2026) --- variational inference 결합 \pinn{}으로 표준 관상동맥 조영술만으로 CFR을 비침습 추정(GPU 1장에서 약 3분/환자)
+\end{enumerate}
+
+\item \textbf{방법론(Tier 2) 핵심 흐름}: 2025\textendash 2026년 \pinn{} 방법론은
+\begin{enumerate}
+\item \textbf{2차 최적화/그래디언트 정렬} (NeurIPS 2025의 Sifan Wang--Paris Perdikaris, SOAP optimizer로 Re=10{,}000 난류 최초 달성)
+\item \textbf{PIKAN(KAN backbone) 정착} (Dzimah et al.\ \arxivid{2602.15068}, 통제 실험에서 MLP-\pinn{} 능가)
+\item \textbf{LLM 멀티에이전트 자동화} (\langpinn{}, ICLR 2026 submission)
+\item \textbf{동적 도메인 분해} (AB-PINNs, MERL+Cornell)로 수렴
+\end{enumerate}
+
+\item \textbf{CTO 의사결정 권고}: 임상/제품화는 PUNCH·Lannelongue·PINGS-X 라인이 가장 빠른 경로(분\textasciitilde{}10분 단위 추론, 환자별 retraining 불필요). 내부 PDE 솔버 인프라는 \textbf{SOAP 옵티마이저 + AB-PINN 동적 도메인 분해 + PIKAN 백본}의 3축 표준화가 가장 위험-보상비가 우수.
+\end{itemize}
+
+\section{Key Findings}
+
+\begin{enumerate}
+\item \textbf{혈류 \pinn{}은 ``환자별 재학습'' 병목을 깨는 방향으로 급격히 이동.} 전통 \pinn{}은 환자당 수 시간 학습이 필요했으나, 2025년 말부터 (a) 명시적 표현(PINGS-X의 4D Gaussian Splatting), (b) 그래프 신경 연산자(Lannelongue GNN), (c) \pinn{}/PINO 결합(Coronary FFR 리뷰 by Tanxin Zhu·Weihua Zhou)이 임상 시계열(분 단위)에 도달.
+
+\item \textbf{Inverse 혈류 문제에서 불확실성 정량화(UQ)가 표준}이 되는 중. PUNCH가 KL-regularized variational posterior와 100회 Monte Carlo 샘플로 신뢰구간을 산출하는 것은, FDA·CE 인증의 가장 큰 장벽인 ``calibration \& gatekeeping''을 정면 해결한 사례.
+
+\item \textbf{2026년 초 \pinn{} 학습 이론의 결정적 진전은 그래디언트 충돌 해소.} Sifan Wang(Yale Institution for Foundation of Data Science) + Ananyae Kumar Bhartari + Paris Perdikaris(UPenn MEAM)의 NeurIPS 2025 SOAP 결과는, 수년간 정체되어 있던 ``PINN은 turbulent flow를 못 푼다''는 한계를 처음으로 Re=$10^4$까지 해소.
+
+\item \textbf{PIKAN(Physics-Informed Kolmogorov-Arnold Networks)이 MLP-\pinn{} 대비 우위가 통제 실험으로 검증}됨 (Dzimah et al., MIT+UCM, \arxivid{2602.15068}, Feb 14, 2026). 동일 파라미터 예산에서 PIKAN이 더 높은 정확도·더 적은 iteration·더 좋은 gradient 추정.
+
+\item \textbf{LLM 에이전트가 \pinn{} 개발 루프에 진입} (\langpinn{}, \arxivid{2510.05158}, ICLR 2026 submission): 자연어 $\rightarrow$ PDE $\rightarrow$ 아키텍처 $\rightarrow$ 코드 $\rightarrow$ 디버깅의 4-에이전트 파이프라인.
+
+\item \textbf{CT 기반 혈류 추정의 패러다임이 ``이미지 후처리''에서 ``raw sinogram 직접 학습''으로 전환} (SinoFlow, UCSD Bioengineering, \arxivid{2511.03876}): 시간 의존 Radon 변환을 \pinn{} 손실에 내장.
+
+\item \textbf{Architectural physics embedding의 부상}: soft loss만이 아니라 fundamental solution이나 integrator를 아키텍처에 하드 임베딩 (Zhang--Ye--Ma의 PE-\pinn{}, \arxivid{2603.02231}; Point Neuron Learning; HRPINN).
+\end{enumerate}
+
+\section{Tier 1: 혈류·심혈관 PINN (Late 2025 -- May 2026)}
+
+\subsection{PINGS-X --- Physics-Informed Normalized Gaussian Splatting for 4D Flow MRI Super-Resolution (AAAI 2026)}
+
+\begin{description}
+\item[arXiv] \arxivid{2511.11048} (Nov 14, 2025; revised Jan 13, 2026)
+\item[Authors / Institution] Sun Jo, Seok Young Hong, Jinhyun Kim, Seungmin Kang, Ahjin Choi, Don-Gwan An, Simon Song, Je Hyeong Hong --- 주로 \textbf{Hanyang University (서울)}, 일부 NTU Singapore.
+\item[혁신] 기존 \pinn{} 기반 4D Flow MRI 초해상화의 핵심 단점은 환자별로 \pinn{}을 재학습해야 한다는 점. PINGS-X는 3D Gaussian Splatting(3DGS)에서 영감을 얻어 시공간을 \textbf{axes-aligned 4D 정규 Gaussian 집합}으로 명시적으로 표현하고, normalization + 축 정렬 제약 + Navier-Stokes 일관성 손실을 결합. 결과: 합성/실측 4D Flow MRI 양쪽에서 \pinn{}-SR 베이스라인 대비 학습 시간이 크게 단축되면서 carotid artery의 fine-scale 유동 재현 향상.
+\item[임상 의의] 협착/동맥류 위험 지표(WSS, vorticity) 추출용 high-res 4D Flow를 짧은 스캔 시간으로 확보, 임상 워크플로에 통합 가능.
+\item[Link] \url{https://arxiv.org/abs/2511.11048}
+\end{description}
+
+\subsection{Lannelongue et al.\ --- Physics-Constrained GNN for Real-Time Intracranial Aneurysm Hemodynamics}
+
+\begin{description}
+\item[DOI] 10.1038/s41746-026-02404-z, \textbf{npj Digital Medicine vol.\ 9, article no.\ 212, published 06 February 2026}
+\item[Authors / Institution] Vincent Lannelongue, Paul Garnier, Pablo Jeken-Rico, Aurèle Goetz, Philippe Meliga, Yves Chau, Elie Hachem --- \textbf{MINES Paris, PSL University, CEMEF}
+\item[혁신] 환자별 두개내동맥류 혈역학(속도장·WSS·OSI)을 그래프 신경망 위에 Navier-Stokes 기반 물리 제약 손실을 부과해 학습. \textbf{``BenchAnXplore'' --- 105 환자 동맥류 geometry와 CFD 정답 필드의 대규모 벤치마크 데이터셋 공개} (per follow-up \arxivid{2512.09013}). CFD 대비 약 $200\times$ 속도(64 CPU 시간 단위 $\rightarrow$ GPU 1장에서 약 1분/심장박동주기).
+\item[임상 의의] 두개내동맥류 파열 위험 평가(SAWSS 등)를 실시간으로 환자별 산출 가능. 수술적 결정(coil/stent) in-loop 활용 가능성.
+\item[Link] \url{https://www.nature.com/articles/s41746-026-02404-z}
+\item[Follow-up] 동일 그룹의 \arxivid{2512.09013} --- 51M 파라미터 transformer-GNN, 약 28.5억 node-timestep 학습; 전체 파이프라인(segmentation\textrightarrow{}meshing\textrightarrow{}inference) 10분 미만.
+\end{description}
+
+\subsection{PUNCH --- Physics-Informed Uncertainty-Aware Network for Coronary Hemodynamics}
+
+\begin{description}
+\item[arXiv] \arxivid{2601.17192} (Jan 2026; v2 Feb 7, 2026)
+\item[Authors / Institution] Sukirt Thakur (\textbf{AngioInsight Inc., lead}), Marcus Roper (UCLA), Yang Zhou, Dmitry Yu.\ Isaev, Reza Akbarian Bafghi (CU Boulder), Brahmajee K.\ Nallamothu (U.\ Michigan), C.\ Alberto Figueroa (U.\ Michigan), Srinivas Paruchuri, Scott Burger, Carlos Collet (Cardiovascular Research Foundation, NY), \textbf{Maziar Raissi (UC Riverside)}
+\item[혁신] \textbf{표준 관상동맥 조영술 영상만으로 coronary flow reserve(CFR)을 비침습 추정} --- invasive pressure wire 불요. \pinn{}으로 조영제(contrast) 이동의 first-principles 방정식(intravascular tracer dynamics)을 풀고, \textbf{variational inference} (posterior $q_\phi(z) = \mathcal{N}(\mu, \text{diag}(\sigma^2))$를 표준정규분포에 KL 발산으로 정규화)를 결합. 100회 Monte Carlo 샘플로 CFR 신뢰구간 산출. 환자당 population-level 학습 불필요. 합성 조영술 + 환자 20명 bolus thermodilution 데이터로 검증.
+\item[임상 의의] 허혈성 심장 질환 평가 환자의 약 70\%에서 obstructive lesion이 발견되지 않으며 그 절반이 미진단 coronary microvascular dysfunction(CMD). PUNCH는 routine 조영술 데이터에서 CMD를 정량화하는 첫 \pinn{} 솔루션. 여성 환자군의 진단 격차 해소 가능성.
+\item[Link] \url{https://arxiv.org/abs/2601.17192}
+\end{description}
+
+\subsection{DCP-INN --- Dual-Correction PINN for Hemodynamic Reconstruction from Sparse Data}
+
+\begin{description}
+\item[arXiv] \arxivid{2605.12544} (May 9, 2026)
+\item[Authors] Jingtai Song, Qinsheng Zhu, Xiaodong Xing, Yufeng Tang, Zhiyun Zhang, Xianwen Zhang, Hao Wu (중국 기반 그룹; 추정 UESTC)
+\item[혁신] 두개내 internal carotid artery의 \textbf{고도로 굴곡진(tortuous) geometry}에서 sparse 측정(transcranial Doppler / CTA)만으로 전체 유동장 복원. (1) \textbf{diamond-shaped main network}가 low-frequency 물리 추세를, (2) \textbf{wide-deep correction network}가 high-frequency 잔차를 병렬 보정. (3) \textbf{causal decoupling} 학습 전략 + 고차 Taylor 전개 기반 물리 손실로 local 연속성 강화.
+\item[Link] \url{https://arxiv.org/abs/2605.12544}
+\end{description}
+
+\subsection{SinoFlow --- CT Sinogram-Based PINN for Cardiovascular Flow Estimation}
+
+\begin{description}
+\item[arXiv] \arxivid{2511.03876} (Nov 2025)
+\item[Authors / Institution] Jinyuxuan Guo (\textbf{UCSD Bioengineering}), Gurnoor Singh Khurana (UCSD CSE), Alejandro Gonzalo Grande (UW Mech.\ Eng.), Juan C.\ del Alamo (UW), \textbf{Francisco Contijoch} (UCSD)
+\item[혁신] \pinn{}을 재구성 이미지(FBP 결과)에 적용하던 ImageFlow 패러다임을 깨고, \textbf{CT의 forward acquisition 모델(시간 가변 Radon 변환)을 \pinn{} 손실 안에 직접 내장}. raw sinogram에서 직접 속도장 추정 $\rightarrow$ reconstruction artifact가 유동 추정을 오염시키는 문제 우회. Gantry rotation 속도·tube current·pulse mode 변동에 강건. 2D 이상화 vessel bifurcation에서 시뮬레이션 검증.
+\item[Link] \url{https://arxiv.org/abs/2511.03876}
+\end{description}
+
+\subsection{Imaging-Derived Coronary FFR / PINN-PINO 리뷰}
+
+\begin{description}
+\item[arXiv] \arxivid{2602.16000} (Feb 17, 2026)
+\item[Authors / Institution] Tanxin Zhu (lead), Emran Hossen, Chen Zhao, Michele Esposito, Jiguang Sun, \textbf{Weihua Zhou (senior)} --- \textbf{Michigan Technological University}
+\item[내용] CT/조영술 기반 imaging-derived FFR에서 CFD $\rightarrow$ ML/DL $\rightarrow$ \pinn{}/PINO로의 진화를 종합. \textbf{deployment-oriented 지표(calibration, UQ, quality-control gatekeeping)}를 임상 적용의 필수 조건으로 명시.
+\item[Link] \url{https://arxiv.org/abs/2602.16000}
+\end{description}
+
+\subsection{Hematocrit-Dependent Rheology PINN for 4D-Flow MRI}
+
+\begin{description}
+\item[arXiv] \arxivid{2508.03326} (Aug 5, 2025)
+\item[Authors / Institution] Moises Sierpe, Ernesto Castillo (\textbf{Universidad de Santiago de Chile}), Hernán Mella (PUC Valparaíso), \textbf{Felipe Galarce} (PUC Valparaíso, corresponding)
+\item[혁신] 환자별 aortic geometry + 합성 4D-flow MRI에서 \textbf{shear-thinning 비뉴턴 유동 + hematocrit 의존성}을 \pinn{}으로 동시 추정. \textbf{curriculum training + adaptive collocation points + adaptive loss balancing}의 3중 안정화. \textbf{압력 강하 추정 상대 오차 약 1\%}; vWERP와 결합해 super-sampled 고차 압력 추정.
+\item[Link] \url{https://arxiv.org/abs/2508.03326}
+\end{description}
+
+\subsection{Fast Inverse Blood Flow via PINNs (EPFL LHTC)}
+
+\begin{description}
+\item[arXiv] \arxivid{2604.03221} (Apr 2026)
+\item[Institution] \textbf{EPFL Laboratory of Hemodynamics and Cardiovascular Technology (LHTC)}
+\item[혁신] 1D arterial network에서 \textbf{단일 비침습 측정(brachial cuff pressure)} 만으로 8개 동맥 트리 전체를 단일 \pinn{}으로 inverse-solve. \textbf{Terminal resistance $R_T$와 compliance $C_T$를 학습 가능 파라미터}로 추가; 환자별 5\textendash 10분 학습.
+\item[Link] \url{https://arxiv.org/html/2604.03221}
+\end{description}
+
+\subsection{Physics-Informed Neural Operators for Cardiac Electrophysiology}
+
+\begin{description}
+\item[arXiv] \arxivid{2511.08418} (Nov 2025; PMLR 2026 accepted)
+\item[혁신] 심장 EP의 PDE를 \pinn{} 대신 \textbf{Fourier Neural Operator + 물리 손실}로 학습 --- mesh-resolution 일반화 가능, 새 IC/parameter 재학습 불필요. 3D EP 시뮬레이션에서 \pinn{} 대비 일반화 향상. Aliev-Panfilov cell model 검증.
+\item[Link] \url{https://arxiv.org/pdf/2511.08418}
+\end{description}
+
+\subsection{Physics-Informed Deep Learning Surrogates for AAA (PINN + DeepONet)}
+
+\begin{description}
+\item[HAL] hal-05191728 (late 2025/early 2026, Aix-Marseille A*MIDEX 과제)
+\item[혁신] AAA(복부대동맥류)에서 \pinn{} + DeepONet 결합. 3D Navier-Stokes 기반 \pinn{}을 환자별 학습 후, physics-informed DeepONet으로 새 boundary condition에 instant 적응.
+\item[Link] \url{https://hal.science/hal-05191728/document}
+\end{description}
+
+\subsection{Physics-Informed GNN for Carotid Artery Flow Field Estimation}
+
+\begin{description}
+\item[arXiv] \arxivid{2408.07110} (v2 Feb 20, 2026)
+\item[Authors] Julian Suk et al.\ (Twente / UMC Utrecht)
+\item[혁신] PointNet++ + SE(3)-steerable layers의 group-equivariant 그래프 네트워크. \textbf{4D Flow MRI 학습 데이터의 노이즈를 물리 손실로 정규화}하며 unseen carotid geometry에 일반화.
+\item[Link] \url{https://arxiv.org/abs/2408.07110}
+\end{description}
+
+\subsection{Hybrid CFD-PINN-FSI for Coronary Trees (FFR/WSS)}
+
+MDPI Fluids 9(12):280 (2024)와 2025 후속 thoracoabdominal aneurysm 연구. \textbf{혁신}: 1D \pinn{}으로 outlet boundary condition 계산 $\rightarrow$ 3D FSI에 주입하는 hybrid 파이프라인.
+
+\section{Tier 2: 일반 PINN 방법론 핫 페이퍼 (Late 2025 -- May 2026)}
+
+\subsection{Gradient Alignment via Quasi-Second-Order Optimization (SOAP) --- NeurIPS 2025}
+
+\begin{description}
+\item[arXiv] \arxivid{2502.00604}; \textbf{NeurIPS 2025 poster \#116510}
+\item[Authors / Institution] Sifan Wang (\textbf{Yale Institution for Foundation of Data Science}), Ananyae Kumar Bhartari, \textbf{Paris Perdikaris} (\textbf{UPenn MEAM}), 외
+\item[혁신] \pinn{} 학습의 핵심 병목인 \textbf{loss term 간 그래디언트 충돌}을 정량화하는 \textbf{gradient alignment score} 도입; \textbf{quasi-second-order 옵티마이저(특히 SOAP)}가 명시적 loss weighting 없이 충돌을 해소함을 이론·실험으로 입증. ``state-of-the-art results on 10 challenging PDE benchmarks, including the first successful application of \pinn{}s to turbulent flows at Reynolds numbers up to 10{,}000''.
+\item[Why notable] \pinn{}의 ``stiff PDE에서 안 된다''는 가장 강한 비판을 정면 격파.
+\item[Link] \url{https://arxiv.org/abs/2502.00604}
+\end{description}
+
+\subsection{PIKAN vs PINN Unified Benchmark}
+
+\begin{description}
+\item[arXiv] \arxivid{2602.15068} (Feb 14, 2026)
+\item[Authors / Institution] \textbf{Salvador K.\ Dzimah (MIT)}, Sonia Rubio Herranz, Fernando Carlos López Hernández, Antonio López Montes (\textbf{Universidad Complutense de Madrid})
+\item[혁신] 동일 파라미터 예산·동일 물리 손실 하에 MLP-\pinn{} vs \textbf{Physics-Informed Kolmogorov-Arnold Networks(PIKANs)} 통제 비교. PIKAN이 \textbf{더 적은 iteration으로 더 높은 정확도 + 더 정확한 gradient 추정} --- 특히 oscillatory·sharp-gradient 문제에서 차이가 크다.
+\item[Link] \url{https://arxiv.org/abs/2602.15068}
+\end{description}
+
+\subsection{\langpinn{} --- LLM Multi-Agent PINN Builder (ICLR 2026 submission)}
+
+\begin{description}
+\item[arXiv] \arxivid{2510.05158} (Oct 3, 2025)
+\item[혁신] \textbf{자연어 task description $\rightarrow$ PDE 추출(PDE Agent) $\rightarrow$ 아키텍처 선택(PINN Agent) $\rightarrow$ 코드 생성(Code Agent) $\rightarrow$ 디버깅(Feedback Agent)}의 4-에이전트 LLM 파이프라인.
+\item[Link] \url{https://arxiv.org/abs/2510.05158}
+\end{description}
+
+\subsection{AB-PINNs --- Adaptive-Basis Residual-Driven Domain Decomposition}
+
+\begin{description}
+\item[arXiv] \arxivid{2510.08924} (Oct 10, 2025)
+\item[Authors / Institution] Jonah Botvinick-Greenhouse (Cornell), Wael H.\ Ali (\textbf{MERL}), Mouhacine Benosman, Saviz Mowlavi (MERL, co-corresponding)
+\item[혁신] 도메인 분해를 \textbf{고정 분할(XPINN 등)이 아니라 학습 중 residual loss가 높은 곳에 동적으로 새 서브도메인을 spawning}.
+\item[Link] \url{https://arxiv.org/abs/2510.08924}
+\end{description}
+
+\subsection{Architectural Physics Embedding for Wave Field Reconstruction}
+
+\begin{description}
+\item[arXiv] \arxivid{2603.02231} (Feb 13, 2026)
+\item[Authors] Huiwen Zhang, Feng Ye, Chu Ma
+\item[혁신] Helmholtz 방정식의 fundamental solution(점원 응답)을 \textbf{네트워크 아키텍처에 하드 임베딩}.
+\item[Link] \url{https://arxiv.org/abs/2603.02231}
+\end{description}
+
+\subsection{P-PINN --- Selective Pruning for Noisy Inverse Problems}
+
+\begin{description}
+\item[arXiv] \arxivid{2602.19967} (Feb 2026)
+\item[Authors / Institution] Zhejiang University + University of Pennsylvania (Y.\ Chen) + Texas Tech
+\item[혁신] 학습 후 \textbf{activation-level post-hoc pruning(일종의 ``machine unlearning'')}으로 noisy data로부터 학습한 spurious feature 제거. PDE inverse-problem 벤치마크에서 베이스라인 \pinn{} 대비 \textbf{최대 96.6\% 상대 오차 감소}.
+\end{description}
+
+\subsection{Diffusion Models with Physics-Guided Inference}
+
+\begin{description}
+\item[arXiv] \arxivid{2604.01242} (Apr 2026)
+\item[혁신] 확산 모델(diffusion model)의 reverse process에 \textbf{\pinn{}-style PDE residual을 guidance로 주입}.
+\end{description}
+
+\subsection{Rethinking Input Domains via Geometric Compactification Mappings}
+
+\begin{description}
+\item[arXiv] \arxivid{2602.16193} (Feb 2026)
+\item[혁신] \pinn{}에서 무한·반무한 도메인을 다루는 표준 해법(절단/패딩)을 \textbf{conformal/diffeomorphic compactification mapping}으로 대체.
+\end{description}
+
+\subsection{HyResPINNs --- Hybrid Residual PINN with Adaptive Function Spaces}
+
+\begin{description}
+\item[arXiv] \arxivid{2410.03573} (v2 late 2025)
+\item[혁신] 고정 basis(Fourier/RBF) 또는 고정 도메인 분해가 아니라 \textbf{학습 중 expressive function space 자체를 동적으로 확장}.
+\end{description}
+
+\subsection{Learnable Loss Balancing + Transfer Learning PINN (ICLR 2026 submission)}
+
+\begin{description}
+\item[OpenReview] 1dNbK58bB9 (Sept 20, 2025 modified Oct 8, 2025)
+\item[혁신] 손실 항의 가중치를 \textbf{learnable blending neuron}으로 처리 + transfer learning. CFD 87 데이터 포인트에서 $<$8\% 오차 달성.
+\end{description}
+
+\subsection{Training Deep Physics-Informed Kolmogorov-Arnold Networks}
+
+\begin{description}
+\item[arXiv] \arxivid{2510.23501} (Oct 2025)
+\item[혁신] 깊은 PIKAN의 학습 실패 원인 분석 + \textbf{basis-agnostic Glorot-like 초기화 스킴} 제안.
+\end{description}
+
+\subsection{Saddle-Point Reformulation for PINN Stability}
+
+\begin{description}
+\item[arXiv] \arxivid{2507.16008} (2025)
+\item[혁신] 손실 가중치 $\pi$를 외부 하이퍼파라미터가 아닌 \textbf{min-max saddle-point 게임}으로 재정의.
+\end{description}
+
+\section{관찰된 트렌드}
+
+\begin{enumerate}
+\item \textbf{임상에서의 ``환자별 retraining 제거''}: GNN / operator learning / explicit representation 3가지 경로로 \pinn{}의 가장 큰 임상 장벽 제거.
+\item \textbf{UQ가 default}: PUNCH의 variational inference, \$PINN의 Bayesian domain decomposition, Causal Inverse \pinn{} 등.
+\item \textbf{2차 최적화의 부활}: SOAP/Newton류가 \pinn{}의 stiff/turbulent 한계를 깸.
+\item \textbf{KAN의 정착}: PIKAN/cPIKAN이 MLP 백본 대비 우위로 확립.
+\item \textbf{LLM이 \pinn{} 개발 루프에 진입}: \langpinn{} 등으로 PDE 명세\textrightarrow{}코드 자동화.
+\item \textbf{Architectural physics embedding 부상}.
+\item \textbf{혈류 특이 흐름}: (a) 4D Flow MRI super-resolution의 GS 전환, (b) raw signal 학습(SinoFlow), (c) variational inference 기반 inverse 솔루션 표준화(PUNCH).
+\end{enumerate}
+
+\section{Recommendations (CTO 관점)}
+
+\subsection*{Stage 1 --- 0\textendash 3개월: 내부 기준선 정립}
+\begin{itemize}
+\item \textbf{\pinn{} 학습 인프라 표준화}: \textbf{SOAP 옵티마이저 + AB-PINN 동적 도메인 분해 + PIKAN(Chebyshev) 백본}의 3축
+\item \textbf{UQ를 기본값으로}: variational inference 또는 BPINN으로 신뢰구간 동반 출력
+\item \textbf{기준 데이터셋 확보}: BenchAnXplore --- 105 두개내동맥류 CFD 벤치마크
+\end{itemize}
+
+\subsection*{Stage 2 --- 3\textendash 9개월: 제품 라인 선택}
+\begin{itemize}
+\item \textbf{하나의 임상 use-case 선택}: PUNCH (관상동맥 CFR) 또는 Lannelongue GNN (두개내동맥류)
+\item \textbf{PINGS-X 패턴 채용}: 자체 4D Flow MRI 파이프라인이 있다면 axes-aligned Gaussian Splatting으로 전환
+\end{itemize}
+
+\subsection*{Stage 3 --- 9\textendash 18개월: 차세대 R\&D}
+\begin{itemize}
+\item \textbf{Foundation \pinn{} 검토}
+\item \textbf{LLM 에이전트화}: \langpinn{} 패턴
+\item \textbf{Architectural physics embedding 실험}
+\end{itemize}
+
+\subsection*{의사결정 임계값 (벤치마크)}
+\begin{itemize}
+\item 환자별 추론 시간 \textbf{$>$5분이면} GS/operator learning으로 즉시 전환
+\item WSS/FFR 추정 calibration \textbf{ECE $>$ 0.1이면} UQ 미탑재로 간주, 임상 사용 보류
+\item Stiff/turbulent PDE에서 \pinn{}이 발산하면 \textbf{SOAP 옵티마이저 우선 시도}
+\end{itemize}
+
+\section{Caveats}
+
+\begin{warningbox}[원본 리서치의 caveat 섹션]
+\begin{enumerate}
+\item \textbf{arXiv preprint 비중이 큼}: 2026년 1\textendash 5월의 많은 논문이 peer review 통과 전.
+\item \textbf{임상 검증 한계}: PUNCH는 환자 20명; Lannelongue BenchAnXplore는 105 geometry. 다기관 prospective trial은 모두 미진행.
+\item \textbf{\pinn{}의 근본 한계가 완전히 해결된 것은 아님}: turbulent flow $Re > 10^4$는 여전히 도전 영역.
+\item \textbf{AAAI 2026·ICLR 2026 일부 논문은 acceptance 미확정}.
+\item \textbf{DCP-INN의 소속 불확실}.
+\item \textbf{PUNCH는 산업체 주도}.
+\item \textbf{혈류 \pinn{} 리뷰 논문} (ScienceDirect S0952197625028659)이 본 보고서에 부분적 기반.
+\item ``$200\times$ 속도'' 등 수치는 저자 보고 기준이며 production end-to-end는 다를 수 있음.
+\end{enumerate}
+\end{warningbox}
+
+% ============================================================
+\chapter{Lang-PINN 첫 번째 해설}
+% ============================================================
+
+\section{왜 이 논문이 중요한가 --- 해결하려는 문제}
+
+기존 LLM 기반 \pinn{} 자동화 도구들(CodePDE, PINNsAgent 등)의 공통 가정은 \textbf{``PDE는 이미 formal하게 주어진다''}였습니다. 즉 사용자가 $\partial_t u = \kappa \partial_{xx} u$ 같은 형식으로 방정식을 적어줘야 하고, LLM은 그 다음 단계(아키텍처 선택, 코드 생성)만 도와줍니다.
+
+저자들은 이 가정이 깨질 때 무슨 일이 벌어지는지 통제 실험으로 증명합니다. PINNacle 벤치마크에서 8개 PDE를 뽑아 동일한 PDE를 4단계의 언어 표현 변이(level 1 = 논문체, level 4 = 흩어진 lab notebook 노트)로 다시 쓴 1{,}600개 description-PDE pair 데이터셋 \textbf{Task2PDE}를 만들고 Llama2, Vicuna, DeepSeek-V3, Qwen으로 테스트하면, \textbf{언어가 자연스러워질수록 PDE 추출의 symbolic equivalence가 가파르게 떨어집니다.}
+
+이게 문제인 이유: 과학자가 ``열원이 도메인 중심에서 경계로 이동했다''고 자연어로 말하면 source term + BC + spatial dependence 3개가 동시에 바뀌어야 하는데, 이 manual translation이 전체 \pinn{} 워크플로의 가장 큰 병목입니다. \langpinn{}은 \textbf{이 upstream 단계까지 자동화하는 첫 end-to-end 시스템}입니다.
+
+\section{4-Agent 아키텍처}
+
+전체 파이프라인은 sequential하게 흐르지만 Feedback Agent가 closed loop으로 upstream을 수정합니다. RACI 관점에서 보면 PDE Agent가 R(formulation), PINN Agent가 R(architecture), Code Agent가 R(implementation), Feedback Agent가 A(accountable for quality) + C/I(consulted/informed across all)의 역할.
+
+\subsection{Agent 1: PDE Agent --- Linguistic Variability를 격파하는 방법}
+
+핵심은 \textbf{K개의 CoT trajectory를 샘플링한 후 consensus voting}으로 정답을 정합니다.
+
+\begin{enumerate}
+\item \textbf{Reasoning--Selection 파이프라인}: 자연어 description $d$를 받으면, K개의 chain-of-thought를 독립적으로 sampling. 각 trajectory가 노이즈를 정리한 normalized description $\hat{d}_k$를 만들고 canonical PDE candidate $E_k$를 생성.
+\item \textbf{Template validation}: operator well-formedness, residual form, admissible BC/IC 조건으로 invalid candidate 필터링.
+\item \textbf{Symbolic Equivalence}: 각 후보 PDE를 Sympy로 AST로 파싱. 두 후보의 tree-matching score:
+\[
+\text{sym}(E_i, E_j) = \frac{|M(T(E_i), T(E_j))|}{\max(|T(E_i)|, |T(E_j)|)}
+\]
+\item \textbf{Semantic Consistency}: 각 후보를 normalized summary $g(E)$로 paraphrase한 후 embedding cosine similarity 또는 LLM entailment score로 비교.
+\item \textbf{Composite Score}: $S(E_i, E_j) = \alpha \cdot \text{sym} + (1-\alpha) \cdot \text{sem}$. 0.80 threshold가 calibrated 값.
+\end{enumerate}
+
+\subsection{Agent 2: PINN Agent --- Training-Free Architecture Selection}
+
+저자들이 사전 실험으로 보여준 핵심 관찰: \textbf{어떤 아키텍처도 모든 PDE에서 우수하지 않다.}
+
+방식은 history reuse + knowledge-guided matching의 2단계:
+
+\textbf{1) PDE Feature Vector $\phi(E)$ (3차원)}
+\begin{itemize}
+\item \textbf{Periodicity} $f_{per}(E) = |P(E)|/d$
+\item \textbf{Geometry complexity} $f_{geo}(E) = \text{clip}(0.6 c_\Omega + 0.4 c_{disc})$
+\item \textbf{Multi-scale demand} logistic 매핑
+\end{itemize}
+
+\textbf{2) Architecture Capability Vector $\psi(A)$ (3차원)}: \textbf{Bradley-Terry model}로 pairwise win-loss를 통한 ability parameter 추정. 두 측정의 분산으로 가중치 결정:
+\[
+\omega_k = \sigma^2_{Abs} / (\sigma^2_{Abs} + \sigma^2_{BT})
+\]
+
+\textbf{3) Matching}: $S(A, E) = (W\phi(E))^\top \psi(A) / (\|W\phi(E)\| \|\psi(A)\|)$ weighted cosine similarity.
+
+\subsection{Agent 3: Code Agent --- Modular Generation + PDE Loss Verification}
+
+핵심 통찰: \textbf{monolithic code generation은 한 번 실패하면 전체 재생성이 필요해서 fragile}. 6개 PDE 통제 실험에서 modular generation이 monolithic 대비 success rate 2배 이상.
+
+가장 영리한 부분은 \textbf{PDE loss verification}: 생성된 loss 코드를 다시 symbolic PDE $\hat{E}$로 parse-back해서 PDE Agent가 준 $E$와 equivalence를 체크.
+
+\subsection{Agent 4: Feedback Agent --- Closed Loop의 핵심}
+
+두 가지 모드로 작동:
+\begin{itemize}
+\item \textbf{Mode 1: Error localization}
+\item \textbf{Mode 2: Multi-dimensional quality evaluation} --- effectiveness, efficiency, robustness 평가
+\end{itemize}
+
+가중 합: $S(C) = \sum_i w_i \hat{m}_i(C)$
+
+\textbf{Iterative refinement}: $S(C^{(t)}) > S(C^{(t-1)})$이면 accept, 아니면 rollback.
+
+\section{실험 결과 정리}
+
+PINNacle 14개 PDE(1D\textasciitilde{}ND), DeepSeek-V3 backbone, 10 runs $\times$ 최대 30 refinement cycle.
+\begin{itemize}
+\item \textbf{MSE 감소}: KS·Poisson-MA·Heat-ND에서 \textbf{3 orders of magnitude 이상 감소}
+\item \textbf{Success rate}: 1D/2D에서 80\% 이상, 3D 75\%, ND 73-76\%
+\item \textbf{Iterations to first runnable}: 평균 8 iterations (worst baseline 31 대비 \textbf{74\% 감소})
+\item \textbf{Wall-clock time}: 평균 199.7초 (RandomAgent 413.5초의 \textbf{52\% 감소})
+\end{itemize}
+
+\textbf{Ablation별 기여}:
+\begin{itemize}
+\item Modular code generation $\rightarrow$ success rate +22\%
+\item Metric-guided feedback $\rightarrow$ MSE 2.5$\times \downarrow$
+\item PDE Agent $\rightarrow$ semantic consistency +18\%
+\end{itemize}
+
+\section{한계와 비판적 평가}
+
+\begin{enumerate}
+\item \textbf{혈류 분야 직접 적용은 미검증}: PINNacle 표준 PDE만 검증
+\item \textbf{Architecture pool이 제한적}: MLP, CNN, GNN, Transformer 4가지만
+\item \textbf{\pinn{} training의 진짜 어려움(stiff PDE, turbulent flow)에는 침묵}
+\item \textbf{PDE Loss verification의 round-trip이 LLM의 inverse parsing 능력에 의존}
+\item \textbf{ICLR 2026 under review 상태}
+\end{enumerate}
+
+\section{CTO 관점에서의 인사이트}
+
+살펴볼 만한 multi-agent system 설계 패턴:
+\begin{itemize}
+\item \textbf{Sequential pipeline + escalating feedback}
+\item \textbf{Round-trip verification}
+\item \textbf{Consensus voting을 다중 기준으로}
+\item \textbf{Bootstrap variance 기반 fusion 가중치}
+\item \textbf{Modular generation의 success rate 효과}
+\end{itemize}
+
+% ============================================================
+\chapter{Lang-PINN 심화 해설 --- Architecture, Math, Critique}
+% ============================================================
+
+\section{논문의 출발점 --- 세 가지 통제 실험 결과}
+
+저자들은 method를 제안하기 전 Section 3에서 \pinn{} 파이프라인의 세 모듈을 따로 측정합니다. 이 사전 실험이 4-agent 구조를 정당화하는 근거가 됩니다.
+
+\subsection{실험 \textcircled{1} --- Linguistic Variability of Task Formulation}
+
+8개 PINNacle PDE를 뽑아 4단계 언어 복잡도로 재표현한 1{,}600개 description-PDE pair (Task2PDE)에서 측정. 결과: \textbf{Level 1 $\rightarrow$ Level 4로 갈수록 모든 모델에서 정확도가 단조 감소}. DeepSeek-V3조차 Level 4에서 약 60\% 수준.
+
+\subsection{실험 \textcircled{2} --- Variability of Architecture Performance Across PDEs}
+
+MLP, CNN, GNN, Transformer 4가지를 Shallow Water·Convection·Poisson·Heat에 적용한 MSE 비교 결과:
+\begin{itemize}
+\item \textbf{Convection·Heat}: CNN과 Transformer가 우세
+\item \textbf{Poisson}: MLP와 GNN이 lowest error
+\item \textbf{Shallow Water}: 차이 미미
+\end{itemize}
+
+\subsection{실험 \textcircled{3} --- Complexity of Code Generation}
+
+6개 PDE에서 monolithic vs modular code generation 비교. \textbf{modular이 monolithic 대비 2배 이상 success rate}.
+
+\section{4-Agent 시스템의 수학적 정밀화}
+
+\subsection{PDE Agent --- 두 개의 직교적 유사도 척도}
+
+\textbf{Symbolic Equivalence (AST 매칭)}
+\[
+\text{sym}(E_i, E_j) = \frac{|M(T(E_i), T(E_j))|}{\max(|T(E_i)|, |T(E_j)|)}
+\]
+
+\textbf{Semantic Consistency (embedding-based)}
+\[
+\text{sem}(E_i, E_j) = \sigma(g(E_i), g(E_j))
+\]
+
+\textbf{Composite Score}
+\[
+S(E_i, E_j) = \alpha \cdot \text{sym}(E_i, E_j) + (1-\alpha) \cdot \text{sem}(E_i, E_j)
+\]
+
+\textbf{calibrated threshold = 0.80} --- 200 equivalent pair와 200 non-equivalent pair로 sweep해 결정.
+
+\textbf{Appendix 3의 검증 실험}: 같은 PDE를 perfect(C1) $\rightarrow$ notation variation(C2) $\rightarrow$ coefficient error(C3) $\rightarrow$ missing/incorrect terms(C4) $\rightarrow$ structural hallucination(C5)로 단계적 perturbation 했을 때, semantic score와 PINN training의 최종 $-\log_{10} \text{MSE}$의 \textbf{Pearson correlation이 0.88}.
+
+\subsection{PINN Agent --- Bradley-Terry로 architecture 능력 측정}
+
+\textbf{PDE Feature Vector} $\phi(E) = [f_{per}, f_{geo}, f_{ms}]^\top$
+\begin{itemize}
+\item \textbf{Periodicity} $f_{per}(E) = |P(E)|/d$
+\item \textbf{Geometry complexity} $f_{geo}(E) = \text{clip}(\lambda_\Omega c_\Omega + \lambda_{disc} c_{disc}, 0, 1)$ --- $\lambda_\Omega=0.6, \lambda_{disc}=0.4$
+\item \textbf{Multi-scale demand}:
+\[
+\tilde{f}_{ms}(E) = 0.8 \cdot \mathbb{1}_{m \geq 3} + 0.8 \cdot \mathbb{1}_{NL=1} + 0.4 \cdot \log(1 + Re + Pe) + 1.0 \cdot \mathbb{1}_{FR=1}
+\]
+$f_{ms}(E) = \sigma(\tilde{f}_{ms}(E))$
+\end{itemize}
+
+\textbf{Architecture Capability Vector} $\psi(A) = [a_{per}, a_{geo}, a_{ms}]^\top$
+
+\textit{Absolute Capability}:
+\[
+\bar{y}_k(A) = \frac{1}{|\mathcal{E}_k|} \sum_{E \in \mathcal{E}_k} y(A, E), \quad a^{Abs}_k(A) = 1 - \tilde{y}_k(A)
+\]
+
+\textit{Relative Capability (Bradley-Terry)}:
+\[
+p_{ij} = P(A_i \succ A_j) = \frac{\exp(\theta_k(A_i))}{\exp(\theta_k(A_i)) + \exp(\theta_k(A_j))}
+\]
+likelihood
+\[
+\mathcal{L}(\theta_k) = \prod_{i<j} p_{ij}^{n_{ij}} (1 - p_{ij})^{n_{ji}}
+\]
+를 maximize.
+
+\textit{Fusion}:
+\[
+a_k(A) = \omega_k \cdot a^{BT}_k(A) + (1 - \omega_k) \cdot a^{Abs}_k(A)
+\]
+\[
+\omega_k = \frac{\sigma^2_{k,Abs}}{\sigma^2_{k,Abs} + \sigma^2_{k,BT}}
+\]
+
+즉 더 stable한(variance가 작은) estimator에 더 큰 가중. RLHF의 preference learning 인사이트를 architecture 추천에 가져온 영리한 cross-pollination.
+
+\textit{Matching}: weighted cosine
+\[
+S(A, E) = \frac{(W\phi(E))^\top \psi(A)}{\|W\phi(E)\|_2 \cdot \|\psi(A)\|_2}
+\]
+
+\subsection{Code Agent --- Round-Trip Symbolic Verification}
+
+가장 영리한 부분: 생성된 loss 코드를 다시 symbolic AST로 parse-back해서 PDE Agent가 준 $E$와 equivalence를 체크하는 \textbf{round-trip 검증}.
+
+6개 모듈은 표준화된 input-output interface로 연결:
+\begin{itemize}
+\item model definition $\rightarrow$ \code{nn.Module} with \code{forward(x, t)} signature
+\item PDE loss $\rightarrow$ scalar tensor given model and collocation points
+\item data preprocessing $\rightarrow$ DataLoader-compatible objects
+\item training loop $\rightarrow$ consumes loss + data + model
+\item validation $\rightarrow$ consumes model + analytic solution if available
+\item main $\rightarrow$ orchestrates above
+\end{itemize}
+
+\subsection{Feedback Agent --- 4-Dimensional Quality Score}
+
+\textbf{(i) Convergence Efficiency}:
+\[
+T_{conv} = \min\{t \mid L_t \leq \tau\}, \quad m_{conv} = 1/T_{conv}
+\]
+\[
+\hat{m}_{conv} = (T_{max} - T_{conv})/(T_{max} - T_{min})
+\]
+
+\textbf{(ii) Predictive Accuracy}: $m_{acc} = -\text{MSE}(N_\theta, E)$
+
+\textbf{(iii) Model Complexity}: $m_{comp} = \#\text{Params}(N_\theta) / \max(\#\text{Params})$
+
+\textbf{(iv) Robustness}:
+\[
+m_{smooth} = 1 - \frac{\text{Std}(\Delta L_t)}{\text{Mean}(L_t)}
+\]
+\[
+m_{grad} = \mathbb{1}\{\epsilon \leq \|\nabla_\theta L\|/d \leq \kappa\}
+\]
+\[
+m_{rob} = \alpha \cdot m_{smooth} + (1-\alpha) \cdot m_{grad}
+\]
+
+\textbf{Aggregate Score}:
+\[
+S(C) = w_1 \hat{m}_{conv} + w_2 \hat{m}_{acc} + w_3 \hat{m}_{comp} + w_4 \hat{m}_{rob}
+\]
+
+\section{Task2PDE 벤치마크 --- 구체 예시}
+
+\subsection{Level 1 (clean, paper-style)}
+\begin{quotebox}
+``We consider one-dimensional heat diffusion in a rod of length $L=1$ with constant thermal conductivity $\kappa=0.01$. The temperature $u(x,t)$ satisfies $\partial_t u = \kappa \partial_{xx} u$, $x \in [0,1]$, $t > 0$. BC: $u(0,t)=0$, $u(1,t)=1$; IC: $u(x,0)=\sin(\pi x)$.''
+\end{quotebox}
+$\rightarrow$ direct translation, error 거의 없음.
+
+\subsection{Level 2 (irrelevant but realistic side information)}
+\begin{quotebox}
+``\ldots The lab was quite cold in the morning and the left end of the setup felt a bit colder when I touched it, but this is just due to the room air and is not part of the mathematical model. In the simulation, we still impose\ldots''
+\end{quotebox}
+$\rightarrow$ 환경 묘사가 가짜 boundary condition으로 오인될 risk.
+
+\subsection{Level 3 (ambiguous shorthand)}
+\begin{quotebox}
+``\ldots At the left end, the temperature reading tends to drift over time because the sensor is not very stable, but in the actual experiment the boundary itself is kept at a fixed 0$^\circ$C throughout the run\ldots''
+\end{quotebox}
+$\rightarrow$ ``drift over time''이 measurement noise인지 time-dependent BC인지 모호.
+
+\subsection{Level 4 (disorganized lab notebook)}
+\begin{quotebox}
+``For this batch of runs we use the same basic heat diffusion setup as before on a rod from $x=0$ to $x=1$. Initially we tried several values for the thermal conductivity, like $\kappa=0.005$ and $\kappa=0.02$, but in the final configuration we fixed it at $\kappa=0.01$. The initial temperature profile is the sine-shaped one from our earlier tests\ldots''
+\end{quotebox}
+$\rightarrow$ 정보가 흩어져 있고 preliminary value가 final value보다 먼저 등장.
+
+\section{실험 결과 --- Per-PDE Breakdown}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lllll}
+\toprule
+\textbf{PDE} & \textbf{차원} & \textbf{강한 baseline MSE} & \textbf{Lang-PINN MSE} & \textbf{비고} \\
+\midrule
+Burgers     & 1D & 1.10E-04 (PINNsAgent)   & \textbf{6.48E-05} & 약 40\% 개선 \\
+KS          & 1D & 1.04E+00 (PINNacle)      & \textbf{1.62E-03} & 3 orders \\
+Wave-CG     & 2D & 2.11E-02 (BayesianAgent) & \textbf{2.52E-03} & 약 10$\times$ \\
+Heat-CG     & 2D & 8.53E-04 (PINNacle)      & 1.35E-03           & baseline에 약간 못 미침 \\
+NS-C        & 2D & 1.40E-05 (PINNsAgent)   & 4.05E-05           & baseline에 못 미침 \\
+GS          & 2D & 4.03E-03 (BayesianAgent) & \textbf{1.89E-03} & 2$\times$ \\
+Poisson-MA  & 2D & 1.83E+00 (PINNacle)      & \textbf{2.25E-03} & 3 orders \\
+Heat-ND     & ND & 1.18E-04 (BayesianAgent) & 4.72E-04           & baseline에 못 미침 \\
+\bottomrule
+\end{tabular}
+\caption{Lang-PINN 주요 PDE의 MSE 비교 (강한 baseline 대비)}
+\end{table}
+
+\textbf{Success Rate} (1D/2D/3D/ND 평균): Lang-PINN 73-84\% vs Random/Bayesian/PINNsAgent 22-37\%.
+
+\textbf{Time Overhead}: Lang-PINN 평균 8 iterations. End-to-end wall-clock: 199.7s vs RandomAgent 413.5s (52\% 감소).
+
+\textbf{Ablation 정량 결과}:
+\begin{itemize}
+\item Modular code generation $\rightarrow$ success rate \textbf{+22\%}
+\item Metric-guided feedback $\rightarrow$ mean MSE \textbf{2.5$\times$ 감소}
+\item PDE Agent's semantic-symbolic validation $\rightarrow$ \textbf{+18\%}
+\end{itemize}
+
+\textbf{LLM Backbone Robustness}: DeepSeek-V3, Qwen2, LLaMA2-Chat 모두에서 Lang-PINN이 baselines(DeepSeek-V3 사용)보다 우수.
+
+\section{Sibling Systems와의 비교}
+
+\begin{itemize}
+\item \textbf{CodePDE} (Li et al., \arxivid{2505.08783}, 2025) --- 단일 agent + self-debugging. PDE는 formal하게 주어진다고 가정.
+\item \textbf{PINNsAgent} (Wuwu et al., 2025) --- architecture suggestion과 code generation, PDE formulation 미적용.
+\item \textbf{AgenticSciML} (Jiang \& Karniadakis, \arxivid{2511.07262}, 2025) --- SciML 전반의 emergent discovery.
+\item \textbf{PDE-Agent} (\arxivid{2512.16214}, 2025/26) --- toolchain-augmented multi-agent.
+\item \textbf{AutoNumerics} (\arxivid{2602.17607}, Feb 2026) --- PDE-agnostic.
+\end{itemize}
+
+\textbf{\langpinn{}의 차별점}:
+\begin{enumerate}
+\item End-to-end NL\textrightarrow{}executable \pinn{}의 완전한 자동화
+\item PDE loss round-trip verification
+\item Bradley-Terry로 architecture capability를 데이터로 학습
+\item 4차원 multi-metric feedback
+\item Escalating feedback
+\end{enumerate}
+
+\section{Critical Assessment}
+
+\subsection{강점}
+\begin{enumerate}
+\item \textbf{언어 변이에 robust}한 첫 \pinn{} automation
+\item \textbf{Modular round-trip verification}은 software engineering 정석
+\item \textbf{Bradley-Terry capability fusion}의 데이터 기반 접근
+\item \textbf{Multi-metric feedback이 error-only feedback 대비 2.5$\times \downarrow$}
+\end{enumerate}
+
+\subsection{약점·한계}
+\begin{enumerate}
+\item Architecture pool이 빈약: MLP/CNN/GNN/Transformer 4가지만
+\item \pinn{}의 진짜 어려움은 다루지 않음: gradient pathology, NTK ill-conditioning
+\item 혈류 등 specialized domain에 직접 적용 미검증
+\item PDE Loss verification의 round-trip이 LLM의 inverse parsing에 의존
+\item 30 cycle은 결코 가볍지 않음
+\item ICLR 2026 under review (peer review 미통과)
+\item Symbolic equivalence threshold 0.80은 PINNacle 분포에서 calibrate됨
+\end{enumerate}
+
+\section{Multi-Agent System Design Pattern으로서의 가치}
+
+claude-heart-beat-system처럼 5 core + 17 domain agent를 RACI로 운영하는 입장에서 transferable한 multi-agent 패턴:
+
+\begin{itemize}
+\item \textbf{Pattern A --- Round-Trip Verification at Agent Boundary}: PDE $\rightarrow$ code $\rightarrow$ PDE 역변환. 일반화: ``agent A의 output을 agent B가 받기 전에 A의 input domain으로 되돌려 일치 확인''.
+
+\item \textbf{Pattern B --- Multi-Criterion Voting with Orthogonal Metrics}: symbolic + semantic처럼 서로 다른 failure mode를 잡는 평가 척도를 가중 결합. *-red adversarial skill pattern과 통하는 철학.
+
+\item \textbf{Pattern C --- Escalating Feedback (Non-Local Correction)}: Feedback Agent가 PDE Agent까지 거슬러 올라가는 directive 전송.
+
+\item \textbf{Pattern D --- Variance-Weighted Estimator Fusion}: RLHF의 BT model을 architecture selection에 가져온 cross-pollination.
+
+\item \textbf{Pattern E --- Modular Generation + Standardized Interface}: Monolithic vs modular의 +22\% gap.
+
+\item \textbf{Pattern F --- Template Instantiation over Free-Form Generation}: 자유도가 낮을수록 reproducibility/correctness가 높다는 trade-off.
+\end{itemize}
+
+% ============================================================
+\chapter{Lang-PINN의 혈류 외 응용 도메인}
+% ============================================================
+
+\langpinn{}의 본질은 ``\textbf{자연어로 기술된 PDE 문제를 자동으로 \pinn{} 솔루션으로 변환}''하는 것이므로, PDE가 핵심 모델링 언어인 모든 도메인이 후보입니다.
+
+\section{Tier 1 --- 즉시 적용 가능 (\langpinn{}의 sweet spot)}
+
+\subsection{열전달·전자기기 thermal management}
+
+가장 자연스러운 fit. PINNacle에 Heat-CG, Heat-MS, Heat-VC, Heat-ND가 이미 포함되어 검증됨.
+
+\textbf{구체 use case}:
+\begin{itemize}
+\item \textbf{데이터센터 GPU 클러스터 cooling 설계} --- ``12개의 H100이 3행 4열로 배치, 각각 700W 발산, 측면 inlet에서 18$^\circ$C 공기'' 같은 자연어 기술. ConoHa VPS 인프라 운영 경험과 직결.
+\item \textbf{반도체 chip-level hot spot 예측} --- 3D heat equation with anisotropic conductivity
+\item \textbf{PCB thermal simulation}
+\end{itemize}
+
+\subsection{음향·진동·구조 동역학}
+
+Wave equation 계열이 PINNacle에 있고(Wave-C, Wave-CG), 산업 응용 풍부.
+
+\textbf{구체 use case}:
+\begin{itemize}
+\item \textbf{건축 음향} --- 일본 건축 시장과 가까움
+\item \textbf{MEMS resonator 설계}
+\item \textbf{자동차 NVH} --- 토요타·혼다 등 일본 자동차 기업에 직접 가치
+\end{itemize}
+
+\subsection{화학 반응 시스템·반응-확산}
+
+PINNacle에 Gray-Scott(GS)가 있어서 검증됨.
+
+\textbf{구체 use case}:
+\begin{itemize}
+\item \textbf{제약·정밀화학 반응기 설계}
+\item \textbf{배터리 전기화학 (lithium-ion intercalation)} --- 일본의 배터리 산업
+\item \textbf{반도체 dopant diffusion}
+\end{itemize}
+
+\section{Tier 2 --- 적용 가능하나 약간의 확장 필요}
+
+\subsection{지하수·환경 유체 (porous media flow)}
+
+Darcy/Forchheimer 방정식, Richards equation.
+
+\textbf{구체 use case}:
+\begin{itemize}
+\item 지하수 contamination 추적
+\item 지열 발전 --- 일본의 지열 잠재력은 세계 3위
+\item 이산화탄소 지중저장 (CCS)
+\end{itemize}
+
+\subsection{옵션 가격결정·금융 PDE (Black-Scholes 계열)}
+
+\textbf{구체 use case}:
+\begin{itemize}
+\item 이색 옵션 (exotic option) pricing
+\item CVA/XVA computation
+\item mean-field game in financial markets
+\end{itemize}
+
+\textbf{한계}: 금융 PDE는 잘 정의된 formal 표기를 quants가 이미 쓰므로 \textit{자연어\textrightarrow{}PDE} 변환의 가치가 상대적으로 낮음.
+
+\subsection{광학·포토닉스 (전자기 wave propagation)}
+
+Maxwell 방정식, Helmholtz equation.
+
+\textbf{구체 use case}:
+\begin{itemize}
+\item 포토닉스 결정 (photonic crystal) 설계
+\item 메타물질 (metamaterial) 시뮬레이션
+\item 광섬유 통신의 nonlinear pulse propagation --- 일본의 NTT·KDDI 통신 인프라
+\end{itemize}
+
+\section{Tier 3 --- 흥미롭지만 도전적 영역}
+
+\subsection{양자역학 --- Schr\"{o}dinger equation}
+
+Time-dependent Schr\"{o}dinger Equation의 numerical solution.
+
+\textbf{왜 도전적}: 복소수 wavefunction, hermitian operator 보존, probability conservation 같은 constraint를 \pinn{}으로 enforce하는 게 nontrivial.
+
+\subsection{우주물리·천체역학 --- General Relativity}
+
+Einstein field equation의 다양한 limit. LIGO/KAGRA의 waveform modeling.
+
+\textbf{현실적 한계}: \langpinn{}의 PDE Agent가 tensor PDE를 다루도록 학습되지 않음.
+
+\subsection{인구역학·역학 (epidemiology, ecology)}
+
+SIR/SEIR model의 reaction-diffusion 확장.
+
+\textbf{구체 use case}:
+\begin{itemize}
+\item 공간적 epidemic spread
+\item 생태계 invasive species spread --- Fisher-KPP equation
+\end{itemize}
+
+\subsection{재료과학 --- Phase field method}
+
+Cahn-Hilliard, Allen-Cahn equation.
+
+\textbf{구체 use case}:
+\begin{itemize}
+\item 금속 alloy 응고 시뮬레이션
+\item 배터리 음극 SEI layer formation
+\item 3D printing의 melt pool dynamics
+\end{itemize}
+
+\section{CTO 관점 --- 어디부터 시작할까}
+
+planitai.co.jp의 컨설팅 포트폴리오와 일본 산업 구조를 고려한 우선순위:
+
+\textbf{가장 빠른 ROI (3-6개월)}:
+\begin{itemize}
+\item 반도체·전자기기 thermal management
+\item 배터리 전기화학
+\end{itemize}
+
+\textbf{중기 R\&D (6-18개월)}:
+\begin{itemize}
+\item 건축 음향·자동차 NVH
+\item CCS·지열
+\end{itemize}
+
+\textbf{탐색적 베팅 (18개월+)}:
+\begin{itemize}
+\item 광섬유 통신의 nonlinear optics
+\item 금융 PDE
+\end{itemize}
+
+\begin{infobox}[원칙적 캐비엇]
+\langpinn{}의 진짜 가치는 ``PDE를 잘 모르는 domain expert(의사, 약사, 화공 엔지니어, 건축가)가 자연어로 기술하면 \pinn{}이 나온다''는 점입니다. 따라서 \textbf{PDE 표기가 이미 표준화된 quants나 물리학자보다, PDE를 손으로 적는 게 부담스러운 도메인}에서 가장 큰 가치를 발휘합니다. 의사가 환자 hemodynamics를 기술하는 게 그 대표 케이스였고, 같은 논리로 \textbf{건축가의 음향 설계, 화공 엔지니어의 반응기 설계, 재료 엔지니어의 미세조직 진화 기술}이 fit이 좋은 후보입니다.
+
+반대로 \textbf{이미 formal PDE specification이 산업 표준인 영역(quant finance, computational electromagnetics)}에서는 \langpinn{}의 PDE Agent가 주는 가치가 작고, CodePDE 같은 더 단순한 도구로 충분합니다.
+\end{infobox}
+
+% ============================================================
+\appendix
+\chapter{컴파일 노트}
+% ============================================================
+
+\section{빌드 방법}
+
+이 문서는 XeLaTeX + kotex 기반입니다. TeX Live 2022 이상이면 모든 패키지가 기본 포함됩니다.
+
+\begin{lstlisting}[language=bash, caption={빌드 명령어}]
+# 한국어 글꼴 (NanumMyeongjo, NanumGothic, NanumGothicCoding) 설치 필요
+# Ubuntu: sudo apt install fonts-nanum fonts-nanum-coding
+# macOS:  brew install --cask font-nanum-gothic font-nanum-myeongjo
+
+xelatex pinn_report.tex
+xelatex pinn_report.tex   # TOC 생성을 위해 두 번 실행
+\end{lstlisting}
+
+폰트가 없을 경우 \code{setmainfont} 등의 호출에서 다른 폰트로 fallback할 수 있습니다 (예: \code{Noto Serif CJK KR}).
+
+\section{소스 메타데이터}
+
+\begin{itemize}
+\item Document class: \code{report}
+\item 인코딩: UTF-8
+\item 한국어 패키지: \code{kotex}
+\item 글꼴 엔진: \code{fontspec} (XeLaTeX 필요)
+\item 색상: \code{xcolor}
+\item 하이퍼링크: \code{hyperref}
+\item 박스: \code{tcolorbox}
+\item 코드: \code{listings}
+\end{itemize}
+
+\section{원본 대화 메타데이터}
+
+\begin{itemize}
+\item Session date: 2026-05-20
+\item Compiler: Claude Opus 4.7 (Anthropic)
+\item User: Crowdy (CTO, PlanitAI)
+\item Primary language: Korean (English technical terms preserved)
+\item Source: web browse / arXiv fetch / OpenReview fetch / extended research task
+\end{itemize}
+
+\section{이 문서의 한계}
+
+\begin{warningbox}[중요]
+\begin{itemize}
+\item Chapter 2의 리서치 내용은 2026-05-20 기준이며, 그 이후 paper들의 출판 여부, peer review 결과 등은 반영되어 있지 않습니다.
+\item arXiv preprint의 비중이 높습니다. 인용 전 venue 확정과 peer review 통과 여부를 별도 확인해야 합니다.
+\item PUNCH의 PMLR vol.\ 정보, Lannelongue의 DOI 등은 fetch 시점의 메타데이터입니다.
+\item LLM 기반 합성 텍스트이므로 모든 수치·인용은 원본 논문에서 재검증을 권장합니다.
+\end{itemize}
+\end{warningbox}
+
+\vspace{1cm}
+\begin{center}
+\rule{8cm}{0.4pt}\\[4pt]
+\textit{End of document.}
+\end{center}
+
+\end{document}
