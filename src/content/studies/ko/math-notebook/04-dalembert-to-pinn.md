@@ -14,9 +14,10 @@ updated: 2026-05-20
 
 > 진동하는 줄 한 가닥에서 시작된 이야기가 오늘날 환자의 심장 안 혈류 시뮬레이션과 신경망 기반 수치해석으로 이어지기까지 — 달랑베르 원리, 파동방정식, 푸리에 급수, 나비에-스토크스, 심혈관 시뮬레이션, 유한체적법(FVM), 그리고 물리 정보 신경망(PINN)을 한 줄에 꿰는 대화의 기록.
 
-이 노트는 Crowdy ↔ Claude 의 2026년 5월 대화록을 LaTeX 로 정리한 것을 Markdown 으로 옮긴 것이다. **typeset LaTeX 소스는 아래에서 받을 수 있다:**
+이 노트는 Crowdy ↔ Claude 의 2026년 5월 대화록을 LaTeX 로 정리한 것을 Markdown 으로 옮긴 것이다. **typeset PDF 와 LaTeX 소스는 아래에서 받을 수 있다:**
 
-- 📝 [dalembert_conversation.tex](/study/math-notebook/dalembert_conversation.tex) — XeLaTeX (Noto CJK) 소스
+- 📄 [dalembert_conversation.pdf](/study/math-notebook/dalembert_conversation.pdf) — XeLaTeX 로 조판된 보고서
+- 📝 [dalembert_conversation.tex](/study/math-notebook/dalembert_conversation.tex) — LaTeX 소스 (Noto CJK)
 
 ---
 
