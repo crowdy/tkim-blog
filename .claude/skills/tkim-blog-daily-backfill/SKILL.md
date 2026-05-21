@@ -34,7 +34,9 @@ allowed-tools: Bash, Read, Write, Edit, WebFetch, AskUserQuestion
 1. 현재 위치 확인:
    ```bash
    pwd
-   # /root/dev/crowdy/tkim-blog 가 아니면 즉시 종료
+   # 경로에 'tkim-blog' 가 포함되어야 진행. 그 외에는 즉시 종료.
+   # 하위 디렉터리 (예: /root/dev/crowdy/tkim-blog/src) 는 허용.
+   [[ "$(pwd)" == *"tkim-blog"* ]] || { echo "wrong repo: $(pwd)"; exit 1; }
    ```
 2. 한국어 트리에서 최신 일자 찾기:
    ```bash
@@ -68,20 +70,25 @@ curl -s https://hacker-news.firebaseio.com/v0/item/<ID>.json \
 필터:
 - `score >= 100`
 - `descendants >= 50`
-- `time` (UNIX 초) 을 KST 일자로 변환했을 때 백필 대상 일자 범위 ±1 일
+- `time` (UNIX 초) 을 KST 일자로 변환했을 때 백필 대상 일자 범위 ±1 일. 변환:
+  ```bash
+  TZ=Asia/Seoul date -d "@<time>" +%Y-%m-%d
+  ```
 
 `url` 이 외부 사이트면 `WebFetch` 로 본문 요약을 가져온다. HN 토론을 인용하려면 `https://news.ycombinator.com/item?id=<ID>` 도 WebFetch.
 
 #### 2-B: GitHub Trending
 
-```bash
-# WebFetch 사용 (HTML 직접 파싱)
-# daily 와 weekly 둘 다 가져와 daily 우선
-```
+`WebFetch` 로 다음 두 URL 의 HTML 을 가져온다 (daily 우선, 갭이 길면 weekly 도):
 - `https://github.com/trending?since=daily`
 - `https://github.com/trending?since=weekly`
 
-각 페이지에서 상위 ~25 개 리포지토리의 이름·설명·언어·`Stars today` 를 추출한다. 단순 알고리즘 라이브러리보다 **트레이드오프가 명확한 도구** (예: pip 대체, ORM 대체, k8s 대안) 를 우선 후보로 표시.
+WebFetch prompt 에 다음을 지정한다:
+> "Extract the top 25 trending repositories. For each, return: full name (owner/repo), one-line description, primary language, and 'stars today' count (the number next to the star icon at the bottom of each row). Output as a JSON array."
+
+페이지 구조 단서: 각 리포는 `<article class="Box-row">` 이고, stars-today 는 행 하단의 `<span class="d-inline-block float-sm-right">` 안에 있다 (선택자 변경 가능성 있으므로 WebFetch 의 LLM 파싱에 의존).
+
+단순 알고리즘 라이브러리보다 **트레이드오프가 명확한 도구** (예: pip 대체, ORM 대체, k8s 대안) 를 우선 후보로 표시.
 
 #### 2-C: Qiita
 
