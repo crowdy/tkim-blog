@@ -25,6 +25,8 @@ allowed-tools: Bash, Read, Write, Edit, WebFetch, AskUserQuestion
                               [9] 푸시 ← [8] 단일 커밋 ← [7] 빌드 검증 ← [6] 파일 쓰기
 ```
 
+> **다일 백필의 제1 규칙:** HN 소재는 날짜별 Algolia `search_by_date` 로 모은다. `topstories.json` 단일 스냅샷으로 여러 날을 채우면 최신 스토리가 과거 날짜에 소급 배정된다 (Step 2-A 참조).
+
 기존 사용자 스킬 `tech-blog-pipeline` 과 별개로 운용한다. 본 스킬은 (a) 소스가 다르고 (HN + GitHub Trending + Qiita, Slack 없음), (b) 출력이 frontmatter 유효 형태로 리포지토리에 직접 들어가며, (c) 갭 탐지 → 자동 진행이라는 점이 차이다.
 
 ## Workflow
@@ -58,24 +60,38 @@ allowed-tools: Bash, Read, Write, Edit, WebFetch, AskUserQuestion
 
 #### 2-A: Hacker News
 
+**⚠️ 핵심 규칙: 날짜별 수집은 반드시 Algolia `search_by_date` 로 한다.**
+
+`topstories.json` 은 **호출 시점의 현재 상위 50 건 스냅샷**이다. 이걸로 여러 날을 백필하면, 실행 시점에 살아 있는 최신 스토리가 과거 날짜에 소급 배정된다 (예: 6/26 에 실행하면서 6/22 자리에 6/25 스토리를 넣는 사고). **백필 대상이 2 일 이상이면 `topstories.json` 을 토픽 배정에 쓰지 말 것.** 대신 누락된 **각 날짜마다** Algolia HN Search 의 날짜 구간 질의를 돈다.
+
+**각 백필 대상 날짜 `D` (KST) 마다:**
+
+1. 그 날의 UTC 타임스탬프 구간을 계산한다 (KST 자정 = 전날 UTC 15:00):
+   ```bash
+   start=$(TZ=UTC date -d "${D}T00:00:00+09:00" +%s)
+   end=$(TZ=UTC date -d "${D}T23:59:59+09:00" +%s)
+   ```
+2. 그 구간의 스토리를 점수순으로 가져온다. **`curl` 이 이 호스트에서 막히면 (sandbox/DNS) 즉시 `WebFetch` 로 폴백**한다 — 이번 검증에서 `curl` 은 `hn.algolia.com` 에 대해 exit 5, `WebFetch` 는 정상이었다:
+   ```
+   https://hn.algolia.com/api/v1/search_by_date?tags=story&numericFilters=created_at_i%3E%3D<start>%2Ccreated_at_i%3C%3D<end>%2Cpoints%3E%3D150&hitsPerPage=20
+   ```
+   - 반드시 `search_by_date` 엔드포인트를 쓴다. (`search` 엔드포인트는 동일 `numericFilters` 에 400 을 반환하는 경우가 있다.)
+   - 인코딩: 쉼표 `%2C`, `>=` `%3E%3D`, `<=` `%3C%3D`.
+   - `WebFetch` prompt: `"Return all hits with title, url, points, num_comments, objectID, sorted by points descending."`
+   - 후보가 적으면 `points%3E%3D150` 을 `100` 으로 낮춰 재질의.
+
+3. HN 토론을 인용하거나 `objectID` (= HN item id) 가 필요하면 `https://news.ycombinator.com/item?id=<objectID>` 를 `WebFetch`. **출처의 HN 링크에는 반드시 이 실제 `objectID` 를 박는다 — placeholder ID 금지** (이번에 합성 ID 가 새어 들어가 사후 보정이 필요했다).
+
+**토픽 배정 시 제외:**
+- **부고·단순 속보·가격 변동 헤드라인** (예: "X has died", "Apple raises prices"): 점수는 높아도 분석 포스트로 부적합. Step 3 의 "분석 깊이" 규칙에서 걸러낸다.
+- `url` 이 외부 사이트면 채택 후보에 한해 `WebFetch` 로 본문 요약을 가져온다.
+
+**단일 날(오늘 하루)만 백필**하는 경우에 한해 `topstories.json` 스냅샷을 써도 된다 (소급 배정 위험이 없으므로):
 ```bash
-# 상위 50 건 ID
 curl -s https://hacker-news.firebaseio.com/v0/topstories.json | jq '.[0:50]'
-
-# 각 ID 의 상세
-curl -s https://hacker-news.firebaseio.com/v0/item/<ID>.json \
-  | jq '{title, url, score, descendants, by, time}'
+curl -s https://hacker-news.firebaseio.com/v0/item/<ID>.json | jq '{title, url, score, descendants, by, time}'
 ```
-
-필터:
-- `score >= 100`
-- `descendants >= 50`
-- `time` (UNIX 초) 을 KST 일자로 변환했을 때 백필 대상 일자 범위 ±1 일. 변환:
-  ```bash
-  TZ=Asia/Seoul date -d "@<time>" +%Y-%m-%d
-  ```
-
-`url` 이 외부 사이트면 `WebFetch` 로 본문 요약을 가져온다. HN 토론을 인용하려면 `https://news.ycombinator.com/item?id=<ID>` 도 WebFetch.
+이때도 `time` 을 KST 로 변환해 (`TZ=Asia/Seoul date -d "@<time>" +%Y-%m-%d`) 오늘 ±1 일인지 확인한다.
 
 #### 2-B: GitHub Trending
 
@@ -110,7 +126,7 @@ curl -s 'https://qiita.com/api/v2/items?page=1&per_page=40&query=stocks:%3E10'
    ```bash
    find src/content/posts/ko -type d -mtime -14 -path '*/2026/*' | sort
    ```
-5. **날짜 매칭.** 후보의 `raw_date` 가 누락된 날과 일치하는 것을 우선 배정.
+5. **날짜 매칭 (엄격).** 각 누락 날짜에는 **그 날(KST) 구간 질의에서 나온 후보만** 배정한다. 다른 날 후보를 빈자리 메우기로 끌어다 쓰지 않는다 — 부득이 그 날 적합 후보가 없으면 GitHub Trending/Qiita 의 같은 날 후보로 대체하고, 그래도 없으면 사용자에게 보고한다. (HN `search_by_date` 를 날짜별로 돌면 이 매칭은 자동으로 보장된다.)
 
 선정 결과를 다음 형태로 명시:
 ```
@@ -278,6 +294,9 @@ git status   # nothing to commit, working tree clean 확인
 | 갭 0 일 | "최신 상태입니다 (마지막 포스트: YYYY-MM-DD)" 보고 후 종료 |
 | 누락 > 5 일 | `AskUserQuestion` 으로 진행 여부 확인 |
 | HN/GH/Qiita 접근 실패 | 즉시 실패. 무음 폴백 금지. 어느 소스가 죽었는지 보고 |
+| `curl` 이 `hn.algolia.com` 차단 (exit 5 등) | `WebFetch` 로 폴백. 같은 질의를 `search_by_date` 로 재시도 |
+| 2 일 이상 백필인데 `topstories.json` 만 씀 | 금지. 날짜별 `search_by_date` 로 재수집 (소급 배정 사고) |
+| 출처 HN 링크에 placeholder ID | 금지. 실제 `objectID` 로 교체 후에만 커밋 |
 | `pairSlug` 가 기존 포스트와 충돌 | 즉시 실패, 사용자에게 슬러그 변경 요청 |
 | 본문 6000 자 미달 | 본문 보강 후 재검사 (Step 4 의 글자 수 체크에 걸려야 함) |
 | 첫 줄 `# Title` ≠ frontmatter `title` | 자동 정렬 후 재확인 |
